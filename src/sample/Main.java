@@ -1,11 +1,14 @@
 package sample;
 
+import Tasks.Task;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
+import java.util.Vector;
 
 public class Main extends Application {
 
@@ -44,6 +47,9 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
+        Task task = new Task("task", new Vector<>(), "2000-06-02 22:01:10");
+        System.out.println(task.getDateTime());
+        System.exit(0);
         launch(args);
     }
 }

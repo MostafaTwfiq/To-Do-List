@@ -1,15 +1,12 @@
 package Tasks;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Vector;
 import java.util.regex.Pattern;
 
 public class DayTasks {
 
-    private final String dateRegex = "(19|20)\\d\\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])";
-    private final String dateFormat = "yyyy-MM-dd";
     private Vector<Task> tasks;
     private LocalDate date;
 
@@ -34,11 +31,11 @@ public class DayTasks {
 
         if (date == null)
             throw new IllegalArgumentException();
-        else if (!Pattern.matches(dateRegex, date))
+        else if (!Pattern.matches(DateFormat.getDateRegex(), date))
             throw new IllegalArgumentException("The passed date in Task class in invalid");
 
         tasks = new Vector<>();
-        this.date = LocalDate.parse(date, DateTimeFormatter.ofPattern(dateFormat));
+        this.date = LocalDate.parse(date, DateTimeFormatter.ofPattern(DateFormat.getDateFormat()));
 
     }
 
@@ -46,11 +43,11 @@ public class DayTasks {
 
         if (tasks == null || date == null)
             throw new IllegalArgumentException();
-        else if (!Pattern.matches(dateRegex, date))
+        else if (!Pattern.matches(DateFormat.getDateRegex(), date))
             throw new IllegalArgumentException("The passed date in Task class in invalid");
 
         this.tasks = tasks;
-        this.date = LocalDate.parse(date, DateTimeFormatter.ofPattern(dateFormat));
+        this.date = LocalDate.parse(date, DateTimeFormatter.ofPattern(DateFormat.getDateFormat()));
     }
 
     public void addTask(Task task) {
@@ -59,6 +56,15 @@ public class DayTasks {
             throw new IllegalArgumentException();
 
         tasks.add(task);
+
+    }
+
+    public void removeTask(Task task) {
+
+        if (task == null)
+            throw new IllegalArgumentException();
+
+        tasks.remove(task);
 
     }
 
@@ -78,10 +84,10 @@ public class DayTasks {
 
         if (date == null)
             throw new IllegalArgumentException();
-        else if (!Pattern.matches(dateRegex, date))
+        else if (!Pattern.matches(DateFormat.getDateRegex(), date))
             throw new IllegalArgumentException("The passed date in Task class in invalid");
 
-        this.date = LocalDate.parse(date, DateTimeFormatter.ofPattern(dateFormat));
+        this.date = LocalDate.parse(date, DateTimeFormatter.ofPattern(DateFormat.getDateFormat()));
 
     }
 

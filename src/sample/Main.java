@@ -1,6 +1,7 @@
 package sample;
 
 import Tasks.Task;
+import Tasks.TaskStatus;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -47,9 +48,7 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        Task task = new Task("task", new Vector<>(), "2000-06-02 22:01:10");
-        System.out.println(task.getDateTime());
-        System.exit(0);
         launch(args);
     }
+
 }

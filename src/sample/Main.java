@@ -1,18 +1,22 @@
 package sample;
 
 import GUI.CustomStage;
+import GUI.ProgressBar.ProgressBar;
+import GUI.ProgressBar.ProgressElement;
 import GUI.ScreenManager;
 import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
+import java.util.Vector;
 
 public class Main extends Application {
 
     public static ScreenManager screenManager = new ScreenManager();
 
-    double x, y;
     @Override
     public void start(Stage stage) throws Exception{
 
@@ -39,9 +43,21 @@ public class Main extends Application {
 
         mainPane.getChildren().add(button);
 
+        Vector<ProgressElement> elements = new Vector<>();
+        elements.add(new ProgressElement(50, Color.rgb(98, 220, 165)));
+        elements.add(new ProgressElement(20, Color.rgb(247, 248, 121)));
+        elements.add(new ProgressElement(30, Color.rgb(226, 103, 90)));
+
+
+        ProgressBar progressBar = new ProgressBar(elements, 500, 2, 15, 400);
+        progressBar.setLayoutX(500);
+        progressBar.setLayoutY(500);
+        mainPane.getChildren().add(progressBar);
+
         Button button1 = new Button();
         button1.setOnAction(e -> {
             screenManager.changeToLastScreen();
+            progressBar.updateProgress();
         });
         secondPane.getChildren().add(button1);
 

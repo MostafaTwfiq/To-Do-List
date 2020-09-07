@@ -1,50 +1,52 @@
 package sample;
 
-import Tasks.*;
+import GUI.CustomStage;
+import GUI.ScreenManager;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.Vector;
 
 public class Main extends Application {
+
+    public static ScreenManager screenManager = new ScreenManager();
 
     double x, y;
     @Override
     public void start(Stage stage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        //primaryStage.setTitle("Hello World");
-        Scene scene = new Scene(root, 1000, 800);
-        stage.setScene(scene);
-        //stage.setScene(new Scene(root, 300, 275));
-        //primaryStage.show();
 
-        stage.setScene(scene);
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.initStyle(StageStyle.TRANSPARENT);
+        Pane mainPane = new Pane();
+        mainPane.styleProperty().set("-fx-background-color: transparent;");
+        Label label1 = new Label("First layout");
+        label1.setLayoutX(200);
+        label1.setLayoutY(200);
+        label1.setStyle("-fx-text-fill: white;");
+        mainPane.getChildren().add(label1);
 
-        root.setOnMousePressed(event -> {
-            x = event.getSceneX();
-            y= event.getSceneY();
+        Button button = new Button();
+        Pane secondPane = new Pane();
+        secondPane.styleProperty().set("-fx-background-color: transparent;");
+        Label label2 = new Label("Second layout");
+        label2.setLayoutX(200);
+        label2.setLayoutY(200);
+        label2.setStyle("-fx-text-fill: white;");
+        secondPane.getChildren().add(label2);
+
+        button.setOnAction(e -> {
+            screenManager.changeScreen(secondPane);
         });
-        root.setOnMouseDragged(event -> {
-            stage.setX(event.getScreenX() - x);
-            stage.setY(event.getScreenY() - y);
-            stage.setOpacity(0.7f);
+
+        mainPane.getChildren().add(button);
+
+        Button button1 = new Button();
+        button1.setOnAction(e -> {
+            screenManager.changeToLastScreen();
         });
-        root.setOnDragDone((event) -> {
-            stage.setOpacity(1.0f);
-        });
-        root.setOnMouseReleased((event) -> {
-            stage.setOpacity(1.0f);
-        });
-        stage.show();
+        secondPane.getChildren().add(button1);
+
+        CustomStage customStage = new CustomStage(700, 1000, mainPane);
+        customStage.showStageAndWait();
 
     }
 

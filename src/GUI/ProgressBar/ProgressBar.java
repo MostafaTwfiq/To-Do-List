@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
@@ -15,9 +16,10 @@ public class ProgressBar extends HBox {
     double totalRatio;
     double updatingTime;
 
-    public ProgressBar(Vector<ProgressElement> elements, double updatingTime, double spacing, double h, double w) {
+    public ProgressBar(Vector<ProgressElement> elements,
+                       double updatingTime, double spacing, double h, double w) {
 
-        if (elements == null)
+        if (elements == null || updatingTime < 0 || h < 0 || w < 0)
             throw new IllegalArgumentException();
 
         this.updatingTime = updatingTime;
@@ -30,13 +32,15 @@ public class ProgressBar extends HBox {
         setPrefWidth(w);
         setSpacing(spacing);
 
+        setupProgressBarStyle();
+
         updateProgress();
 
     }
 
     private void setupProgressBarStyle() {
 
-        styleProperty().set("-fx-background-color: #2e2d34;"
+        styleProperty().set("-fx-background-color: transparent;"
                 + "-fx-border-color: transparent;"
                 + "-fx-background-radius: " + String.format("%f", getPrefHeight() / 2) + ";"
                 + "-fx-border-radius: " + String.format("%f", getPrefHeight() / 2) + ";");
@@ -130,6 +134,19 @@ public class ProgressBar extends HBox {
 
         this.elements = elements;
         calculateTotalRatio();
+
+    }
+
+    public double getUpdatingTime() {
+        return updatingTime;
+    }
+
+    public void setUpdatingTime(double updatingTime) {
+
+        if (updatingTime < 0)
+            throw new IllegalArgumentException();
+
+        this.updatingTime = updatingTime;
 
     }
 

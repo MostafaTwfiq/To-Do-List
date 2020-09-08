@@ -11,12 +11,12 @@
    <children>
       <AnchorPane fx:id="stageBar" layoutY="-1.0" prefHeight="30.0" prefWidth="1003.0" style="-fx-background-color: #44403F; -fx-background-radius: 30 30 0 0;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button fx:id="closeB" layoutX="958.0" layoutY="1.0" mnemonicParsing="false" style="-fx-background-color: #FF5A53; -fx-background-radius: 20;" AnchorPane.bottomAnchor="1.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="1.0">
+            <Button fx:id="closeB" layoutX="958.0" layoutY="1.0" mnemonicParsing="false" style="-fx-background-color: #FF5A53; -fx-background-radius: 5;" AnchorPane.bottomAnchor="1.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="1.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="minimizeB" layoutX="936.0" layoutY="1.0" mnemonicParsing="false" style="-fx-background-color: #FBFAFB; -fx-background-radius: 20;" AnchorPane.bottomAnchor="1.0" AnchorPane.rightAnchor="55.0" AnchorPane.topAnchor="1.0">
+            <Button fx:id="minimizeB" layoutX="936.0" layoutY="1.0" mnemonicParsing="false" style="-fx-background-color: #FBFAFB; -fx-background-radius: 5;" AnchorPane.bottomAnchor="1.0" AnchorPane.rightAnchor="55.0" AnchorPane.topAnchor="1.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

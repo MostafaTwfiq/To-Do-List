@@ -4,6 +4,8 @@ import GUI.CustomStage;
 import GUI.ProgressBar.ProgressBar;
 import GUI.ProgressBar.ProgressElement;
 import GUI.ScreenManager;
+import Tasks.Task;
+import Tasks.TaskStatus;
 import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,9 +22,11 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception{
 
+        Task task = new Task("title", new Vector<>(), "2020-06-02 15:05:56", TaskStatus.DONE);
+
         Pane mainPane = new Pane();
         mainPane.styleProperty().set("-fx-background-color: transparent;");
-        Label label1 = new Label("First layout");
+        Label label1 = new Label(task.getDateTime().toString().substring(task.getDateTime().toString().indexOf('T') + 1));
         label1.setLayoutX(200);
         label1.setLayoutY(200);
         label1.setStyle("-fx-text-fill: white;");
@@ -49,8 +53,9 @@ public class Main extends Application {
         elements.add(new ProgressElement(30, Color.rgb(226, 103, 90)));
 
 
-        ProgressBar progressBar = new ProgressBar(elements, 500, 2, 15, 400);
-        progressBar.setLayoutX(500);
+
+        ProgressBar progressBar = new ProgressBar(elements, 700, 5, 15, 400);
+        progressBar.setLayoutX(400);
         progressBar.setLayoutY(500);
         mainPane.getChildren().add(progressBar);
 
@@ -65,6 +70,8 @@ public class Main extends Application {
         customStage.showStageAndWait();
 
     }
+
+
 
 
     public static void main(String[] args) {

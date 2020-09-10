@@ -1,14 +1,16 @@
 package sample;
 
 import GUI.CustomStage;
+import GUI.MultiProgressBar.MultiProgressBar;
+import GUI.MultiProgressBar.MultiProgressElement;
 import GUI.ProgressBar.ProgressBar;
-import GUI.ProgressBar.ProgressElement;
 import GUI.ScreenManager;
 import Tasks.Task;
 import Tasks.TaskStatus;
 import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -47,22 +49,35 @@ public class Main extends Application {
 
         mainPane.getChildren().add(button);
 
-        Vector<ProgressElement> elements = new Vector<>();
-        elements.add(new ProgressElement(50, Color.rgb(98, 220, 165)));
-        elements.add(new ProgressElement(20, Color.rgb(247, 248, 121)));
-        elements.add(new ProgressElement(30, Color.rgb(226, 103, 90)));
+        Vector<MultiProgressElement> elements = new Vector<>();
+        elements.add(new MultiProgressElement(20, Color.rgb(98, 220, 165)));
+        elements.add(new MultiProgressElement(30, Color.rgb(247, 248, 121)));
+        elements.add(new MultiProgressElement(40, Color.rgb(230,126,34)));
+        elements.add(new MultiProgressElement(10, Color.rgb(226, 103, 90)));
 
 
+        ProgressBar progressBar = new ProgressBar(
+                Color.rgb(149,165,166),
+                Color.rgb(39,174,96),
+                Color.rgb(236,240,241),
+                700, 20, 300);
 
-        ProgressBar progressBar = new ProgressBar(elements, 700, 5, 15, 400);
         progressBar.setLayoutX(400);
-        progressBar.setLayoutY(500);
-        mainPane.getChildren().add(progressBar);
+        progressBar.setLayoutY(400);
+
+        progressBar.updateProgress(0.8);
+
+
+        MultiProgressBar multiProgressBar = new MultiProgressBar(elements, 700, 5, 20, 300);
+        multiProgressBar.setLayoutX(400);
+        multiProgressBar.setLayoutY(500);
+        mainPane.getChildren().addAll(multiProgressBar, progressBar);
 
         Button button1 = new Button();
         button1.setOnAction(e -> {
             screenManager.changeToLastScreen();
-            progressBar.updateProgress();
+            multiProgressBar.updateProgress();
+            progressBar.updateProgress(progressBar.getPercentage() - 0.3);
         });
         secondPane.getChildren().add(button1);
 

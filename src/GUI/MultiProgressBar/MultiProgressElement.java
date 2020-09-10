@@ -1,13 +1,13 @@
-package GUI.ProgressBar;
+package GUI.MultiProgressBar;
 
 import javafx.scene.paint.Color;
 
-public class ProgressElement {
+public class MultiProgressElement {
 
     private double ratio;
     private Color color;
 
-    public ProgressElement(double ratio, Color color) {
+    public MultiProgressElement(double ratio, Color color) {
 
         if (ratio < 0 || color == null)
             throw new IllegalArgumentException();

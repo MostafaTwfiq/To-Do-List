@@ -22,6 +22,9 @@ public class ProgressBar extends AnchorPane {
 
     public ProgressBar(Color progressBarC, Color progressC, Color labelC, double animationTimeM, double height, double width) {
 
+        if (progressBarC == null || progressC == null || labelC == null || animationTimeM < 0)
+            throw new IllegalArgumentException();
+
         this.progressBarC = progressBarC;
         this.progressC = progressC;
         this.labelC = labelC;
@@ -130,7 +133,6 @@ public class ProgressBar extends AnchorPane {
         else if (percentage > 1)
             percentage = 1;
 
-        //progressP.setPrefWidth(0);
         Timeline progressShrinkingTL = new Timeline(
                 new KeyFrame(
                         Duration.millis(animationTimeM),

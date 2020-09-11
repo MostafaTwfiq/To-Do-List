@@ -6,11 +6,11 @@ import GUI.MultiProgressBar.MultiProgressElement;
 import GUI.ProgressBar.ProgressBar;
 import GUI.ScreenManager;
 import Tasks.Task;
+import Tasks.TaskPriority;
 import Tasks.TaskStatus;
 import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -24,7 +24,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception{
 
-        Task task = new Task("title", new Vector<>(), "2020-06-02 15:05:56", TaskStatus.DONE);
+        Task task = new Task("title", new Vector<>(), "2020-06-02 15:05:56", TaskStatus.DONE, TaskPriority.IMPORTANT_AND_URGENT);
 
         Pane mainPane = new Pane();
         mainPane.styleProperty().set("-fx-background-color: transparent;");
@@ -77,7 +77,7 @@ public class Main extends Application {
         button1.setOnAction(e -> {
             screenManager.changeToLastScreen();
             multiProgressBar.updateProgress();
-            progressBar.updateProgress(progressBar.getPercentage() - 0.3);
+            progressBar.updateProgress(progressBar.getPercentage() + 0.3);
         });
         secondPane.getChildren().add(button1);
 

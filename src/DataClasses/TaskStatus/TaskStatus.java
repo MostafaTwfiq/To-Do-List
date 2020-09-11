@@ -1,4 +1,4 @@
-package Tasks;
+package DataClasses.TaskStatus;
 
 public enum TaskStatus {
 

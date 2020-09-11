@@ -1,4 +1,7 @@
-package Tasks;
+package DataClasses;
+
+import DataClasses.TaskStatus.TaskPriority;
+import DataClasses.TaskStatus.TaskStatus;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

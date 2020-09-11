@@ -1,21 +1,23 @@
-package Tasks;
+package DataClasses;
 
 import java.time.LocalDate;
 import java.util.Vector;
 
 public class User {
 
+    private String userName;
     private Vector<DayTasks> daysTasks;
 
     public User() {
         daysTasks = new Vector<>();
     }
 
-    public User(Vector<DayTasks> daysTasks) {
+    public User(String userName, Vector<DayTasks> daysTasks) {
 
-        if (daysTasks == null)
+        if (userName == null || daysTasks == null)
             throw new IllegalArgumentException();
 
+        this.userName = userName;
         this.daysTasks = daysTasks;
     }
 
@@ -61,4 +63,18 @@ public class User {
 
         this.daysTasks = daysTasks;
     }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+
+        if (userName == null)
+            throw new IllegalArgumentException();
+
+        this.userName = userName;
+
+    }
+
 }

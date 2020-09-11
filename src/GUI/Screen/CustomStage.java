@@ -1,4 +1,4 @@
-package GUI;
+package GUI.Screen;
 
 import GUI.Observer.IObserver;
 import javafx.animation.KeyFrame;
@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-import sample.Main;
+import Main.Main;
 
 public class CustomStage implements IObserver {
 

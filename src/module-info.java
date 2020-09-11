@@ -4,7 +4,7 @@ module ToDoList {
     requires javafx.controls;
     requires javafx.fxml;
 
-    opens sample;
-    opens GUI;
+    opens Main;
+    opens GUI.Screen;
 
 }

@@ -1,13 +1,13 @@
-package sample;
+package Main;
 
-import GUI.CustomStage;
+import GUI.Screen.CustomStage;
 import GUI.MultiProgressBar.MultiProgressBar;
 import GUI.MultiProgressBar.MultiProgressElement;
 import GUI.ProgressBar.ProgressBar;
-import GUI.ScreenManager;
-import Tasks.Task;
-import Tasks.TaskPriority;
-import Tasks.TaskStatus;
+import GUI.Screen.ScreenManager;
+import DataClasses.Task;
+import DataClasses.TaskStatus.TaskPriority;
+import DataClasses.TaskStatus.TaskStatus;
 import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

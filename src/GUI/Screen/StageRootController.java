@@ -1,4 +1,4 @@
-package GUI;
+package GUI.Screen;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

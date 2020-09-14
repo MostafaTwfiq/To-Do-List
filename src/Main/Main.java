@@ -24,7 +24,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception{
 
-        Task task = new Task("title", new Vector<>(), "2020-06-02 15:05:56", TaskStatus.DONE, TaskPriority.IMPORTANT_AND_URGENT);
+        Task task = new Task("title", new Vector<>(), new Vector<>(), "2020-06-02 15:05:56", TaskStatus.DONE, TaskPriority.IMPORTANT_AND_URGENT);
 
         Pane mainPane = new Pane();
         mainPane.styleProperty().set("-fx-background-color: transparent;");

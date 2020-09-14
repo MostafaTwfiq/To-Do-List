@@ -6,19 +6,21 @@ import java.util.Vector;
 public class User {
 
     private String userName;
+    private short userID;
     private Vector<DayTasks> daysTasks;
 
     public User() {
         daysTasks = new Vector<>();
     }
 
-    public User(String userName, Vector<DayTasks> daysTasks) {
+    public User(String userName, short userID, Vector<DayTasks> daysTasks) {
 
         if (userName == null || daysTasks == null)
             throw new IllegalArgumentException();
 
         this.userName = userName;
         this.daysTasks = daysTasks;
+        this.userID = userID;
     }
 
     public DayTasks getTasksAtDate(LocalDate date) {
@@ -75,6 +77,18 @@ public class User {
 
         this.userName = userName;
 
+    }
+
+    public short getUserID() {
+        return userID;
+    }
+
+    public void setUserID(short userID) {
+
+        if (userID < 0)
+            throw new IllegalArgumentException();
+
+        this.userID = userID;
     }
 
 }

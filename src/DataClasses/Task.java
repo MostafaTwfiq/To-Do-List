@@ -12,32 +12,35 @@ public class Task {
 
     private String title; // the title of the task
     private Vector<String> notes; // notes associated to the task
+    private Vector<String> tags;
     private LocalDateTime dateTime; // the start date of the task
     private TaskStatus taskStatus; // the task status [done, not done, and in progress]
-    private TaskPriority priority;
+    private TaskPriority priority; // the priority of the task
 
-    public Task(String title, Vector<String> notes, LocalDateTime dateTime, TaskStatus taskStatus, TaskPriority priority) {
+    public Task(String title, Vector<String> notes, Vector<String> tags, LocalDateTime dateTime, TaskStatus taskStatus, TaskPriority priority) {
 
-        if (title == null || title.equals("") || notes == null || dateTime == null || taskStatus == null)
+        if (title == null || title.equals("") || notes == null || tags == null || dateTime == null || taskStatus == null)
             throw new IllegalArgumentException();
 
         this.title = title;
         this.notes = notes;
+        this.tags = tags;
         this.dateTime = dateTime;
         this.taskStatus = taskStatus;
         this.priority = priority;
 
     }
 
-    public Task(String title, Vector<String> notes, String dateTime, TaskStatus taskStatus, TaskPriority priority) {
+    public Task(String title, Vector<String> notes, Vector<String> tags, String dateTime, TaskStatus taskStatus, TaskPriority priority) {
 
-        if (title == null || title.equals("") || notes == null || dateTime == null || taskStatus == null)
+        if (title == null || title.equals("") || notes == null || tags == null || dateTime == null || taskStatus == null)
             throw new IllegalArgumentException();
         else if (!Pattern.matches(DateFormat.getDateTimeRegex(), dateTime))
             throw new IllegalArgumentException("The passed date in Task class in invalid");
 
         this.title = title;
         this.notes = notes;
+        this.tags = tags;
         this.dateTime = LocalDateTime.parse(dateTime, DateTimeFormatter.ofPattern(DateFormat.getDateTimeFormat()));
         this.taskStatus = taskStatus;
         this.priority = priority;
@@ -59,6 +62,23 @@ public class Task {
             throw new IllegalArgumentException();
 
         notes.remove(note);
+
+    }
+
+    public void addTag(String tag) {
+
+        if (tag == null || tag.equals(""))
+            throw new IllegalArgumentException();
+
+        notes.add(tag);
+    }
+
+    public void deleteTag(String tag) {
+
+        if (tag == null)
+            throw new IllegalArgumentException();
+
+        notes.remove(tag);
 
     }
 
@@ -126,4 +146,17 @@ public class Task {
 
         this.priority = priority;
     }
+
+    public Vector<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(Vector<String> tags) {
+
+        if (tags == null)
+            throw new IllegalArgumentException();
+
+        this.tags = tags;
+    }
+
 }

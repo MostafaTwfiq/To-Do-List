@@ -91,6 +91,13 @@ public class CustomStage implements IObserver {
         }
         Parent oldLayout = (Parent) parent.getChildren().get(0);
 
+        createScreenChangeAnimation(parent, oldLayout, newLayout);
+
+
+    }
+
+    private void createScreenChangeAnimation(AnchorPane parent, Parent oldLayout, Parent newLayout) {
+
         newLayout.setOpacity(0);
         parent.getChildren().add(newLayout);
 
@@ -98,10 +105,18 @@ public class CustomStage implements IObserver {
         KeyValue newLayoutAppearanceKV = new KeyValue(newLayout.opacityProperty(), 1);
         screenManager.setLockScreen(true);
 
-        Timeline changingLayoutTimeLine = new Timeline(new KeyFrame(Duration.millis(200), currentLayoutFadingKV, newLayoutAppearanceKV));
+        Timeline changingLayoutTimeLine = new Timeline(
+                new KeyFrame(
+                        Duration.millis(200),
+                        currentLayoutFadingKV,
+                        newLayoutAppearanceKV));
+
+
         changingLayoutTimeLine.setOnFinished(e -> {
+
             parent.getChildren().remove(oldLayout);
             screenManager.setLockScreen(false);
+
         });
 
         changingLayoutTimeLine.play();

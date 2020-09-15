@@ -1,5 +1,6 @@
 package Main;
 
+import DataBase.DataAccess;
 import GUI.Screen.CustomStage;
 import GUI.MultiProgressBar.MultiProgressBar;
 import GUI.MultiProgressBar.MultiProgressElement;
@@ -24,6 +25,10 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception{
 
+        DataAccess dataAccess = new DataAccess();
+        dataAccess.addNewNote(1, "note");
+
+        System.exit(0);
         Task task = new Task(1, "title", new Vector<>(), new Vector<>(), "2020-06-02 15:05:56", TaskStatus.DONE, TaskPriority.IMPORTANT_AND_URGENT);
 
         Pane mainPane = new Pane();

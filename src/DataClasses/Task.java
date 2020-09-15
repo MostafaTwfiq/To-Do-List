@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 
 public class Task {
 
+    private int taskID;
     private String title; // the title of the task
     private Vector<String> notes; // notes associated to the task
     private Vector<String> tags;
@@ -17,11 +18,12 @@ public class Task {
     private TaskStatus taskStatus; // the task status [done, not done, and in progress]
     private TaskPriority priority; // the priority of the task
 
-    public Task(String title, Vector<String> notes, Vector<String> tags, LocalDateTime dateTime, TaskStatus taskStatus, TaskPriority priority) {
+    public Task(int taskID, String title, Vector<String> notes, Vector<String> tags, LocalDateTime dateTime, TaskStatus taskStatus, TaskPriority priority) {
 
-        if (title == null || title.equals("") || notes == null || tags == null || dateTime == null || taskStatus == null)
+        if (taskID < 1 || title == null || title.equals("") || notes == null || tags == null || dateTime == null || taskStatus == null)
             throw new IllegalArgumentException();
 
+        this.taskID = taskID;
         this.title = title;
         this.notes = notes;
         this.tags = tags;
@@ -31,13 +33,14 @@ public class Task {
 
     }
 
-    public Task(String title, Vector<String> notes, Vector<String> tags, String dateTime, TaskStatus taskStatus, TaskPriority priority) {
+    public Task(int taskID, String title, Vector<String> notes, Vector<String> tags, String dateTime, TaskStatus taskStatus, TaskPriority priority) {
 
-        if (title == null || title.equals("") || notes == null || tags == null || dateTime == null || taskStatus == null)
+        if (taskID < 0 || title == null || title.equals("") || notes == null || tags == null || dateTime == null || taskStatus == null)
             throw new IllegalArgumentException();
         else if (!Pattern.matches(DateFormat.getDateTimeRegex(), dateTime))
             throw new IllegalArgumentException("The passed date in Task class in invalid");
 
+        this.taskID = taskID;
         this.title = title;
         this.notes = notes;
         this.tags = tags;
@@ -157,6 +160,19 @@ public class Task {
             throw new IllegalArgumentException();
 
         this.tags = tags;
+    }
+
+    public int getTaskID() {
+        return taskID;
+    }
+
+    public void setTaskID(int taskID) {
+
+        if (taskID < 0)
+            throw new IllegalArgumentException();
+
+        this.taskID = taskID;
+
     }
 
 }

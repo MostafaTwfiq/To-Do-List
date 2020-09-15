@@ -2,6 +2,6 @@ package DataClasses.TaskStatus;
 
 public enum TaskStatus {
 
-    DONE, NOT_DONE, IN_PROGRESS
+    DONE, NOT_DONE
 
 }

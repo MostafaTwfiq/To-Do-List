@@ -8,15 +8,15 @@ public abstract class DataBaseConnection {
 
     private static Connection connection = null;
 
-    public static Connection createDataBaseConnection () {
+    public static Connection createDataBaseConnection () throws SQLException {
 
         if (connection == null) {
 
-            try {
-                connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/todolistdb", "todoListApp", "pass");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/todolistdb",
+                    "todoListApp",
+                    "pass"
+            );
 
         }
 

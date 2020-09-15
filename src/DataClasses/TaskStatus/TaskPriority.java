@@ -2,17 +2,17 @@ package DataClasses.TaskStatus;
 
 public enum TaskPriority {
 
-    IMPORTANT_AND_URGENT(""), IMPORTANT_AND_NOT_URGENT(""),
-    NOT_IMPORTANT_AND_URGENT(""), NOT_IMPORTANT_AND_NOT_URGENT("");
+    IMPORTANT_AND_URGENT(4), IMPORTANT_AND_NOT_URGENT(3),
+    NOT_IMPORTANT_AND_URGENT(2), NOT_IMPORTANT_AND_NOT_URGENT(1);
 
-    private TaskPriority(String color) {
-        this.color = color;
+    private TaskPriority(int priorityWeight) {
+        this.priorityWeight = priorityWeight;
     }
 
-    private final String color;
+    private int priorityWeight;
 
-    public String getColor() {
-        return color;
+    public int getPriorityWeight() {
+        return priorityWeight;
     }
 
 }

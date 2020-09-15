@@ -9,6 +9,7 @@ import GUI.Screen.ScreenManager;
 import DataClasses.Task;
 import DataClasses.TaskStatus.TaskPriority;
 import DataClasses.TaskStatus.TaskStatus;
+import TasksListHandling.TasksListHandling;
 import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,6 +17,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 public class Main extends Application {
@@ -26,10 +29,16 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception{
 
         DataAccess dataAccess = new DataAccess();
-        //dataAccess.addNewNote(1, "note");
-        //dataAccess.updateTaskTitle(2, "new title yaba");
-        //dataAccess.updateTaskDateTime(2, "2019-01-01 12:12:12");
-        dataAccess.updateTaskPriority(2, TaskPriority.IMPORTANT_AND_NOT_URGENT);
+        //dataAccess.addNewTask(1, "new task", "2020-09-14 22:01:30", TaskStatus.DONE, TaskPriority.IMPORTANT_AND_NOT_URGENT);
+        //System.out.println(dataAccess.getNumOfTasks(1, "2020-09-14"));
+        ArrayList<String> tags = new ArrayList<>();
+        tags.add("project");
+        tags.add("programming");
+        tags.add("sleeping");
+        List<Task> tasks = dataAccess.getTaskInfo(dataAccess.getTasksIDs(1, "2020-09-14 10:10:10"));
+        new TasksListHandling().sortTasksPriority(tasks, false);
+        for (var v : tasks)
+            System.out.println(v + "\n");
 
         System.exit(0);
         Task task = new Task(1, "title", new Vector<>(), new Vector<>(), "2020-06-02 15:05:56", TaskStatus.DONE, TaskPriority.IMPORTANT_AND_URGENT);

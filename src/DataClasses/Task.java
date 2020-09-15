@@ -5,20 +5,21 @@ import DataClasses.TaskStatus.TaskStatus;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class Task {
 
     private int taskID;
     private String title; // the title of the task
-    private Vector<String> notes; // notes associated to the task
-    private Vector<String> tags;
+    private List<String> notes; // notes associated to the task
+    private List<String> tags; // tags associated to the task
     private LocalDateTime dateTime; // the start date of the task
     private TaskStatus taskStatus; // the task status [done, not done, and in progress]
     private TaskPriority priority; // the priority of the task
 
-    public Task(int taskID, String title, Vector<String> notes, Vector<String> tags, LocalDateTime dateTime, TaskStatus taskStatus, TaskPriority priority) {
+    public Task(int taskID, String title, List<String> notes, List<String> tags, LocalDateTime dateTime, TaskStatus taskStatus, TaskPriority priority) {
 
         if (taskID < 1 || title == null || title.equals("") || notes == null || tags == null || dateTime == null || taskStatus == null)
             throw new IllegalArgumentException();
@@ -33,7 +34,22 @@ public class Task {
 
     }
 
-    public Task(int taskID, String title, Vector<String> notes, Vector<String> tags, String dateTime, TaskStatus taskStatus, TaskPriority priority) {
+    public Task(int taskID, String title, LocalDateTime dateTime, TaskStatus taskStatus, TaskPriority priority) {
+
+        if (taskID < 1 || title == null || title.equals("") || dateTime == null || taskStatus == null)
+            throw new IllegalArgumentException();
+
+        this.taskID = taskID;
+        this.title = title;
+        this.notes = new ArrayList<>();
+        this.tags = new ArrayList<>();
+        this.dateTime = dateTime;
+        this.taskStatus = taskStatus;
+        this.priority = priority;
+
+    }
+
+    public Task(int taskID, String title, List<String> notes, List<String> tags, String dateTime, TaskStatus taskStatus, TaskPriority priority) {
 
         if (taskID < 0 || title == null || title.equals("") || notes == null || tags == null || dateTime == null || taskStatus == null)
             throw new IllegalArgumentException();
@@ -50,6 +66,22 @@ public class Task {
 
     }
 
+    public Task(int taskID, String title, String dateTime, TaskStatus taskStatus, TaskPriority priority) {
+
+        if (taskID < 0 || title == null || title.equals("") || dateTime == null || taskStatus == null)
+            throw new IllegalArgumentException();
+        else if (!Pattern.matches(DateFormat.getDateTimeRegex(), dateTime))
+            throw new IllegalArgumentException("The passed date in Task class in invalid");
+
+        this.taskID = taskID;
+        this.title = title;
+        this.notes = new ArrayList<>();
+        this.tags = new ArrayList<>();
+        this.dateTime = LocalDateTime.parse(dateTime, DateTimeFormatter.ofPattern(DateFormat.getDateTimeFormat()));
+        this.taskStatus = taskStatus;
+        this.priority = priority;
+
+    }
 
     public void addNote(String note) {
 
@@ -104,11 +136,11 @@ public class Task {
         this.title = title;
     }
 
-    public Vector<String> getNotes() {
+    public List<String> getNotes() {
         return notes;
     }
 
-    public void setNotes(Vector<String> notes) {
+    public void setNotes(List<String> notes) {
         if (notes == null)
             throw new IllegalArgumentException();
 
@@ -150,11 +182,11 @@ public class Task {
         this.priority = priority;
     }
 
-    public Vector<String> getTags() {
+    public List<String> getTags() {
         return tags;
     }
 
-    public void setTags(Vector<String> tags) {
+    public void setTags(List<String> tags) {
 
         if (tags == null)
             throw new IllegalArgumentException();
@@ -172,6 +204,43 @@ public class Task {
             throw new IllegalArgumentException();
 
         this.taskID = taskID;
+
+    }
+
+    @Override
+    public String toString() {
+
+        StringBuilder notesString = new StringBuilder();
+        for (int i = 0; i < notes.size(); i++) {
+            notesString.append(String.format("%d- ", i + 1) + notes.get(i));
+
+            if (i != notes.size() - 1)
+                notesString.append('\n');
+
+        }
+
+        StringBuilder tagsString = new StringBuilder();
+        for (int i = 0; i < tags.size(); i++) {
+            tagsString.append(String.format("%d- ", i + 1) + tags.get(i));
+
+            if (i != tags.size() - 1)
+                tagsString.append('\n');
+
+        }
+
+        return "Task ID: " + taskID
+                + "\n"
+                + "Task title: " + title
+                + "\n"
+                + "Task datetime: " + dateTime.toString()
+                + "\n"
+                + "Task status: " + taskStatus.toString()
+                + "\n"
+                + "Task priority: " + priority.toString()
+                + "\n"
+                + "Notes: \n" + notesString.toString()
+                + "\n"
+                + "Tags: \n" + tagsString.toString();
 
     }
 

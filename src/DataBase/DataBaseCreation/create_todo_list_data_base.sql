@@ -116,60 +116,16 @@ ORDER BY task_id;
 -- This procedure will return ids of the tasks linked to a user id on a specific day.
 DROP PROCEDURE IF EXISTS get_user_tasks_ids_by_user_id_date;
 DELIMITER $$
-CREATE PROCEDURE get_user_tasks_by_user_id_date ( user_id SMALLINT, datetime DATETIME )
+CREATE PROCEDURE get_user_tasks_ids_by_user_id_date ( user_id SMALLINT, datetime DATETIME )
 BEGIN
 SELECT 
 	DISTINCT task_id
-FROM view_full_tasks_table vt
+FROM tasks t
 WHERE 
-	vt.user_id = user_id 
-    AND SUBSTRING(vt.datetime, 1, 10) = SUBSTRING(datetime, 1, 10);
+	t.user_id = user_id 
+    AND SUBSTRING(t.datetime, 1, 10) = SUBSTRING(datetime, 1, 10);
 END $$
 DELIMITER ;
-
-
--- This procedure will retrn a full table information that will represent a user tasks on a specific day.
-DROP PROCEDURE IF EXISTS get_user_tasks_by_user_id_date;
-DELIMITER $$
-CREATE PROCEDURE get_user_tasks_by_user_id_date ( user_id SMALLINT, datetime DATETIME )
-BEGIN
-SELECT 
-	task_id, 
-    task_title, 
-    vt.datetime,
-    task_status, 
-    task_priority,
-    note, 
-    tag 
-FROM view_full_tasks_table vt
-WHERE 
-	vt.user_id = user_id 
-    AND SUBSTRING(vt.datetime, 1, 10) = SUBSTRING(datetime, 1, 10);
-END $$
-DELIMITER ;
-
-
--- This procedure will return a full table information that will represent a user specific task on a specific day.
-DROP PROCEDURE IF EXISTS get_user_tasks_by_user_id_task_id_date;
-DELIMITER $$
-CREATE PROCEDURE get_user_tasks_by_user_id_task_id_date ( user_id SMALLINT, task_id INT, datetime DATETIME )
-BEGIN
-SELECT 
-	task_id, 
-    task_title, 
-    vt.datetime,
-    task_status, 
-    task_priority,
-    note, 
-    tag 
-FROM view_full_tasks_table vt
-WHERE 
-	vt.user_id = user_id 
-    AND vt.task_id = task_id
-    AND SUBSTRING(vt.datetime, 1, 10) = SUBSTRING(datetime, 1, 10);
-END $$
-DELIMITER ;
-  
 
 
 -- This procedure will return tasks ids for a specific user, using specific tags and day. 

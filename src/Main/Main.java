@@ -16,9 +16,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Vector;
 
 public class Main extends Application {
@@ -28,19 +25,6 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception{
 
-        DataAccess dataAccess = new DataAccess();
-        //dataAccess.addNewTask(1, "new task", "2020-09-14 22:01:30", TaskStatus.DONE, TaskPriority.IMPORTANT_AND_NOT_URGENT);
-        //System.out.println(dataAccess.getNumOfTasks(1, "2020-09-14"));
-        ArrayList<String> tags = new ArrayList<>();
-        tags.add("project");
-        tags.add("programming");
-        tags.add("sleeping");
-        List<Task> tasks = dataAccess.getTaskInfo(dataAccess.getTasksIDs(1, "2020-09-14 10:10:10"));
-        new TasksListHandling().sortTasksPriority(tasks, false);
-        for (var v : tasks)
-            System.out.println(v + "\n");
-
-        System.exit(0);
         Task task = new Task(1, "title", new Vector<>(), new Vector<>(), "2020-06-02 15:05:56", TaskStatus.DONE, TaskPriority.IMPORTANT_AND_URGENT);
 
         Pane mainPane = new Pane();

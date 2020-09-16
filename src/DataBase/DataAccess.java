@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class DataAccess {
@@ -42,6 +41,25 @@ public class DataAccess {
             return resultSet.getInt(1);
 
         return -1;
+
+    }
+
+
+    public String getUserName(int userID) throws SQLException {
+
+        ArrayList<String> parameters = new ArrayList<>();
+        parameters.add(String.format("%d", userID));
+
+        ResultSet resultSet = statement.executeQuery(
+                "CALL get_user_name"
+                        + convertStringToParameters(parameters)
+                        + ";"
+        );
+
+        if (resultSet.next())
+            return resultSet.getString(1);
+
+        return null;
 
     }
 
@@ -411,6 +429,23 @@ public class DataAccess {
 
         statement.executeQuery(
                 "CALL update_user_password"
+                        + convertStringToParameters(parameters)
+                        + ";"
+        );
+
+    }
+
+    public void updateTask(int taskID, String title, String dateTime, TaskStatus status, TaskPriority priority) throws SQLException {
+
+        ArrayList<String> parameters = new ArrayList<>();
+        parameters.add(String.format("%d", taskID));
+        parameters.add(addStringBetweenSingleQuote(title));
+        parameters.add(addStringBetweenSingleQuote(dateTime));
+        parameters.add(addStringBetweenSingleQuote(status.toString()));
+        parameters.add(addStringBetweenSingleQuote(priority.toString()));
+
+        statement.executeQuery(
+                "CALL update_task"
                         + convertStringToParameters(parameters)
                         + ";"
         );

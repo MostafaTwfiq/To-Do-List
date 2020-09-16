@@ -94,7 +94,17 @@ DROP PROCEDURE IF EXISTS get_user_id;
 DELIMITER $$
 CREATE PROCEDURE get_user_id ( user_name VARCHAR(50), password VARCHAR(50) )
 BEGIN
-SELECT user_id FROM users WHERE users.user_id = user_id AND users.password = password; 
+SELECT user_id FROM users WHERE users.user_name = user_name AND users.password = password; 
+END $$
+DELIMITER ;
+
+
+-- Deop and create procedure to return the user name with the passed id.
+DROP PROCEDURE IF EXISTS get_user_name;
+DELIMITER $$
+CREATE PROCEDURE get_user_name ( user_id SMALLINT )
+BEGIN
+SELECT user_name FROM users WHERE users.user_id = user_id; 
 END $$
 DELIMITER ;
 
@@ -429,6 +439,23 @@ CREATE PROCEDURE update_task_priority(task_id INT, new_priority VARCHAR(30))
 BEGIN
 
 UPDATE tasks SET task_priority = new_priority WHERE tasks.task_id = task_id;
+
+END $$
+DELIMITER ;
+
+
+-- This procedure will update the task with the passed id.
+DROP PROCEDURE IF EXISTS update_task;
+DELIMITER $$
+CREATE PROCEDURE update_task(task_id INT, new_title VARCHAR(50), new_datetime DATETIME, new_status VARCHAR(10), new_priority VARCHAR(30))
+BEGIN
+
+UPDATE tasks SET 
+	task_title = new_title, 
+    tasks.datetime = new_datetime,  
+    task_status = new_status,
+    task_priority = new_priority
+    WHERE tasks.task_id = task_id;
 
 END $$
 DELIMITER ;

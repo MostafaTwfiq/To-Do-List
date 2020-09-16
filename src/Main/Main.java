@@ -9,6 +9,7 @@ import GUI.Screen.ScreenManager;
 import DataClasses.Task;
 import DataClasses.TaskStatus.TaskPriority;
 import DataClasses.TaskStatus.TaskStatus;
+import GUI.SearchBox.SearchBox;
 import TasksListHandling.TasksListHandling;
 import javafx.application.Application;
 import javafx.scene.control.Button;
@@ -16,6 +17,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
+import java.util.List;
 import java.util.Vector;
 
 public class Main extends Application {
@@ -24,7 +27,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception{
-        
+
         Task task = new Task(1, "title", new Vector<>(), new Vector<>(), "2020-06-02 15:05:56", TaskStatus.DONE, TaskPriority.IMPORTANT_AND_URGENT);
 
         Pane mainPane = new Pane();
@@ -69,10 +72,16 @@ public class Main extends Application {
         progressBar.updateProgress(0.8);
 
 
+        SearchBox searchBox = new SearchBox(20, 300, Color.rgb(236,240,241));
+
+        searchBox.setLayoutX(400);
+        searchBox.setLayoutY(200);
+
+
         MultiProgressBar multiProgressBar = new MultiProgressBar(elements, 700, 5, 20, 300);
         multiProgressBar.setLayoutX(400);
         multiProgressBar.setLayoutY(500);
-        mainPane.getChildren().addAll(multiProgressBar, progressBar);
+        mainPane.getChildren().addAll(multiProgressBar, progressBar, searchBox);
 
         Button button1 = new Button();
         button1.setOnAction(e -> {

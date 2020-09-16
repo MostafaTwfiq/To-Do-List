@@ -1,10 +1,11 @@
 package GUI.Observer;
 
+import java.util.List;
 import java.util.Vector;
 
 public abstract class Observer {
 
-    private Vector<IObserver> observers;
+    private List<IObserver> observers;
 
     public Observer() {
         observers = new Vector<>();
@@ -35,11 +36,11 @@ public abstract class Observer {
 
     }
 
-    public Vector<IObserver> getObservers() {
+    public List<IObserver> getObservers() {
         return observers;
     }
 
-    public void setObservers(Vector<IObserver> observers) {
+    public void setObservers(List<IObserver> observers) {
 
         if (observers == null)
             throw new IllegalArgumentException();

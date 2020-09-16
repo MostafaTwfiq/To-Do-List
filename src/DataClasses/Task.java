@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class Task {
 
-    private int taskID;
+    private int taskID; // the unique id of the task
     private String title; // the title of the task
     private List<String> notes; // notes associated to the task
     private List<String> tags; // tags associated to the task

@@ -485,3 +485,115 @@ END $$
 DELIMITER ;
 
 /* End of updating data functions*/
+
+
+/** Start check if exists functions*/
+
+-- This function will check if the passed user id exisits or not.
+DROP FUNCTION IF EXISTS user_id_exists;
+DELIMITER $$ 
+CREATE FUNCTION user_id_exists ( user_id SMALLINT )
+RETURNS BOOL
+READS SQL DATA
+BEGIN
+
+DECLARE found_flag BOOL DEFAULT FALSE;
+SELECT EXISTS (SELECT us.user_id FROM users us WHERE us.user_id = user_id) INTO found_flag;
+
+RETURN found_flag;
+
+END $$
+DELIMITER ;
+
+-- This function will check if the passed user name exisits or not.
+DROP FUNCTION IF EXISTS user_name_exists;
+DELIMITER $$ 
+CREATE FUNCTION user_name_exists ( user_name VARCHAR(50) )
+RETURNS BOOL
+READS SQL DATA
+BEGIN
+
+DECLARE found_flag BOOL DEFAULT FALSE;
+SELECT EXISTS (SELECT us.user_name FROM users us WHERE us.user_name = user_name) INTO found_flag;
+
+RETURN found_flag;
+
+END $$
+DELIMITER ;
+
+-- This function will check if the passed task id exisits or not.
+DROP FUNCTION IF EXISTS task_id_exists;
+DELIMITER $$ 
+CREATE FUNCTION task_id_exists ( task_id INT )
+RETURNS BOOL
+READS SQL DATA
+BEGIN
+
+DECLARE found_flag BOOL DEFAULT FALSE;
+SELECT EXISTS (SELECT t.task_id FROM tasks t WHERE t.task_id = task_id) INTO found_flag;
+
+RETURN found_flag;
+
+END $$
+DELIMITER ;
+
+-- This function will check if the passed task title exisits or not for the passed user id on the passed day.
+DROP FUNCTION IF EXISTS task_title_exists;
+DELIMITER $$ 
+CREATE FUNCTION task_title_exists ( user_id SMALLINT, title VARCHAR(50), task_datetime DATETIME )
+RETURNS BOOL
+READS SQL DATA
+BEGIN
+
+DECLARE found_flag BOOL DEFAULT FALSE;
+SELECT EXISTS (
+
+				SELECT t.task_title 
+				FROM tasks t 
+                WHERE 
+					t.user_id = user_id 
+                    AND t.task_title = title
+                    AND SUBSTRING(t.datetime, 1, 10) = SUBSTRING(task_datetime, 1, 10)
+                    
+			) INTO found_flag;
+
+RETURN found_flag;
+
+END $$
+DELIMITER ;
+
+
+-- This function will check if the passed note exisits or not for the passed task id.
+DROP FUNCTION IF EXISTS note_exists;
+DELIMITER $$ 
+CREATE FUNCTION note_exists ( task_id INT, note VARCHAR(50) )
+RETURNS BOOL
+READS SQL DATA
+BEGIN
+
+DECLARE found_flag BOOL DEFAULT FALSE;
+SELECT EXISTS (SELECT n.task_id FROM notes n WHERE n.task_id = task_id AND n.note = note) INTO found_flag;
+
+RETURN found_flag;
+
+END $$
+DELIMITER ;
+
+
+-- This function will check if the passed tag exisits or not for the passed task id.
+DROP FUNCTION IF EXISTS tag_exists;
+DELIMITER $$ 
+CREATE FUNCTION tag_exists ( task_id INT, tag VARCHAR(50) )
+RETURNS BOOL
+READS SQL DATA
+BEGIN
+
+DECLARE found_flag BOOL DEFAULT FALSE;
+SELECT EXISTS (SELECT t.task_id FROM tags t WHERE t.task_id = task_id AND t.tag = tag) INTO found_flag;
+
+RETURN found_flag;
+
+END $$
+DELIMITER ;
+
+/** Start check if exists functions*/

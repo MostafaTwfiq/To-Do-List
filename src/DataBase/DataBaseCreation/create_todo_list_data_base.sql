@@ -537,16 +537,25 @@ RETURN found_flag;
 END $$
 DELIMITER ;
 
--- This function will check if the passed task title exisits or not for the passed user id.
+-- This function will check if the passed task title exisits or not for the passed user id on the passed day.
 DROP FUNCTION IF EXISTS task_title_exists;
 DELIMITER $$ 
-CREATE FUNCTION task_title_exists ( user_id SMALLINT, title VARCHAR(50) )
+CREATE FUNCTION task_title_exists ( user_id SMALLINT, title VARCHAR(50), task_datetime DATETIME )
 RETURNS BOOL
 READS SQL DATA
 BEGIN
 
 DECLARE found_flag BOOL DEFAULT FALSE;
-SELECT EXISTS (SELECT t.task_title FROM tasks t WHERE t.user_id = user_id AND t.task_title = title) INTO found_flag;
+SELECT EXISTS (
+
+				SELECT t.task_title 
+				FROM tasks t 
+                WHERE 
+					t.user_id = user_id 
+                    AND t.task_title = title
+                    AND SUBSTRING(t.datetime, 1, 10) = SUBSTRING(task_datetime, 1, 10)
+                    
+			) INTO found_flag;
 
 RETURN found_flag;
 

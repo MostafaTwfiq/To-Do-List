@@ -780,6 +780,171 @@ public class DataAccess {
     }
 
 
+
+    /** This function will check if the passed user id exists in the database or note.
+     * @param userID the user id
+     * @return it will return true if the passed user id exists in the database, other wise it will return false
+     * @throws SQLException exception in case something went wrong
+     */
+
+    public boolean checkIfUserIDExists(int userID) throws SQLException {
+
+        ArrayList<String> parameters = new ArrayList<>();
+        parameters.add(String.format("%d", userID));
+
+        ResultSet resultSet = statement.executeQuery(
+                "SELECT user_id_exists"
+                + convertStringToParameters(parameters)
+                + ";"
+        );
+
+        if (resultSet.next())
+            return resultSet.getBoolean(1);
+
+        return false;
+
+    }
+
+
+
+    /** This function will check if the passed user name exists in the database or not.
+     * @param userName the user name
+     * @return it will return true if the passed user name exists, other wise it will return false
+     * @throws SQLException exception in case something went wrong
+     */
+
+    public boolean checkIfUserNameExists(String userName) throws SQLException {
+
+        ArrayList<String> parameters = new ArrayList<>();
+        parameters.add(addStringBetweenSingleQuote(userName));
+
+        ResultSet resultSet = statement.executeQuery(
+                "SELECT user_name_exists"
+                        + convertStringToParameters(parameters)
+                        + ";"
+        );
+
+        if (resultSet.next())
+            return resultSet.getBoolean(1);
+
+        return false;
+
+    }
+
+
+    /** This function will check if the passed task id exists in the database or not.
+     * @param taskID the task id
+     * @return it will return true if the passed task id exists, other wise it will return false
+     * @throws SQLException exception in case something went wrong
+     */
+
+    public boolean checkIfTaskIDExists(int taskID) throws SQLException {
+
+        ArrayList<String> parameters = new ArrayList<>();
+        parameters.add(String.format("%d", taskID));
+
+        ResultSet resultSet = statement.executeQuery(
+                "SELECT task_id_exists"
+                        + convertStringToParameters(parameters)
+                        + ";"
+        );
+
+        if (resultSet.next())
+            return resultSet.getBoolean(1);
+
+        return false;
+
+    }
+
+
+    /** This function will check if the passed task title exists on the passed day for the passed user id or not.
+     * @param userID the user id
+     * @param title the title of the task
+     * @param datetime the day date of the task YYYY-MM-dd
+     * @return it will return true if the passed task title exists on the passed day for the passed user id,
+     * other wise it will return false
+     * @throws SQLException exception in case something went wrong
+     */
+
+    public boolean checkIfTaskTitleExists(int userID, String title, String datetime) throws SQLException {
+
+        ArrayList<String> parameters = new ArrayList<>();
+        parameters.add(String.format("%d", userID));
+        parameters.add(addStringBetweenSingleQuote(title));
+        parameters.add(addStringBetweenSingleQuote(datetime));
+
+
+        ResultSet resultSet = statement.executeQuery(
+                "SELECT task_title_exists"
+                        + convertStringToParameters(parameters)
+                        + ";"
+        );
+
+        if (resultSet.next())
+            return resultSet.getBoolean(1);
+
+        return false;
+
+    }
+
+
+
+    /** This funciton will check if the passed note exists for the passed task id or not.
+     * @param taskID the task id
+     * @param note the note string
+     * @return it will return true if the passed note exists for the passed task id, other wise it will return false
+     * @throws SQLException exception in case something went wrong
+     */
+
+    public boolean checkIfNoteExists(int taskID, String note) throws SQLException {
+
+        ArrayList<String> parameters = new ArrayList<>();
+        parameters.add(String.format("%d", taskID));
+        parameters.add(addStringBetweenSingleQuote(note));
+
+
+        ResultSet resultSet = statement.executeQuery(
+                "SELECT note_exists"
+                        + convertStringToParameters(parameters)
+                        + ";"
+        );
+
+        if (resultSet.next())
+            return resultSet.getBoolean(1);
+
+        return false;
+
+    }
+
+
+    /** This function will check if the passed tag exists for the passed task id or not.
+     * @param taskID the task id
+     * @param tag the tag string
+     * @return it will return true if the passed tag exists for the passed task id, other wise it will return false
+     * @throws SQLException exception in case something went wrong
+     */
+
+    public boolean checkIfTagExists(int taskID, String tag) throws SQLException {
+
+        ArrayList<String> parameters = new ArrayList<>();
+        parameters.add(String.format("%d", taskID));
+        parameters.add(addStringBetweenSingleQuote(tag));
+
+
+        ResultSet resultSet = statement.executeQuery(
+                "SELECT tag_exists"
+                        + convertStringToParameters(parameters)
+                        + ";"
+        );
+
+        if (resultSet.next())
+            return resultSet.getBoolean(1);
+
+        return false;
+
+    }
+
+
     /** This function will add the passed string between single quote.
      * @param string the string
      * @return it will return the string added between single quote
@@ -813,7 +978,7 @@ public class DataAccess {
         return parameters.toString();
 
     }
-    
+
 
     /** This function will convert the passed tags list into a single text to be used in the task searching using tags.
      * @param tags the tags list

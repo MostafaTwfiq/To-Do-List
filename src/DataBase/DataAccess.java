@@ -467,7 +467,7 @@ public class DataAccess {
      * @param dateTime the datetime of the new task YYYY-MM-dd HH:MM:ss
      * @param status the status of the new task
      * @param priority the priority of the new task
-     * @throws SQLException exception in case something went wrnong
+     * @throws SQLException exception in case something went wrong
      */
 
     public void addNewTask(int userID, String title, String dateTime, TaskStatus status, TaskPriority priority) throws SQLException {

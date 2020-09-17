@@ -118,6 +118,40 @@ public class TasksListHandling {
         return getTasksPriorityNum(tasks, priority) / (tasks.size() * 1.0);
     }
 
+
+    public List<Task> filterTasksByStatus(List<Task> tasks, TaskStatus status) {
+
+        List<Task> filteredTasks = new ArrayList<>();
+
+        for (Task task : tasks) {
+
+            if (task.getTaskStatus() == status)
+                filteredTasks.add(task);
+
+        }
+
+        return filteredTasks;
+
+    }
+
+
+    public List<Task> filterTasksByPriority(List<Task> tasks, TaskPriority priority) {
+
+        List<Task> filteredTasks = new ArrayList<>();
+
+        for (Task task : tasks) {
+
+            if (task.getPriority() == priority)
+                filteredTasks.add(task);
+
+        }
+
+        return filteredTasks;
+
+    }
+
+
+
     public void sortTasksByDate(List<Task> tasks, boolean decs) {
 
         tasks.sort(new Comparator<>() {
@@ -136,9 +170,9 @@ public class TasksListHandling {
 
                 }
 
-                if (decs) {
+                if (decs)
                     return sDate.length() < fDate.length() ? -1 : 1;
-                } else
+                else
                     return fDate.length() < sDate.length() ? -1 : 1;
 
             }

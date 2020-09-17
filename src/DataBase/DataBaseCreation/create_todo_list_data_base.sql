@@ -316,6 +316,18 @@ END $$
 DELIMITER ;
 
 
+-- This procedure will insert a new user image in the users images table.
+DROP PROCEDURE IF EXISTS add_new_user_image;
+DELIMITER $$
+CREATE PROCEDURE add_new_user_image( user_id SMALLINT, image_path VARCHAR(260) )
+BEGIN
+
+INSERT INTO users_images VALUES (user_id, image_path);
+
+END $$
+DELIMITER ;
+
+
 -- This procedure will insert a new task in the tasks table.
 DROP PROCEDURE IF EXISTS add_new_task;
 DELIMITER $$
@@ -362,6 +374,18 @@ CREATE PROCEDURE delete_user(user_id SMALLINT)
 BEGIN
 
 DELETE FROM users WHERE users.user_id = user_id;
+
+END $$
+DELIMITER ;
+
+
+-- This procedure will delete the user image with the passed id.
+DROP PROCEDURE IF EXISTS delete_user_image;
+DELIMITER $$
+CREATE PROCEDURE delete_user_image(user_id SMALLINT)
+BEGIN
+
+DELETE FROM users_images WHERE users_images.user_id = user_id;
 
 END $$
 DELIMITER ;
@@ -425,6 +449,18 @@ CREATE PROCEDURE update_user_password(user_id SMALLINT, new_pass VARCHAR(50))
 BEGIN
 
 UPDATE users SET users.password = new_pass WHERE users.user_id = user_id;
+
+END $$
+DELIMITER ;
+
+
+-- This procedure will update the user image with the passed id.
+DROP PROCEDURE IF EXISTS update_user_image;
+DELIMITER $$
+CREATE PROCEDURE update_user_image(user_id SMALLINT, new_path VARCHAR(260))
+BEGIN
+
+UPDATE users_images SET users_images.path = new_path WHERE users_images.user_id = user_id;
 
 END $$
 DELIMITER ;

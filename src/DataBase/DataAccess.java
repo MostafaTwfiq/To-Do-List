@@ -77,6 +77,31 @@ public class DataAccess {
     }
 
 
+    /** This function will return the image path for the passed user id if found, other wise it will return null.
+     * @param userID the user id
+     * @return it will return the user image path if found, other wise it will return null
+     * @throws SQLException exception in case something went wrong
+     */
+
+    public String getUserImagePath(int userID) throws SQLException {
+
+        ArrayList<String> parameters = new ArrayList<>();
+        parameters.add(String.format("%d", userID));
+
+        ResultSet resultSet = statement.executeQuery(
+                "SELECT get_user_image_path"
+                        + convertStringToParameters(parameters)
+                        + ";"
+        );
+
+        if (resultSet.next())
+            return resultSet.getString(1);
+
+        return null;
+
+    }
+
+
     /** This function will return the number of tasks on the passed day for the passed user id.
      * @param userID user id
      * @param date day date YYYY-MM-dd
@@ -414,6 +439,28 @@ public class DataAccess {
     }
 
 
+
+    /** This function will add the passed image path in the images paths tables, for the passed user id.
+      * @param userID the user id
+     * @param path the image path
+     * @throws SQLException exception in case something went wrong
+     */
+
+    public void addNewUserImage(int userID, String path) throws SQLException {
+
+        ArrayList<String> parameters = new ArrayList<>();
+        parameters.add(String.format("%d", userID));
+        parameters.add(addStringBetweenSingleQuote(path));
+
+        statement.executeQuery(
+                "CALL add_new_user_image"
+                        + convertStringToParameters(parameters)
+                        + ";"
+        );
+
+    }
+
+
     /** This function will add new task with the passed info.
      * @param userID the user id for the new task
      * @param title the title of the new task
@@ -496,6 +543,25 @@ public class DataAccess {
 
         statement.executeQuery(
                     "CALL delete_user"
+                        + convertStringToParameters(parameters)
+                        + ";"
+        );
+
+    }
+
+
+    /** This function will delete the image of the passed user id from the database.
+     * @param userID the user id
+     * @throws SQLException exception in case something went wrong
+     */
+
+    public void deleteUserImage(int userID) throws SQLException {
+
+        ArrayList<String> parameters = new ArrayList<>();
+        parameters.add(String.format("%d", userID));
+
+        statement.executeQuery(
+                "CALL delete_user_image"
                         + convertStringToParameters(parameters)
                         + ";"
         );
@@ -599,6 +665,27 @@ public class DataAccess {
 
         statement.executeQuery(
                 "CALL update_user_password"
+                        + convertStringToParameters(parameters)
+                        + ";"
+        );
+
+    }
+
+
+    /** This function will update the image path for the passed user id in the database.
+     * @param userID the user id
+     * @param newPath the new path
+     * @throws SQLException exception in case something went wrong
+     */
+
+    public void updateUserImage(int userID, String newPath) throws SQLException {
+
+        ArrayList<String> parameters = new ArrayList<>();
+        parameters.add(String.format("%d", userID));
+        parameters.add(addStringBetweenSingleQuote(newPath));
+
+        statement.executeQuery(
+                "CALL update_user_image"
                         + convertStringToParameters(parameters)
                         + ";"
         );
@@ -796,6 +883,31 @@ public class DataAccess {
                 "SELECT user_id_exists"
                 + convertStringToParameters(parameters)
                 + ";"
+        );
+
+        if (resultSet.next())
+            return resultSet.getBoolean(1);
+
+        return false;
+
+    }
+
+
+    /** This function will check if the passe user id has an image or not.
+     * @param userID the user id
+     * @return it will return true if the user has an image, other wise it will return false
+     * @throws SQLException exception in case something went wrong
+     */
+
+    public boolean checkIfUserImageExists(int userID) throws SQLException {
+
+        ArrayList<String> parameters = new ArrayList<>();
+        parameters.add(String.format("%d", userID));
+
+        ResultSet resultSet = statement.executeQuery(
+                "SELECT user_image_exists"
+                        + convertStringToParameters(parameters)
+                        + ";"
         );
 
         if (resultSet.next())

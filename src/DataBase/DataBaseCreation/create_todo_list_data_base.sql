@@ -75,6 +75,22 @@ CREATE TABLE IF NOT EXISTS `todoListDB`.`notes` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `todoListDB`.`users_images`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `todoListDB`.`users_images` (
+  `user_id` SMALLINT NOT NULL,
+  `path` VARCHAR(260) NOT NULL,
+  INDEX `fk_users_images_users1_idx` (`user_id` ASC) VISIBLE,
+  PRIMARY KEY (`user_id`),
+  CONSTRAINT `fk_users_images_users`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `todoListDB`.`users` (`user_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
@@ -99,7 +115,7 @@ END $$
 DELIMITER ;
 
 
--- Deop and create procedure to return the user name with the passed id.
+-- Drop and create procedure to return the user name with the passed id.
 DROP PROCEDURE IF EXISTS get_user_name;
 DELIMITER $$
 CREATE PROCEDURE get_user_name ( user_id SMALLINT )
@@ -107,6 +123,24 @@ BEGIN
 SELECT user_name FROM users WHERE users.user_id = user_id; 
 END $$
 DELIMITER ;
+
+-- This function will return the path of the user image for the passed user id.
+DROP FUNCTION IF EXISTS get_user_image_path;
+DELIMITER $$
+CREATE FUNCTION get_user_image_path( user_id SMALLINT )
+RETURNS VARCHAR(260)
+READS SQL DATA
+BEGIN
+
+DECLARE image_path VARCHAR(260) DEFAULT NULL;
+
+SELECT path INTO image_path FROM users_images ui WHERE ui.user_id = user_id;
+
+RETURN image_path;
+ 
+END $$
+DELIMITER ;
+
 
 
 -- Drop and create view to view the tasks table with notes and tags tables.
@@ -593,6 +627,24 @@ SELECT EXISTS (SELECT t.task_id FROM tags t WHERE t.task_id = task_id AND t.tag 
 
 RETURN found_flag;
 
+END $$
+DELIMITER ;
+
+
+-- This function will return true if there is an image for the passed user id.
+DROP FUNCTION IF EXISTS user_image_exists;
+DELIMITER $$
+CREATE FUNCTION user_image_exists( user_id SMALLINT )
+RETURNS BOOL
+READS SQL DATA
+BEGIN
+
+DECLARE exists_bool BOOL DEFAULT FALSE;
+
+SELECT EXISTS ( SELECT user_id FROM users_images ui WHERE ui.user_id = user_id ) INTO exists_bool;
+
+RETURN exists_bool;
+ 
 END $$
 DELIMITER ;
 

@@ -72,7 +72,11 @@ public class Main extends Application {
         progressBar.updateProgress(0.8);
 
 
-        SearchBox searchBox = new SearchBox(20, 300, Color.rgb(236,240,241));
+        SearchBox searchBox = new SearchBox(20, 300, "Search",
+                Color.rgb(236,240,241),
+                Color.rgb(226, 103, 90),
+                Color.rgb(149,165,166)
+                );
 
         searchBox.setLayoutX(400);
         searchBox.setLayoutY(200);

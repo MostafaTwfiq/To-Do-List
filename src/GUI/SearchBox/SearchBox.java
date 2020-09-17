@@ -22,28 +22,105 @@ public class SearchBox extends HBox {
     private TextField searchField;
     private ImageView searchIcon;
     private Color searchBoxColor;
+    private Color textColor;
+    private Color promptTextColor;
+    private final String defaultSearchIconPath = "resources/searchBoxIcon.png";
 
-    public SearchBox(double h, double w, String promptText, Color searchBoxColor) {
+    public SearchBox(double h, double w, String promptText,
+                     List<IObserver> observers,
+                     Color searchBoxColor,
+                     Color textColor,
+                     Color promptTextColor) {
+
+        if (promptText == null || observers == null
+                || searchBoxColor == null || textColor == null
+                || promptTextColor == null) {
+            throw new IllegalArgumentException();
+        }
 
         this.searchBoxColor = searchBoxColor;
-        observers = new ArrayList<>();
+        this.observers = observers;
+        this.textColor = textColor;
+        this.promptTextColor = promptTextColor;
 
         setupLayout(h, w);
         setupSearchField(promptText);
-        setupSearchIconImageView();
+        setupSearchIconImageView(defaultSearchIconPath);
 
         getChildren().addAll(searchIcon, searchField);
 
     }
 
-    public SearchBox(double h, double w, Color searchBoxColor) {
+    public SearchBox(double h, double w, String promptText,
+                     Color searchBoxColor,
+                     Color textColor,
+                     Color promptTextColor) {
+
+        if (promptText == null
+                || searchBoxColor == null || textColor == null
+                || promptTextColor == null) {
+            throw new IllegalArgumentException();
+        }
 
         this.searchBoxColor = searchBoxColor;
         observers = new ArrayList<>();
+        this.textColor = textColor;
+        this.promptTextColor = promptTextColor;
 
         setupLayout(h, w);
-        setupSearchField("Search");
-        setupSearchIconImageView();
+        setupSearchField(promptText);
+        setupSearchIconImageView(defaultSearchIconPath);
+
+        getChildren().addAll(searchIcon, searchField);
+
+    }
+
+    public SearchBox(double h, double w,
+                     String promptText, String searchIconPath,
+                     List<IObserver> observers,
+                     Color searchBoxColor,
+                     Color textColor,
+                     Color promptTextColor) {
+
+        if (promptText == null || searchIconPath == null || observers == null
+                || searchBoxColor == null || textColor == null
+                || promptTextColor == null) {
+            throw new IllegalArgumentException();
+        }
+
+        this.searchBoxColor = searchBoxColor;
+        this.observers = observers;
+        this.textColor = textColor;
+        this.promptTextColor = promptTextColor;
+
+        setupLayout(h, w);
+        setupSearchField(promptText);
+        setupSearchIconImageView(searchIconPath);
+
+        getChildren().addAll(searchIcon, searchField);
+
+    }
+
+    public SearchBox(double h, double w,
+                     String promptText, String searchIconPath,
+                     Color searchBoxColor,
+                     Color textColor,
+                     Color promptTextColor) {
+
+        if (promptText == null || searchIconPath == null
+                || searchBoxColor == null || textColor == null
+                || promptTextColor == null) {
+            throw new IllegalArgumentException();
+        }
+
+        this.searchBoxColor = searchBoxColor;
+        observers = new ArrayList<>();
+        this.textColor = textColor;
+        this.promptTextColor = promptTextColor;
+
+        setupLayout(h, w);
+        setupSearchField(promptText);
+        setupSearchIconImageView(searchIconPath);
 
         getChildren().addAll(searchIcon, searchField);
 
@@ -54,9 +131,9 @@ public class SearchBox extends HBox {
         setPrefHeight(h);
         setPrefWidth(w);
 
-        setPadding(new Insets(1, 1, 1, 1));
+        setPadding(new Insets(2, 2, 2, 2));
 
-        setSpacing(1);
+        setSpacing(2);
 
         setAlignment(Pos.CENTER_LEFT);
 
@@ -67,16 +144,16 @@ public class SearchBox extends HBox {
 
     }
 
-    private void setupSearchIconImageView() {
+    private void setupSearchIconImageView(String iconPath) {
 
         try {
 
-            FileInputStream inputStream = new FileInputStream("resources/searchBoxIcon.png");
+            FileInputStream inputStream = new FileInputStream(iconPath);
             Image image = new Image(inputStream);
             searchIcon = new ImageView(image);
 
-            searchIcon.setFitHeight(getPrefHeight());
-            searchIcon.setFitWidth(getPrefHeight());
+            searchIcon.setFitHeight(getPrefHeight() - getInsets().getTop() - getInsets().getBottom());
+            searchIcon.setFitWidth(getPrefHeight() - getInsets().getTop() - getInsets().getBottom());
 
         } catch (Exception e) {
             System.out.println("Something went wrong while loading search box icon");
@@ -93,13 +170,13 @@ public class SearchBox extends HBox {
 
         searchField.setStyle(getSearchFieldStyle());
 
-        searchField.setPrefHeight(getHeight());
+        searchField.setPrefHeight(getHeight() - getInsets().getTop() - getInsets().getBottom());
         searchField.setPrefWidth(getPrefWidth() - getPrefHeight() - getSpacing() - getPadding().getLeft());
 
         searchField.setOnKeyReleased(e -> {
+
             if (e.getCode() == KeyCode.ENTER) {
                 notifyObservers();
-                System.out.println(searchField.getText());
             }
 
         });
@@ -107,10 +184,10 @@ public class SearchBox extends HBox {
     }
 
     private String getSearchFieldStyle() {
-        return    "-fx-background-radius: " + getPrefHeight() / 5.0 + ";"
-                + "-fx-border-radius: " + getPrefHeight() / 5.0 + ";"
-                + "-fx-border-color: transparent;"
-                + "-fx-background-color: transparent;";
+        return    "-fx-border-color: transparent;"
+                + "-fx-background-color: transparent;"
+                + "-fx-text-fill: " + colorToHex(textColor) + ";"
+                + "-fx-prompt-text-fill: " + colorToHex(promptTextColor) + ";";
     }
 
     private String colorToHex(Color color) {

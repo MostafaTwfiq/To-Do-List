@@ -1,6 +1,9 @@
 package GUI.SearchBox;
 
 import GUI.Observer.IObserver;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
@@ -9,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
@@ -25,6 +29,7 @@ public class SearchBox extends HBox {
     private Color textColor;
     private Color promptTextColor;
     private final String defaultSearchIconPath = "resources/searchBoxIcon.png";
+    private boolean animationLocker;
 
     public SearchBox(double h, double w, String promptText,
                      List<IObserver> observers,
@@ -42,6 +47,7 @@ public class SearchBox extends HBox {
         this.observers = observers;
         this.textColor = textColor;
         this.promptTextColor = promptTextColor;
+        animationLocker = false;
 
         setupLayout(h, w);
         setupSearchField(promptText);
@@ -66,6 +72,7 @@ public class SearchBox extends HBox {
         observers = new ArrayList<>();
         this.textColor = textColor;
         this.promptTextColor = promptTextColor;
+        animationLocker = false;
 
         setupLayout(h, w);
         setupSearchField(promptText);
@@ -92,6 +99,7 @@ public class SearchBox extends HBox {
         this.observers = observers;
         this.textColor = textColor;
         this.promptTextColor = promptTextColor;
+        animationLocker = false;
 
         setupLayout(h, w);
         setupSearchField(promptText);
@@ -117,6 +125,7 @@ public class SearchBox extends HBox {
         observers = new ArrayList<>();
         this.textColor = textColor;
         this.promptTextColor = promptTextColor;
+        animationLocker = false;
 
         setupLayout(h, w);
         setupSearchField(promptText);
@@ -176,10 +185,31 @@ public class SearchBox extends HBox {
         searchField.setOnKeyReleased(e -> {
 
             if (e.getCode() == KeyCode.ENTER) {
+                activateIconAnimation();
                 notifyObservers();
             }
 
         });
+
+    }
+
+    private void activateIconAnimation() {
+
+        if (animationLocker)
+            return;
+        else
+            animationLocker = true;
+
+        KeyValue heightKeyVal = new KeyValue(searchIcon.fitHeightProperty(), searchIcon.getFitHeight() * 1.5);
+        KeyValue widthKeyVal = new KeyValue(searchIcon.fitWidthProperty(), searchIcon.getFitWidth() * 1.5);
+
+        Timeline animation = new Timeline(new KeyFrame(Duration.millis(100), heightKeyVal, widthKeyVal));
+
+        animation.setAutoReverse(true);
+        animation.setCycleCount(2);
+        animation.setOnFinished(e -> animationLocker = false);
+
+        animation.play();
 
     }
 

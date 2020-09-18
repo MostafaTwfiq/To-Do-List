@@ -1,15 +1,19 @@
-package GUI.Screen;
+package GUI.Screen.Stage;
 
+import Main.Main;
+import Style.ColorHandling;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.effect.Glow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -74,11 +78,31 @@ public class StageRootController implements Initializable {
 
     private void setupMinimizeB() {
 
+        try {
+            FileInputStream imageStream = new FileInputStream(Main.theme.getThemeResourcesPath()
+                    + "Stage/" + "minimizeB.png");
+
+            Image buttonImage = new Image(imageStream);
+            ImageView buttonImageView = new ImageView(buttonImage);
+            buttonImageView.setFitHeight(15);
+            buttonImageView.setFitWidth(15);
+
+            minimizeB.setGraphic(buttonImageView);
+
+        } catch (Exception e) {
+            System.out.println("There is an error happened while loading images.");
+        }
+
         minimizeB.setOnMouseEntered(e -> {
-            minimizeB.setEffect(new Glow(1));
+            minimizeB.styleProperty().setValue(
+                    "-fx-background-color: "
+                            + new ColorHandling().colorToHex(Main.theme.getStageStyle().getMinimizeBOnMoveColor())
+                            + ";"
+            );
+
         });
         minimizeB.setOnMouseExited( e-> {
-            minimizeB.setEffect(null);
+            minimizeB.styleProperty().setValue("-fx-background-color: transparent;");
         });
 
 
@@ -88,11 +112,34 @@ public class StageRootController implements Initializable {
 
     private void setupCloseB() {
 
+        try {
+            FileInputStream imageStream = new FileInputStream(Main.theme.getThemeResourcesPath()
+                    + "Stage/" + "closeB.png");
+
+            Image buttonImage = new Image(imageStream);
+            ImageView buttonImageView = new ImageView(buttonImage);
+            buttonImageView.setFitHeight(15);
+            buttonImageView.setFitWidth(15);
+
+            closeB.setGraphic(buttonImageView);
+
+        } catch (Exception e) {
+            System.out.println("There is an error happened while loading images.");
+        }
+
         closeB.setOnMouseEntered(e -> {
-            closeB.setEffect(new Glow(0.5));
+
+            closeB.styleProperty().setValue("-fx-background-color: "
+                    + new ColorHandling().colorToHex(Main.theme.getStageStyle().getCloseBOnMoveColor())
+                    + ";"
+            );
+
         });
+
         closeB.setOnMouseExited( e-> {
-            closeB.setEffect(null);
+
+            closeB.styleProperty().setValue("-fx-background-color: transparent;");
+
         });
 
         closeB.setOnAction(onClosingEvent);
@@ -133,5 +180,6 @@ public class StageRootController implements Initializable {
         setupCloseB();
         setStageTitle(title);
     }
+
 
 }

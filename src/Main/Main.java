@@ -1,6 +1,7 @@
 package Main;
 
-import GUI.Screen.CustomStage;
+import DataClasses.User;
+import GUI.Screen.Stage.CustomStage;
 import GUI.MultiProgressBar.MultiProgressBar;
 import GUI.MultiProgressBar.MultiProgressElement;
 import GUI.ProgressBar.ProgressBar;
@@ -9,6 +10,7 @@ import DataClasses.Task;
 import DataClasses.TaskStatus.TaskPriority;
 import DataClasses.TaskStatus.TaskStatus;
 import GUI.SearchBox.SearchBox;
+import Style.Style;
 import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,23 +20,17 @@ import javafx.stage.Stage;
 import tray.animations.AnimationType;
 import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
-
+import Style.*;
 import java.util.Vector;
 
 public class Main extends Application {
 
     public static ScreenManager screenManager = new ScreenManager();
+    public static User user;
+    public static Style theme = new LightTheme();
 
     @Override
     public void start(Stage stage) throws Exception{
-
-        TrayNotification trayNotification = new TrayNotification();
-        trayNotification.setTitle("Todo list");
-        trayNotification.setMessage("Don't forget your task");
-        trayNotification.setAnimationType(AnimationType.POPUP);
-        NotificationType notification = NotificationType.NOTICE;
-        trayNotification.setNotificationType(notification);
-        trayNotification.showAndWait();
 
         Task task = new Task(1, "title", new Vector<>(), new Vector<>(), "2020-06-02 15:05:56", TaskStatus.DONE, TaskPriority.IMPORTANT_AND_URGENT);
 

@@ -1,6 +1,7 @@
-package GUI.Screen;
+package GUI.Screen.Stage;
 
 import GUI.Observer.IObserver;
+import GUI.Screen.ScreenManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -32,7 +33,7 @@ public class CustomStage implements IObserver {
         screenManager.addObserver(this);
 
         setupStage();
-        rootController = new StageRootController(stage, "Tasks Organizer", e -> System.exit(0));
+        rootController = new StageRootController(stage, "TODO", e -> System.exit(0));
 
         try {
 

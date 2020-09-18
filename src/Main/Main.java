@@ -1,6 +1,5 @@
 package Main;
 
-import DataBase.DataAccess;
 import GUI.Screen.CustomStage;
 import GUI.MultiProgressBar.MultiProgressBar;
 import GUI.MultiProgressBar.MultiProgressElement;
@@ -10,15 +9,16 @@ import DataClasses.Task;
 import DataClasses.TaskStatus.TaskPriority;
 import DataClasses.TaskStatus.TaskStatus;
 import GUI.SearchBox.SearchBox;
-import TasksListHandling.TasksListHandling;
 import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import tray.animations.AnimationType;
+import tray.notification.NotificationType;
+import tray.notification.TrayNotification;
 
-import java.util.List;
 import java.util.Vector;
 
 public class Main extends Application {
@@ -27,6 +27,14 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception{
+
+        TrayNotification trayNotification = new TrayNotification();
+        trayNotification.setTitle("Todo list");
+        trayNotification.setMessage("Don't forget your task");
+        trayNotification.setAnimationType(AnimationType.POPUP);
+        NotificationType notification = NotificationType.NOTICE;
+        trayNotification.setNotificationType(notification);
+        trayNotification.showAndWait();
 
         Task task = new Task(1, "title", new Vector<>(), new Vector<>(), "2020-06-02 15:05:56", TaskStatus.DONE, TaskPriority.IMPORTANT_AND_URGENT);
 
@@ -62,8 +70,8 @@ public class Main extends Application {
 
         ProgressBar progressBar = new ProgressBar(
                 Color.rgb(149,165,166),
-                Color.rgb(39,174,96),
                 Color.rgb(236,240,241),
+                Color.rgb(0,0,0),
                 700, 20, 300);
 
         progressBar.setLayoutX(400);
@@ -72,7 +80,7 @@ public class Main extends Application {
         progressBar.updateProgress(0.8);
 
 
-        SearchBox searchBox = new SearchBox(20, 300, "Search",
+        SearchBox searchBox = new SearchBox(20, 500, "Search",
                 Color.rgb(236,240,241),
                 Color.rgb(226, 103, 90),
                 Color.rgb(149,165,166)
@@ -82,7 +90,7 @@ public class Main extends Application {
         searchBox.setLayoutY(200);
 
 
-        MultiProgressBar multiProgressBar = new MultiProgressBar(elements, 700, 5, 20, 300);
+        MultiProgressBar multiProgressBar = new MultiProgressBar(elements, 700, 5, 10, 300);
         multiProgressBar.setLayoutX(400);
         multiProgressBar.setLayoutY(500);
         mainPane.getChildren().addAll(multiProgressBar, progressBar, searchBox);

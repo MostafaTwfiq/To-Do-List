@@ -1,0 +1,64 @@
+
+#loginPane {
+
+-fx-background-color: #FAFAFA;
+
+}
+
+#welcomeL {
+
+-fx-text-fill: black;
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+-fx-alignment: center;
+-fx-font-size: 80px;
+-fx-font-weight: regular;
+
+}
+
+#infoL {
+
+-fx-text-fill: black;
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+-fx-alignment: center;
+-fx-font-size: 25px;
+-fx-font-weight: regular;
+
+}
+
+#userNameTF {
+
+-fx-text-fill: black;
+-fx-prompt-text-fill: #4f5254;
+-jfx-focus-color: black;
+-jfx-unfocus-color: #4f5254;
+
+}
+
+#passwordTF {
+
+-fx-text-fill: black;
+-fx-prompt-text-fill: #4f5254;
+-jfx-focus-color: black;
+-jfx-unfocus-color: #4f5254;
+
+}
+
+#loginB {
+
+-fx-background-color: #FAFAFA;
+-fx-border-color: black;
+-fx-border-radius: 5;
+-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5),4,0,0,1);
+
+}
+
+#signUpB {
+
+-fx-background-color: #FAFAFA;
+-fx-border-color: black;
+-fx-border-radius: 5;
+-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5),4,0,0,1);
+
+}

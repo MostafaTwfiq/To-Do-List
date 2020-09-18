@@ -140,6 +140,26 @@ public class SearchBox extends HBox {
 
     }
 
+    public void changeWidth(double w) {
+        setPrefWidth(w);
+
+        searchField.setPrefWidth(getPrefWidth() - getPrefHeight() - getSpacing() - getPadding().getLeft());
+
+    }
+
+    public void changeHeight(double h) {
+
+        setPrefHeight(h);
+
+        if (searchIcon != null) {
+            searchIcon.setFitHeight(getPrefHeight() - getInsets().getTop() - getInsets().getBottom());
+            searchIcon.setFitWidth(getPrefHeight() - getInsets().getTop() - getInsets().getBottom());
+        }
+
+        searchField.setPrefHeight(getHeight() - getInsets().getTop() - getInsets().getBottom());
+
+    }
+
     private void setupLayout(double h, double w) {
 
         setPrefHeight(h);
@@ -190,8 +210,12 @@ public class SearchBox extends HBox {
         searchField.setOnKeyReleased(e -> {
 
             if (e.getCode() == KeyCode.ENTER) {
-                activateIconAnimation();
+
+                if (searchIcon != null)
+                    activateIconAnimation();
+
                 notifyObservers();
+
             }
 
         });

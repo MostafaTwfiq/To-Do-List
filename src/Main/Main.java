@@ -1,11 +1,11 @@
 package Main;
 
 import DataClasses.User;
-import GUI.Screen.Stage.CustomStage;
+import GUI.ScreenManager.Stage.CustomStage;
 import GUI.MultiProgressBar.MultiProgressBar;
 import GUI.MultiProgressBar.MultiProgressElement;
 import GUI.ProgressBar.ProgressBar;
-import GUI.Screen.ScreenManager;
+import GUI.ScreenManager.ScreenManager;
 import DataClasses.Task;
 import DataClasses.TaskStatus.TaskPriority;
 import DataClasses.TaskStatus.TaskStatus;
@@ -17,9 +17,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import tray.animations.AnimationType;
-import tray.notification.NotificationType;
-import tray.notification.TrayNotification;
 import Style.*;
 import java.util.Vector;
 

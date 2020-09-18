@@ -29,7 +29,7 @@ public class SearchBox extends HBox {
     private Color searchBoxColor;
     private Color textColor;
     private Color promptTextColor;
-    private final String defaultSearchIconPath = "resources/searchBoxIcon.png";
+    private final String defaultSearchIconPath = "resources/SearchBox/searchBoxIcon.png";
     private boolean animationLocker;
 
     public SearchBox(double h, double w, String promptText,
@@ -79,7 +79,11 @@ public class SearchBox extends HBox {
         setupSearchField(promptText);
         setupSearchIconImageView(defaultSearchIconPath);
 
-        getChildren().addAll(searchIcon, searchField);
+
+        if (searchIcon != null)
+            getChildren().add(searchIcon);
+
+        getChildren().add(searchField);
 
     }
 

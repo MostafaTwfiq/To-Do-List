@@ -7,6 +7,6 @@ module ToDoList {
     requires TrayTester;
 
     opens Main;
-    opens GUI.Screen.Stage;
+    opens GUI.ScreenManager.Stage;
 
 }

@@ -1,7 +1,7 @@
-package GUI.Screen.Stage;
+package GUI.ScreenManager.Stage;
 
 import GUI.Observer.IObserver;
-import GUI.Screen.ScreenManager;
+import GUI.ScreenManager.ScreenManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;

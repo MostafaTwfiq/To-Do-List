@@ -1,69 +1,32 @@
 package DataClasses;
 
-import java.time.LocalDate;
-import java.util.Vector;
 
 public class User {
 
-    private String userName;
     private short userID;
-    private Vector<DayTasks> daysTasks;
+    private String userName;
+    private String userImagePath;
+    private final String defaultUserImagePath = "resources/Users/defaultUserProfileImage.png";
 
-    public User() {
-        daysTasks = new Vector<>();
-    }
+    public User(String userName, short userID) {
 
-    public User(String userName, short userID, Vector<DayTasks> daysTasks) {
-
-        if (userName == null || daysTasks == null)
+        if (userName == null)
             throw new IllegalArgumentException();
 
         this.userName = userName;
-        this.daysTasks = daysTasks;
         this.userID = userID;
-    }
-
-    public DayTasks getTasksAtDate(LocalDate date) {
-
-        for (DayTasks currentDay : daysTasks) {
-
-            if (currentDay.getDate().isEqual(date))
-                return currentDay;
-
-        }
-
-        return null;
+        this.userImagePath = defaultUserImagePath;
 
     }
 
-    public void addDayTasks(DayTasks dayTasks) {
+    public User(String userName, short userID, String userImagePath) {
 
-        if (dayTasks == null)
+        if (userName == null || userImagePath == null)
             throw new IllegalArgumentException();
 
-        daysTasks.add(dayTasks);
-
-    }
-
-    public void removeDayTask(DayTasks dayTasks) {
-
-        if (dayTasks == null)
-            throw new IllegalArgumentException();
-
-        daysTasks.remove(dayTasks);
-
-    }
-
-    public Vector<DayTasks> getDaysTasks() {
-        return daysTasks;
-    }
-
-    public void setDaysTasks(Vector<DayTasks> daysTasks) {
-
-        if (daysTasks == null)
-            throw new IllegalArgumentException();
-
-        this.daysTasks = daysTasks;
+        this.userName = userName;
+        this.userID = userID;
+        this.userImagePath = userImagePath;
     }
 
     public String getUserName() {
@@ -89,6 +52,24 @@ public class User {
             throw new IllegalArgumentException();
 
         this.userID = userID;
+
+    }
+
+    public String getUserImagePath() {
+        return userImagePath;
+    }
+
+    public void setUserImagePath(String userImagePath) {
+
+        if (userImagePath == null)
+            throw new IllegalArgumentException();
+
+        this.userImagePath = userImagePath;
+
+    }
+
+    public String getDefaultUserImagePath() {
+        return defaultUserImagePath;
     }
 
 }

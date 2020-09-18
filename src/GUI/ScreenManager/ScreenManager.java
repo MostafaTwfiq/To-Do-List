@@ -1,4 +1,4 @@
-package GUI.Screen;
+package GUI.ScreenManager;
 
 import GUI.Observer.Observer;
 import javafx.scene.Parent;

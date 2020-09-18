@@ -1,4 +1,4 @@
-package GUI.Screen.Stage;
+package GUI.ScreenManager.Stage;
 
 import Main.Main;
 import Style.ColorHandling;

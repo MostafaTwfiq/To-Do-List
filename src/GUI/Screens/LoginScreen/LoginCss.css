@@ -12,7 +12,6 @@
 -fx-border-color: transparent;
 -fx-alignment: center;
 -fx-font-size: 80px;
--fx-font-weight: regular;
 
 }
 
@@ -23,7 +22,16 @@
 -fx-border-color: transparent;
 -fx-alignment: center;
 -fx-font-size: 25px;
--fx-font-weight: regular;
+
+}
+
+#errorL {
+
+-fx-text-fill: #D1453B;
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+-fx-font-size: 14px;
+-fx-font-weight: bold;
 
 }
 

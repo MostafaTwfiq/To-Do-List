@@ -1,5 +1,6 @@
 package Main;
 
+import DataBase.DataAccess;
 import DataClasses.User;
 import GUI.ScreenManager.Stage.CustomStage;
 import GUI.MultiProgressBar.MultiProgressBar;
@@ -9,9 +10,12 @@ import GUI.ScreenManager.ScreenManager;
 import DataClasses.Task;
 import DataClasses.TaskStatus.TaskPriority;
 import DataClasses.TaskStatus.TaskStatus;
+import GUI.Screens.LoginScreen.LoginScreenController;
 import GUI.SearchBox.SearchBox;
 import Style.Style;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
@@ -27,8 +31,32 @@ public class Main extends Application {
     public static Style theme = new LightTheme();
 
     @Override
-    public void start(Stage stage) throws Exception{
+    public void start(Stage stage) throws Exception {
 
+        LoginScreenController loginScreenController = new LoginScreenController();
+        Parent loginScreenParent = null;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Screens/LoginScreen/LoginScreenStyle.fxml"));
+            loader.setController(loginScreenController);
+            loginScreenParent = loader.load();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        CustomStage customStage = new CustomStage(700, 1000, loginScreenParent);
+        customStage.showStageAndWait();
+
+    }
+
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+
+    private static Parent tryPane() {
         Task task = new Task(1, "title", new Vector<>(), new Vector<>(), "2020-06-02 15:05:56", TaskStatus.DONE, TaskPriority.IMPORTANT_AND_URGENT);
 
         Pane mainPane = new Pane();
@@ -77,7 +105,7 @@ public class Main extends Application {
                 Color.rgb(236,240,241),
                 Color.rgb(226, 103, 90),
                 Color.rgb(149,165,166)
-                );
+        );
 
         searchBox.setLayoutX(400);
         searchBox.setLayoutY(200);
@@ -96,16 +124,9 @@ public class Main extends Application {
         });
         secondPane.getChildren().add(button1);
 
-        CustomStage customStage = new CustomStage(700, 1000, mainPane);
-        customStage.showStageAndWait();
+        return mainPane;
 
     }
 
-
-
-
-    public static void main(String[] args) {
-        launch(args);
-    }
 
 }

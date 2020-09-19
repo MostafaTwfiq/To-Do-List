@@ -8,24 +8,24 @@ public class User {
     private String userImagePath;
     private final String defaultUserImagePath = "resources/Users/defaultUserProfileImage.png";
 
-    public User(String userName, short userID) {
+    public User(short userID, String userName) {
 
         if (userName == null)
             throw new IllegalArgumentException();
 
-        this.userName = userName;
         this.userID = userID;
+        this.userName = userName;
         this.userImagePath = defaultUserImagePath;
 
     }
 
-    public User(String userName, short userID, String userImagePath) {
+    public User(short userID, String userName, String userImagePath) {
 
         if (userName == null || userImagePath == null)
             throw new IllegalArgumentException();
 
-        this.userName = userName;
         this.userID = userID;
+        this.userName = userName;
         this.userImagePath = userImagePath;
     }
 

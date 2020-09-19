@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane fx:id="loginPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1000.0" stylesheets="@LoginCss.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label fx:id="welcomeL" alignment="CENTER" layoutX="367.0" layoutY="96.0" stylesheets="@LoginCss.css" text="Welcome" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
@@ -47,5 +46,10 @@
             <Font size="18.0" />
          </font>
       </JFXPasswordField>
+      <Label fx:id="errorL" layoutX="255.0" layoutY="507.0" prefHeight="30.0" prefWidth="500.0" stylesheets="@LoginCss.css" textFill="RED" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="500.0">
+         <font>
+            <Font name="Arial" size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

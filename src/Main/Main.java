@@ -13,6 +13,7 @@ import DataClasses.TaskStatus.TaskStatus;
 import GUI.Screens.LoginScreen.LoginScreenController;
 import GUI.SearchBox.SearchBox;
 import Style.Style;
+import com.jfoenix.controls.JFXChipView;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -114,6 +115,18 @@ public class Main extends Application {
         MultiProgressBar multiProgressBar = new MultiProgressBar(elements, 700, 5, 10, 300);
         multiProgressBar.setLayoutX(400);
         multiProgressBar.setLayoutY(500);
+
+        JFXChipView<String> chipView = new JFXChipView<>();
+        chipView.setStyle("-fx-background-color: red;");
+        chipView.setMaxWidth(500);
+        chipView.setMinWidth(500);
+        chipView.setMaxHeight(500);
+        chipView.setMinHeight(500);
+        chipView.setLayoutX(200);
+        chipView.setLayoutY(200);
+        mainPane.getChildren().addAll(chipView);
+
+
         mainPane.getChildren().addAll(multiProgressBar, progressBar, searchBox);
 
         Button button1 = new Button();

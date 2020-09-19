@@ -109,7 +109,7 @@ public class LoginScreenController implements Initializable {
 
         userNameTF.setOnKeyReleased(e -> {
 
-            if (e.getCode() == KeyCode.ENTER)
+            if (e.getCode() == KeyCode.ENTER || e.getCode() == KeyCode.DOWN)
                 passwordTF.requestFocus();
 
         });
@@ -122,6 +122,8 @@ public class LoginScreenController implements Initializable {
 
             if (e.getCode() == KeyCode.ENTER)
                 loginB.fire();
+            else if (e.getCode() == KeyCode.UP)
+                userNameTF.requestFocus();
 
         });
 

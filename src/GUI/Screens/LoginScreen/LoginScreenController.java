@@ -2,11 +2,14 @@ package GUI.Screens.LoginScreen;
 
 import DataBase.DataAccess;
 import DataClasses.User;
+import GUI.Screens.SignUpScreen.SignUpScreenController;
 import Main.Main;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
@@ -100,7 +103,21 @@ public class LoginScreenController implements Initializable {
 
         signUpB.setOnAction(e -> {
             errorL.setText("");
-            // Main.screenManager.changeScreen(null); // pass here the sign up screen
+
+            try {
+            SignUpScreenController signUpScreenController = new SignUpScreenController();
+            Parent signUpScreenParent = null;
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Screens/SignUpScreen/SignUpScreenDesign.fxml"));
+            loader.setController(signUpScreenController);
+            signUpScreenParent = loader.load();
+
+            Main.screenManager.changeScreen(signUpScreenParent);
+
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+
         });
 
     }

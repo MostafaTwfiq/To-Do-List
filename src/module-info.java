@@ -10,6 +10,7 @@ module ToDoList {
     opens Main;
     opens GUI.ScreenManager.Stage;
     opens GUI.Screens.LoginScreen;
+    opens GUI.Screens.SignUpScreen;
     opens JFoenix;
 
 }

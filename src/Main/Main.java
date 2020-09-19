@@ -21,8 +21,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import Style.*;
+
+import java.io.File;
 import java.util.Vector;
 
 public class Main extends Application {

@@ -14,6 +14,8 @@ import GUI.SearchBox.SearchBox;
 import GUI.Style.Style;
 import com.jfoenix.controls.JFXChipView;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -47,7 +49,13 @@ public class Main extends Application {
             e.printStackTrace();
         }
 
-        CustomStage customStage = new CustomStage(700, 1000, loginScreenParent);
+        Parent finalLoginScreenParent = loginScreenParent;
+        CustomStage customStage = new CustomStage(700, 1000, loginScreenParent, e -> {
+            finalLoginScreenParent.getStylesheets().clear();
+            finalLoginScreenParent.getStylesheets().add("GUI/Style/ThemesCss/"
+                    + Main.theme.getThemeName() + "/LoginScreen/LoginSheet.css");
+        });
+
         customStage.showStageAndWait();
 
     }
@@ -79,7 +87,7 @@ public class Main extends Application {
         secondPane.getChildren().add(label2);
 
         button.setOnAction(e -> {
-            screenManager.changeScreen(secondPane);
+            //screenManager.changeScreen(secondPane);
         });
 
         mainPane.getChildren().add(button);

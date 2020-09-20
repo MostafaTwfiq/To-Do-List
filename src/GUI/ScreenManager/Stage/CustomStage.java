@@ -5,6 +5,8 @@ import GUI.ScreenManager.ScreenManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -24,7 +26,7 @@ public class CustomStage implements IObserver {
     private ScreenManager screenManager;
     private int height, width;
 
-    public CustomStage(int height, int width, Parent mainLayout) {
+    public CustomStage(int height, int width, Parent mainLayout, EventHandler<ActionEvent> updateLayoutStyleEvent) {
 
         this.height = height;
         this.width = width;
@@ -49,7 +51,7 @@ public class CustomStage implements IObserver {
         setupScene();
         stage.setScene(scene);
 
-        screenManager.changeScreen(mainLayout);
+        screenManager.changeScreen(mainLayout, updateLayoutStyleEvent);
 
     }
 

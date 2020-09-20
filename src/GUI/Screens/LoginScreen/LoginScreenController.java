@@ -7,6 +7,8 @@ import Main.Main;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -105,15 +107,19 @@ public class LoginScreenController implements Initializable {
             errorL.setText("");
 
             try {
-            SignUpScreenController signUpScreenController = new SignUpScreenController();
-            Parent signUpScreenParent = null;
+                SignUpScreenController signUpScreenController = new SignUpScreenController();
+                Parent signUpScreenParent = null;
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Screens/SignUpScreen/SignUpScreenDesign.fxml"));
-            loader.setController(signUpScreenController);
-            signUpScreenParent = loader.load();
-            signUpScreenParent.getStylesheets().add("GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/SignUpScreen/SignUpSheet.css");
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Screens/SignUpScreen/SignUpScreenDesign.fxml"));
+                loader.setController(signUpScreenController);
+                signUpScreenParent = loader.load();
+                signUpScreenParent.getStylesheets().add("GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/SignUpScreen/SignUpSheet.css");
 
-            Main.screenManager.changeScreen(signUpScreenParent);
+                Parent finalSignUpScreenParent = signUpScreenParent;
+                Main.screenManager.changeScreen(signUpScreenParent, event -> {
+                    finalSignUpScreenParent.getStylesheets().clear();
+                    finalSignUpScreenParent.getStylesheets().add("GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/SignUpScreen/SignUpSheet.css");
+                });
 
             } catch (Exception exception) {
                 exception.printStackTrace();

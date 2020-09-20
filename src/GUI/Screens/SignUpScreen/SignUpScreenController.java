@@ -5,20 +5,22 @@ import Main.Main;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import tray.animations.AnimationType;
 import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.net.URL;
@@ -75,6 +77,25 @@ public class SignUpScreenController implements Initializable {
 
     }
 
+
+    private void setupSignUpPane() {
+
+        signUpPane.setOnDragEntered(e -> signUpPane.setOpacity(0.5));
+        signUpPane.setOnDragExited(e -> signUpPane.setOpacity(1));
+        signUpPane.setOnDragOver(new EventHandler<>() {
+            @Override
+            public void handle(DragEvent event) {
+                if (event.getDragboard().hasFiles()) {
+                    event.acceptTransferModes(TransferMode.COPY);
+                    updateUserImageFile(event.getDragboard().getFiles().get(0));
+                }
+                event.consume();
+            }
+        });
+
+    }
+
+
     private void setupChooseImageB() {
 
         try {
@@ -96,27 +117,31 @@ public class SignUpScreenController implements Initializable {
             FileChooser fileChooser = new FileChooser();
             File file = fileChooser.showOpenDialog(new Stage());
 
-            if (file != null) {
-
-                String filePath = file.getPath();
-                String fileExtension = filePath.substring(filePath.lastIndexOf('.'));
-                if (!Pattern.matches(imageExtensionsRegex, fileExtension))
-                    return;
-
-                userImagePath = filePath;
-
-                try {
-                    FileInputStream fileInputStream = new FileInputStream(userImagePath);
-                    Image image = new Image(fileInputStream);
-                    userImageV.setImage(image);
-                } catch (Exception exception) {
-                    userImagePath = null;
-                }
-
-            }
+            updateUserImageFile(file);
 
         });
 
+    }
+
+    private void updateUserImageFile(File file) {
+        if (file != null) {
+
+            String filePath = file.getPath();
+            String fileExtension = filePath.substring(filePath.lastIndexOf('.'));
+            if (!Pattern.matches(imageExtensionsRegex, fileExtension))
+                return;
+
+            userImagePath = filePath;
+
+            try {
+                FileInputStream fileInputStream = new FileInputStream(userImagePath);
+                Image image = new Image(fileInputStream);
+                userImageV.setImage(image);
+            } catch (Exception exception) {
+                userImagePath = null;
+            }
+
+        }
     }
 
     private void setupSignUpB() {
@@ -212,6 +237,7 @@ public class SignUpScreenController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        setupSignUpPane();
         setupUserImageV();
         setupSignUpB();
         setupChooseImageB();

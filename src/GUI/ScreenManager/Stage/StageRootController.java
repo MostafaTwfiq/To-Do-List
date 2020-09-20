@@ -44,6 +44,14 @@ public class StageRootController implements Initializable {
 
     private EventHandler<ActionEvent> onClosingEvent;
 
+    private void setupStageRoot() {
+        stageRoot.setOnDragDetected(e -> stageRoot.startFullDrag());
+    }
+
+    private void setupParentRoot() {
+        parentRoot.setOnDragDetected(e -> parentRoot.startFullDrag());
+    }
+
     public StageRootController(Stage stage, EventHandler<ActionEvent> onClosingEvent) {
         this.stage = stage;
         this.onClosingEvent = onClosingEvent;
@@ -175,6 +183,8 @@ public class StageRootController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        setupStageRoot();
+        setupParentRoot();
         setupStageBar();
         setupMinimizeB();
         setupCloseB();

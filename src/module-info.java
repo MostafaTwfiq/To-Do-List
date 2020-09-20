@@ -7,6 +7,9 @@ module ToDoList {
     requires TrayTester;
     requires com.jfoenix;
 
+    //--add-opens
+    //java.base/java.lang.reflect=com.jfoenix
+
     opens Main;
     opens GUI.ScreenManager.Stage;
     opens GUI.Screens.LoginScreen;

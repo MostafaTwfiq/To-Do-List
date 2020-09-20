@@ -64,6 +64,9 @@ public class CustomStage implements IObserver {
     private void setupScene() {
         scene = new Scene(stageRoot, width, height);
         scene.setFill(Color.TRANSPARENT);
+
+        scene.setOnDragDetected(e -> scene.startFullDrag());
+
     }
 
     private void setupStage() {

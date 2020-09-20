@@ -18,8 +18,13 @@ public class Task {
     private LocalDateTime dateTime; // the start date of the task
     private TaskStatus taskStatus; // the task status [done, not done, and in progress]
     private TaskPriority priority; // the priority of the task
+    private boolean isStarred; // represents the status of the task where is it starred or not
 
-    public Task(int taskID, String title, List<String> notes, List<String> tags, LocalDateTime dateTime, TaskStatus taskStatus, TaskPriority priority) {
+    public Task(int taskID, String title,
+                List<String> notes, List<String> tags,
+                LocalDateTime dateTime,
+                TaskStatus taskStatus, TaskPriority priority,
+                boolean isStarred) {
 
         if (taskID < 1 || title == null || title.equals("") || notes == null || tags == null || dateTime == null || taskStatus == null)
             throw new IllegalArgumentException();
@@ -31,10 +36,14 @@ public class Task {
         this.dateTime = dateTime;
         this.taskStatus = taskStatus;
         this.priority = priority;
+        this.isStarred = isStarred;
 
     }
 
-    public Task(int taskID, String title, LocalDateTime dateTime, TaskStatus taskStatus, TaskPriority priority) {
+    public Task(int taskID, String title,
+                LocalDateTime dateTime,
+                TaskStatus taskStatus, TaskPriority priority,
+                boolean isStarred) {
 
         if (taskID < 1 || title == null || title.equals("") || dateTime == null || taskStatus == null)
             throw new IllegalArgumentException();
@@ -46,10 +55,15 @@ public class Task {
         this.dateTime = dateTime;
         this.taskStatus = taskStatus;
         this.priority = priority;
+        this.isStarred = isStarred;
 
     }
 
-    public Task(int taskID, String title, List<String> notes, List<String> tags, String dateTime, TaskStatus taskStatus, TaskPriority priority) {
+    public Task(int taskID, String title,
+                List<String> notes, List<String> tags,
+                String dateTime, TaskStatus taskStatus,
+                TaskPriority priority,
+                boolean isStarred) {
 
         if (taskID < 0 || title == null || title.equals("") || notes == null || tags == null || dateTime == null || taskStatus == null)
             throw new IllegalArgumentException();
@@ -63,10 +77,15 @@ public class Task {
         this.dateTime = LocalDateTime.parse(dateTime, DateTimeFormatter.ofPattern(DateFormat.getDateTimeFormat()));
         this.taskStatus = taskStatus;
         this.priority = priority;
+        this.isStarred = isStarred;
 
     }
 
-    public Task(int taskID, String title, String dateTime, TaskStatus taskStatus, TaskPriority priority) {
+    public Task(int taskID, String title,
+                String dateTime,
+                TaskStatus taskStatus,
+                TaskPriority priority,
+                boolean isStarred) {
 
         if (taskID < 0 || title == null || title.equals("") || dateTime == null || taskStatus == null)
             throw new IllegalArgumentException();
@@ -80,6 +99,7 @@ public class Task {
         this.dateTime = LocalDateTime.parse(dateTime, DateTimeFormatter.ofPattern(DateFormat.getDateTimeFormat()));
         this.taskStatus = taskStatus;
         this.priority = priority;
+        this.isStarred = isStarred;
 
     }
 
@@ -207,6 +227,14 @@ public class Task {
 
     }
 
+    public boolean isStarred() {
+        return isStarred;
+    }
+
+    public void setStarred(boolean starred) {
+        isStarred = starred;
+    }
+
     @Override
     public String toString() {
 
@@ -237,6 +265,8 @@ public class Task {
                 + "Task status: " + taskStatus.toString()
                 + "\n"
                 + "Task priority: " + priority.toString()
+                + "\n"
+                + "Task is starred: " + isStarred
                 + "\n"
                 + "Notes: \n" + notesString.toString()
                 + "\n"

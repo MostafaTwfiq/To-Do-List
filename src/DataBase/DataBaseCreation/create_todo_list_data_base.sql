@@ -1,3 +1,5 @@
+DROP DATABASE IF EXISTS todolistdb;
+
 -- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
@@ -35,6 +37,7 @@ CREATE TABLE IF NOT EXISTS `todoListDB`.`tasks` (
   `datetime` DATETIME NOT NULL,
   `task_status` ENUM('DONE', 'NOT_DONE') NOT NULL,
   `task_priority` ENUM('IMPORTANT_AND_URGENT', 'IMPORTANT_AND_NOT_URGENT', 'NOT_IMPORTANT_AND_URGENT', 'NOT_IMPORTANT_AND_NOT_URGENT') NOT NULL,
+  `is_starred` TINYINT NOT NULL,
   INDEX `fk_tasks_users_idx` (`user_id` ASC) VISIBLE,
   PRIMARY KEY (`task_id`),
   CONSTRAINT `fk_tasks_users`
@@ -178,6 +181,10 @@ DELIMITER $$
 CREATE PROCEDURE get_user_tasks_ids_by_user_id_tags_date ( user_id SMALLINT, tags VARCHAR(21845), datetime DATETIME )
 BEGIN
 
+IF tags IS NULL THEN 
+SET tags = '.*?';
+END IF;
+
 SELECT 
 	DISTINCT tk.task_id 
 FROM tasks tk 
@@ -202,7 +209,7 @@ SELECT
 	task_id 
 FROM tasks 
 WHERE 
-	task_title REGEXP CONCAT('^' , title_rgx , '*')
+	task_title REGEXP CONCAT('^' , title_rgx , '(.*?)$')
 	AND tasks.user_id = user_id 
     AND SUBSTRING(tasks.datetime, 1, 10) = SUBSTRING(datetime, 1, 10);
 
@@ -217,13 +224,61 @@ DELIMITER $$
 CREATE PROCEDURE get_user_tasks_ids_by_user_id_title_rgx_tags_date ( user_id SMALLINT, title_rgx VARCHAR(50), tags VARCHAR(21845), datetime DATETIME )
 BEGIN
 
+IF tags IS NULL THEN 
+SET tags = '.*?';
+END IF;
+
 SELECT 
 	DISTINCT tk.task_id 
 FROM tasks tk 
 JOIN tags tg USING (task_id) 
 WHERE 
 	tg.tag REGEXP CONCAT('^(' , tags , ')$')
-    AND tk.task_title REGEXP CONCAT('^', title_rgx, '*') 
+    AND tk.task_title REGEXP CONCAT('^', title_rgx, '(.*?)$') 
+	AND tk.user_id = user_id 
+    AND SUBSTRING(tk.datetime, 1, 10) = SUBSTRING(datetime, 1, 10);
+
+END $$
+DELIMITER ;
+
+
+
+-- This procedure will return tasks ids for a specific user, using specific title rgx, tags and day. 
+DROP PROCEDURE IF EXISTS get_user_tasks_ids_full_search;
+DELIMITER $$
+CREATE PROCEDURE get_user_tasks_ids_full_search ( 
+	user_id SMALLINT, 
+	title_rgx VARCHAR(50), 
+	tags VARCHAR(21845),
+    statuses VARCHAR(15),
+    priorities VARCHAR(120),
+	datetime DATETIME,
+    is_starred BOOL
+)
+BEGIN
+
+IF tags IS NULL THEN 
+SET tags = '.*?';
+END IF;
+
+IF statuses IS NULL THEN 
+SET statuses = '.*?';
+END IF;
+
+IF priorities IS NULL THEN 
+SET priorities = '.*?';
+END IF;
+
+SELECT 
+	DISTINCT tk.task_id 
+FROM tasks tk 
+JOIN tags tg USING (task_id) 
+WHERE 
+	tg.tag REGEXP CONCAT('^(' , tags , ')$')
+    AND tk.task_status REGEXP CONCAT('^(' , statuses , ')$')
+    AND tk.task_priority REGEXP CONCAT('^(' , priorities , ')$')
+    AND tk.is_starred = IF(is_starred IS NOT NULL, is_starred, tk.is_starred)
+    AND tk.task_title REGEXP CONCAT('^', title_rgx, '(.*?)$')
 	AND tk.user_id = user_id 
     AND SUBSTRING(tk.datetime, 1, 10) = SUBSTRING(datetime, 1, 10);
 
@@ -241,7 +296,8 @@ SELECT
     task_title, 
     datetime,
     task_status, 
-    task_priority
+    task_priority,
+    is_starred
 FROM tasks t
 WHERE t.task_id = task_id;
 END $$
@@ -331,10 +387,10 @@ DELIMITER ;
 -- This procedure will insert a new task in the tasks table.
 DROP PROCEDURE IF EXISTS add_new_task;
 DELIMITER $$
-CREATE PROCEDURE add_new_task(user_id SMALLINT, task_title VARCHAR(50), task_datetime DATETIME, task_status VARCHAR(10), task_priority VARCHAR(30))
+CREATE PROCEDURE add_new_task(user_id SMALLINT, task_title VARCHAR(50), task_datetime DATETIME, task_status VARCHAR(10), task_priority VARCHAR(30), is_starred BOOL)
 BEGIN
 
-INSERT INTO tasks VALUES (DEFAULT, user_id, task_title, task_datetime, task_status, task_priority);
+INSERT INTO tasks VALUES (DEFAULT, user_id, task_title, task_datetime, task_status, task_priority, is_starred);
 
 END $$
 DELIMITER ;
@@ -514,17 +570,30 @@ END $$
 DELIMITER ;
 
 
+-- This procedure will update the task is starred boolean for the task with the passed id.
+DROP PROCEDURE IF EXISTS update_task_is_starred;
+DELIMITER $$
+CREATE PROCEDURE update_task_is_starred(task_id INT, new_is_starred BOOL)
+BEGIN
+
+UPDATE tasks SET is_starred = new_is_starred WHERE tasks.task_id = task_id;
+
+END $$
+DELIMITER ;
+
+
 -- This procedure will update the task with the passed id.
 DROP PROCEDURE IF EXISTS update_task;
 DELIMITER $$
-CREATE PROCEDURE update_task(task_id INT, new_title VARCHAR(50), new_datetime DATETIME, new_status VARCHAR(10), new_priority VARCHAR(30))
+CREATE PROCEDURE update_task(task_id INT, new_title VARCHAR(50), new_datetime DATETIME, new_status VARCHAR(10), new_priority VARCHAR(30), new_is_starred BOOL)
 BEGIN
 
 UPDATE tasks SET 
 	task_title = new_title, 
     tasks.datetime = new_datetime,  
     task_status = new_status,
-    task_priority = new_priority
+    task_priority = new_priority,
+    is_starred = new_is_starred
     WHERE tasks.task_id = task_id;
 
 END $$

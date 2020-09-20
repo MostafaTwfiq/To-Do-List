@@ -170,7 +170,10 @@ public class DataAccess {
 
         ArrayList<String> parameters = new ArrayList<>();
         parameters.add(String.format("%d", userID));
-        parameters.add(addStringBetweenSingleQuote(convertTagsArrToParam(tags)));
+        if (!tags.isEmpty())
+            parameters.add(addStringBetweenSingleQuote(convertListToRegexParam(tags)));
+        else
+            parameters.add("NULL");
         parameters.add(addStringBetweenSingleQuote(date));
 
         ResultSet resultSet = statement.executeQuery(
@@ -234,11 +237,71 @@ public class DataAccess {
         ArrayList<String> parameters = new ArrayList<>();
         parameters.add(String.format("%d", userID));
         parameters.add(addStringBetweenSingleQuote(subTitle));
-        parameters.add(addStringBetweenSingleQuote(convertTagsArrToParam(tags)));
+        if (!tags.isEmpty())
+            parameters.add(addStringBetweenSingleQuote(convertListToRegexParam(tags)));
+        else
+            parameters.add("NULL");
         parameters.add(addStringBetweenSingleQuote(date));
 
         ResultSet resultSet = statement.executeQuery(
                 "CALL get_user_tasks_ids_by_user_id_title_rgx_tags_date"
+                        + convertStringToParameters(parameters)
+                        + ";"
+        );
+
+        ArrayList<Integer> ids = new ArrayList<>();
+
+        while (resultSet.next())
+            ids.add(resultSet.getInt(1));
+
+        return ids;
+
+    }
+
+
+    /** This function will return the tasks ids for the passed user id filtered by the passed info.
+     * @param userID the user id
+     * @param subTitle the task sub title
+     * @param tags the tags list
+     * @param statuses the statuses list that the function will filter the tasks with it
+     * @param priorities the priorities list that the function will filter the tasks with it
+     * @param date the day date YYYY-MM-dd
+     * @param isStarred a boolean represents the statues of the task where is it starred or not
+     * @return it will return the tasks ids for the passed user id filtered by the passed info
+     * @throws SQLException exception in case something went wrong
+     */
+
+    public List<Integer> getTasksIDs(int userID,
+                                     String subTitle,
+                                     List<String> tags,
+                                     List<String> statuses,
+                                     List<String> priorities,
+                                     String date,
+                                     Boolean isStarred) throws SQLException {
+
+        ArrayList<String> parameters = new ArrayList<>();
+        parameters.add(String.format("%d", userID));
+        parameters.add(addStringBetweenSingleQuote(subTitle));
+        if (!tags.isEmpty())
+            parameters.add(addStringBetweenSingleQuote(convertListToRegexParam(tags)));
+        else
+            parameters.add("NULL");
+        if (!statuses.isEmpty())
+            parameters.add(addStringBetweenSingleQuote(convertListToRegexParam(statuses)));
+        else
+            parameters.add("NULL");
+        if (!priorities.isEmpty())
+            parameters.add(addStringBetweenSingleQuote(convertListToRegexParam(priorities)));
+        else
+            parameters.add("NULL");
+        parameters.add(addStringBetweenSingleQuote(date));
+        if (isStarred != null)
+            parameters.add(String.format("%b", isStarred));
+        else
+            parameters.add("NULL");
+
+        ResultSet resultSet = statement.executeQuery(
+                "CALL get_user_tasks_ids_full_search"
                         + convertStringToParameters(parameters)
                         + ";"
         );
@@ -329,7 +392,8 @@ public class DataAccess {
                     resultSet.getString(1),
                     resultSet.getString(2),
                     TaskStatus.valueOf(resultSet.getString(3)),
-                    TaskPriority.valueOf(resultSet.getString(4))
+                    TaskPriority.valueOf(resultSet.getString(4)),
+                    resultSet.getBoolean(5)
             );
 
         }
@@ -1097,7 +1161,7 @@ public class DataAccess {
      * @return it will return the passed tags list into a single text to be used in the task searching using tags
      */
 
-    private String convertTagsArrToParam(List<String> tags) {
+    private String convertListToRegexParam(List<String> tags) {
 
         StringBuilder tagsParma = new StringBuilder();
 

@@ -26,6 +26,8 @@ import javafx.stage.Stage;
 import Style.*;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 public class Main extends Application {
@@ -61,7 +63,7 @@ public class Main extends Application {
 
 
     private static Parent tryPane() {
-        Task task = new Task(1, "title", new Vector<>(), new Vector<>(), "2020-06-02 15:05:56", TaskStatus.DONE, TaskPriority.IMPORTANT_AND_URGENT);
+        Task task = new Task(1, "title", new Vector<>(), new Vector<>(), "2020-06-02 15:05:56", TaskStatus.DONE, TaskPriority.IMPORTANT_AND_URGENT, true);
 
         Pane mainPane = new Pane();
         mainPane.styleProperty().set("-fx-background-color: transparent;");

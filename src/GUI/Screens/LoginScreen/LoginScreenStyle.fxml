@@ -6,9 +6,10 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="loginPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="loginPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1000.0" stylesheets="@../../Style/ThemesCss/LightTheme/LoginScreen/LoginSheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label fx:id="welcomeL" alignment="CENTER" layoutX="367.0" layoutY="96.0" text="Welcome" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
          <font>
@@ -25,15 +26,7 @@
             <Font name="Arial" size="18.0" />
          </font>
       </JFXTextField>
-      <JFXButton fx:id="loginB" layoutX="263.0" layoutY="566.0" prefHeight="50.0" prefWidth="150.0" text="Login" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="550.0">
-         <font>
-            <Font size="24.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </JFXButton>
-      <JFXButton fx:id="signUpB" layoutX="576.0" layoutY="552.0" prefHeight="50.0" prefWidth="150.0" text="Sign up" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="550.0">
+      <JFXButton fx:id="loginB" layoutX="248.0" layoutY="540.0" prefHeight="50.0" prefWidth="1000.0" text="Login" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="550.0">
          <font>
             <Font size="24.0" />
          </font>
@@ -51,5 +44,22 @@
             <Font name="Arial" size="14.0" />
          </font>
       </Label>
+      <HBox fx:id="registerLblHBx" alignment="CENTER" layoutX="124.0" layoutY="637.0" prefHeight="30.0" prefWidth="200.0" spacing="5.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="620.0">
+         <children>
+            <Label fx:id="registerLblTxt" text="Don't have login ?">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="registerLblBtn" text="Register">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

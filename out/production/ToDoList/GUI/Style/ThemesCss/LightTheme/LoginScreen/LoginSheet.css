@@ -62,11 +62,32 @@
 
 }
 
-#signUpB {
 
--fx-background-color: #FAFAFA;
--fx-border-color: black;
--fx-border-radius: 5;
--fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5),4,0,0,1);
+#registerLblHBx {
+
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+
+}
+
+
+#registerLblTxt {
+
+-fx-text-fill: black;
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+-fx-alignment: center;
+-fx-font-size: 18px;
+
+}
+
+#registerLblBtn {
+
+-fx-text-fill: black;
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+-fx-alignment: center;
+-fx-font-size: 18px;
+-fx-font-weight: bold;
 
 }

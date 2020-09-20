@@ -7,8 +7,6 @@ import Main.Main;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.HBox;
 import tray.animations.AnimationType;
 import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
@@ -25,7 +24,6 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class LoginScreenController implements Initializable {
-
 
     @FXML
     private AnchorPane loginPane;
@@ -43,13 +41,19 @@ public class LoginScreenController implements Initializable {
     private JFXButton loginB;
 
     @FXML
-    private JFXButton signUpB;
-
-    @FXML
     private JFXPasswordField passwordTF;
 
     @FXML
     private Label errorL;
+
+    @FXML
+    private HBox registerLblHBx;
+
+    @FXML
+    private Label registerLblTxt;
+
+    @FXML
+    private Label registerLblBtn;
 
     private DataAccess dataAccess;
 
@@ -101,9 +105,9 @@ public class LoginScreenController implements Initializable {
 
     }
 
-    private void setupSignUpB() {
+    private void setupRegisterLblBtn() {
 
-        signUpB.setOnAction(e -> {
+        registerLblBtn.setOnMouseClicked(e -> {
             errorL.setText("");
 
             try {
@@ -157,21 +161,21 @@ public class LoginScreenController implements Initializable {
         userNameTF.setDisable(true);
         passwordTF.setDisable(true);
         loginB.setDisable(true);
-        signUpB.setDisable(true);
+        registerLblBtn.setDisable(true);
     }
 
     private void unlockLoginScreen() {
         userNameTF.setDisable(false);
         passwordTF.setDisable(false);
         loginB.setDisable(false);
-        signUpB.setDisable(false);
+        registerLblBtn.setDisable(false);
     }
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupLoginB();
-        setupSignUpB();
+        setupRegisterLblBtn();
         setupUserNameTF();
         setupPasswordTF();
     }

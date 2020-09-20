@@ -1,7 +1,7 @@
 package GUI.SearchBox;
 
 import GUI.Observer.IObserver;
-import Style.ColorHandling;
+import GUI.Style.ColorHandling;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;

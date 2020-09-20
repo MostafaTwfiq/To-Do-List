@@ -40,7 +40,7 @@ public class CustomStage implements IObserver {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("StageDesign.fxml"));
             loader.setController(rootController);
             stageRoot = loader.load();
-
+            stageRoot.getStylesheets().add("GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/Stage/StageSheet.css");
         } catch (Exception e) {
             e.printStackTrace();
         }

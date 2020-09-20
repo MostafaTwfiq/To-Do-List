@@ -7,13 +7,16 @@ module ToDoList {
     requires TrayTester;
     requires com.jfoenix;
 
-    //--add-opens
-    //java.base/java.lang.reflect=com.jfoenix
 
     opens Main;
     opens GUI.ScreenManager.Stage;
     opens GUI.Screens.LoginScreen;
     opens GUI.Screens.SignUpScreen;
     opens JFoenix;
+
+    //Light mode theme:
+    opens GUI.Style.ThemesCss.LightTheme.Stage;
+    opens GUI.Style.ThemesCss.LightTheme.LoginScreen;
+    opens GUI.Style.ThemesCss.LightTheme.SignUpScreen;
 
 }

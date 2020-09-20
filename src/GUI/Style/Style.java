@@ -1,4 +1,4 @@
-package Style;
+package GUI.Style;
 
 public abstract class Style {
 

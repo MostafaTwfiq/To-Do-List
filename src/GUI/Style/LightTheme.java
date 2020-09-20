@@ -1,7 +1,6 @@
-package Style;
+package GUI.Style;
 
 import javafx.scene.paint.Color;
-import javafx.stage.StageStyle;
 
 public class LightTheme extends Style {
 

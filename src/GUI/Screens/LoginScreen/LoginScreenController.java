@@ -111,6 +111,7 @@ public class LoginScreenController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Screens/SignUpScreen/SignUpScreenDesign.fxml"));
             loader.setController(signUpScreenController);
             signUpScreenParent = loader.load();
+            signUpScreenParent.getStylesheets().add("GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/SignUpScreen/SignUpSheet.css");
 
             Main.screenManager.changeScreen(signUpScreenParent);
 

@@ -1,6 +1,5 @@
 package Main;
 
-import DataBase.DataAccess;
 import DataClasses.User;
 import GUI.ScreenManager.Stage.CustomStage;
 import GUI.MultiProgressBar.MultiProgressBar;
@@ -12,7 +11,7 @@ import DataClasses.TaskStatus.TaskPriority;
 import DataClasses.TaskStatus.TaskStatus;
 import GUI.Screens.LoginScreen.LoginScreenController;
 import GUI.SearchBox.SearchBox;
-import Style.Style;
+import GUI.Style.Style;
 import com.jfoenix.controls.JFXChipView;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -21,13 +20,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import Style.*;
+import GUI.Style.*;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Vector;
 
 public class Main extends Application {
@@ -46,6 +41,7 @@ public class Main extends Application {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Screens/LoginScreen/LoginScreenStyle.fxml"));
             loader.setController(loginScreenController);
             loginScreenParent = loader.load();
+            loginScreenParent.getStylesheets().add("GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/LoginScreen/LoginSheet.css");
 
         } catch (Exception e) {
             e.printStackTrace();

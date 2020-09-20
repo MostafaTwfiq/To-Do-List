@@ -1,4 +1,4 @@
-package Style;
+package GUI.Style;
 
 import javafx.scene.paint.Color;
 

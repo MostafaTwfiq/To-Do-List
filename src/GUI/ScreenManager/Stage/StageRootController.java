@@ -1,7 +1,7 @@
 package GUI.ScreenManager.Stage;
 
 import Main.Main;
-import Style.ColorHandling;
+import GUI.Style.ColorHandling;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;

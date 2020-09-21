@@ -179,7 +179,8 @@ public class SignUpScreenController implements IControllers {
                     errorL.setText("This user name already exits.");
                 }  else {
 
-                    dataAccess.addNewUser(userNameTF.getText(), passwordTF.getText());
+                    Themes userTheme = Themes.valueOf(themesComboBox.getValue());
+                    dataAccess.addNewUser(userNameTF.getText(), passwordTF.getText(), userTheme);
 
                     if (userImagePath != null)
                         dataAccess.addNewUserImage(dataAccess.getLastInsertedID(), userImagePath);
@@ -285,6 +286,8 @@ public class SignUpScreenController implements IControllers {
         Themes[] themes = Themes.values();
         for (Themes theme : themes)
             themesComboBox.getItems().add(theme.toString());
+
+        themesComboBox.setValue("LightTheme");
 
         themesComboBox.valueProperty().addListener(new ChangeListener<String>() {
 

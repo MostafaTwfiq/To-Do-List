@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS `todoListDB`.`users` (
   `user_id` SMALLINT NOT NULL AUTO_INCREMENT,
   `user_name` VARCHAR(50) NOT NULL,
   `password` VARCHAR(50) NOT NULL,
+  `theme` ENUM('LightTheme', 'DarkTheme') NOT NULL,
   PRIMARY KEY (`user_id`))
 ENGINE = InnoDB;
 
@@ -140,6 +141,25 @@ DECLARE image_path VARCHAR(260) DEFAULT NULL;
 SELECT path INTO image_path FROM users_images ui WHERE ui.user_id = user_id;
 
 RETURN image_path;
+ 
+END $$
+DELIMITER ;
+
+
+
+-- This function will return the theme of the user with the passed id.
+DROP FUNCTION IF EXISTS get_user_theme;
+DELIMITER $$
+CREATE FUNCTION get_user_theme( user_id SMALLINT )
+RETURNS VARCHAR(15)
+READS SQL DATA
+BEGIN
+
+DECLARE user_theme VARCHAR(15) DEFAULT NULL;
+
+SELECT theme INTO user_theme FROM users u WHERE u.user_id = user_id;
+
+RETURN user_theme;
  
 END $$
 DELIMITER ;
@@ -363,10 +383,10 @@ DELIMITER ;
 -- This procedure will insert a new user in the users table.
 DROP PROCEDURE IF EXISTS add_new_user;
 DELIMITER $$
-CREATE PROCEDURE add_new_user(user_name VARCHAR(50), pass VARCHAR(50))
+CREATE PROCEDURE add_new_user(user_name VARCHAR(50), pass VARCHAR(50), theme VARCHAR(15))
 BEGIN
 
-INSERT INTO users VALUES (DEFAULT, user_name, pass);
+INSERT INTO users VALUES (DEFAULT, user_name, pass, theme);
 
 END $$
 DELIMITER ;
@@ -505,6 +525,18 @@ CREATE PROCEDURE update_user_password(user_id SMALLINT, new_pass VARCHAR(50))
 BEGIN
 
 UPDATE users SET users.password = new_pass WHERE users.user_id = user_id;
+
+END $$
+DELIMITER ;
+
+
+-- This procedure will update the user theme with the passed id.
+DROP PROCEDURE IF EXISTS update_user_theme;
+DELIMITER $$
+CREATE PROCEDURE update_user_theme(user_id SMALLINT, new_theme VARCHAR(15))
+BEGIN
+
+UPDATE users SET users.theme = new_theme WHERE users.user_id = user_id;
 
 END $$
 DELIMITER ;

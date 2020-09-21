@@ -3,6 +3,7 @@ package DataBase;
 import DataClasses.Task;
 import DataClasses.TaskStatus.TaskPriority;
 import DataClasses.TaskStatus.TaskStatus;
+import GUI.Style.Themes;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -71,6 +72,32 @@ public class DataAccess {
 
         if (resultSet.next())
             return resultSet.getString(1);
+
+        return null;
+
+    }
+
+
+
+    /** This function will return the theme for the user with the provided id.
+     * @param userID the user id
+     * @return it will return the theme of the user with the passed id.
+     * @throws SQLException exception in case something went wrong while reading the data
+     */
+
+    public Themes getUserTheme(int userID) throws SQLException {
+
+        ArrayList<String> parameters = new ArrayList<>();
+        parameters.add(String.format("%d", userID));
+
+        ResultSet resultSet = statement.executeQuery(
+                "SELECT get_user_theme"
+                        + convertStringToParameters(parameters)
+                        + ";"
+        );
+
+        if (resultSet.next())
+            return Themes.valueOf(resultSet.getString(1));
 
         return null;
 
@@ -485,14 +512,16 @@ public class DataAccess {
     /** This function will add a new user with the passed info.
      * @param userName the new user name
      * @param password the new user password
+     * @param theme the favorite theme of the user
      * @throws SQLException exception in case something went wrong
      */
 
-    public void addNewUser(String userName, String password) throws SQLException {
+    public void addNewUser(String userName, String password, Themes theme) throws SQLException {
 
         ArrayList<String> parameters = new ArrayList<>();
         parameters.add(addStringBetweenSingleQuote(userName));
         parameters.add(addStringBetweenSingleQuote(password));
+        parameters.add(addStringBetweenSingleQuote(theme.toString()));
 
         statement.executeQuery(
                 "CALL add_new_user"
@@ -729,6 +758,27 @@ public class DataAccess {
 
         statement.executeQuery(
                 "CALL update_user_password"
+                        + convertStringToParameters(parameters)
+                        + ";"
+        );
+
+    }
+
+
+    /** This function will update the user theme for the passed user id.
+     * @param userID the user id
+     * @param theme the new theme
+     * @throws SQLException exception in case something went wrong
+     */
+
+    public void updateUserTheme(int userID, Themes theme) throws SQLException {
+
+        ArrayList<String> parameters = new ArrayList<>();
+        parameters.add(String.format("%d", userID));
+        parameters.add(addStringBetweenSingleQuote(theme.toString()));
+
+        statement.executeQuery(
+                "CALL update_user_theme"
                         + convertStringToParameters(parameters)
                         + ";"
         );

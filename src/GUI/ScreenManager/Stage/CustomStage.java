@@ -1,7 +1,9 @@
 package GUI.ScreenManager.Stage;
 
+import GUI.IControllers;
 import GUI.Observer.IObserver;
 import GUI.ScreenManager.ScreenManager;
+import GUI.Style.ScreensPaths;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -26,7 +28,7 @@ public class CustomStage implements IObserver {
     private ScreenManager screenManager;
     private int height, width;
 
-    public CustomStage(int height, int width, Parent mainLayout, EventHandler<ActionEvent> updateLayoutStyleEvent) {
+    public CustomStage(int height, int width, IControllers mainLayoutController) {
 
         this.height = height;
         this.width = width;
@@ -38,11 +40,11 @@ public class CustomStage implements IObserver {
         rootController = new StageRootController(stage, "TODO", e -> System.exit(0));
 
         try {
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("StageDesign.fxml"));
+            ScreensPaths paths = new ScreensPaths();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(paths.getStageFxml()));
             loader.setController(rootController);
             stageRoot = loader.load();
-            stageRoot.getStylesheets().add("GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/Stage/StageSheet.css");
+            stageRoot.getStylesheets().add(paths.getStageCssSheet());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -51,7 +53,7 @@ public class CustomStage implements IObserver {
         setupScene();
         stage.setScene(scene);
 
-        screenManager.changeScreen(mainLayout, updateLayoutStyleEvent);
+        screenManager.changeScreen(mainLayoutController);
 
     }
 
@@ -127,6 +129,11 @@ public class CustomStage implements IObserver {
 
         changingLayoutTimeLine.play();
 
+    }
+
+    @Override
+    public void updateStyle() {
+        rootController.updateStyle();
     }
 
 }

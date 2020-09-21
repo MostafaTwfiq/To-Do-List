@@ -4,4 +4,6 @@ public interface IObserver {
 
     void update();
 
+    void updateStyle();
+
 }

@@ -1,11 +1,13 @@
 package GUI.ScreenManager.Stage;
 
+import GUI.IControllers;
+import GUI.Style.ScreensPaths;
 import Main.Main;
 import GUI.Style.ColorHandling;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -17,7 +19,7 @@ import java.io.FileInputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class StageRootController implements Initializable {
+public class StageRootController implements IControllers {
 
 
     @FXML
@@ -86,20 +88,20 @@ public class StageRootController implements Initializable {
 
     private void setupMinimizeB() {
 
-        try {
-            FileInputStream imageStream = new FileInputStream(Main.theme.getThemeResourcesPath()
-                    + "Stage/" + "minimizeB.png");
+        setMinimizeBStyle();
 
-            Image buttonImage = new Image(imageStream);
-            ImageView buttonImageView = new ImageView(buttonImage);
-            buttonImageView.setFitHeight(15);
-            buttonImageView.setFitWidth(15);
+        minimizeB.setOnAction(e -> stage.setIconified(true));
 
-            minimizeB.setGraphic(buttonImageView);
+    }
 
-        } catch (Exception e) {
-            System.out.println("There is an error happened while loading images.");
-        }
+    private void setMinimizeBStyle() {
+
+        minimizeB.setGraphic(
+                loadButtonImage(
+                        Main.theme.getThemeResourcesPath() + "Stage/minimizeB.png",
+                        15, 15
+                )
+        );
 
         minimizeB.setOnMouseEntered(e -> {
             minimizeB.styleProperty().setValue(
@@ -113,27 +115,23 @@ public class StageRootController implements Initializable {
             minimizeB.styleProperty().setValue("-fx-background-color: transparent;");
         });
 
-
-        minimizeB.setOnAction(e -> stage.setIconified(true));
-
     }
 
     private void setupCloseB() {
 
-        try {
-            FileInputStream imageStream = new FileInputStream(Main.theme.getThemeResourcesPath()
-                    + "Stage/" + "closeB.png");
+        setCloseBStyle();
 
-            Image buttonImage = new Image(imageStream);
-            ImageView buttonImageView = new ImageView(buttonImage);
-            buttonImageView.setFitHeight(15);
-            buttonImageView.setFitWidth(15);
+        closeB.setOnAction(onClosingEvent);
+    }
 
-            closeB.setGraphic(buttonImageView);
+    private void setCloseBStyle() {
 
-        } catch (Exception e) {
-            System.out.println("There is an error happened while loading images.");
-        }
+        closeB.setGraphic(
+                loadButtonImage(
+                Main.theme.getThemeResourcesPath() + "Stage/closeB.png",
+                15, 15
+                )
+        );
 
         closeB.setOnMouseEntered(e -> {
 
@@ -150,7 +148,27 @@ public class StageRootController implements Initializable {
 
         });
 
-        closeB.setOnAction(onClosingEvent);
+    }
+
+
+    private ImageView loadButtonImage(String imagePath, double h, double w) {
+
+        try {
+            FileInputStream imageStream = new FileInputStream(imagePath);
+
+            Image buttonImage = new Image(imageStream);
+            ImageView buttonImageView = new ImageView(buttonImage);
+            buttonImageView.setFitHeight(h);
+            buttonImageView.setFitWidth(w);
+
+            return buttonImageView;
+
+        } catch (Exception e) {
+            System.out.println("There is an error happened while loading buttons images in stage.");
+        }
+
+        return new ImageView();
+
     }
 
     public void setStageTitle(String title) {
@@ -191,5 +209,18 @@ public class StageRootController implements Initializable {
         setStageTitle(title);
     }
 
+
+    @Override
+    public void updateStyle() {
+        stageRoot.getStylesheets().clear();
+        stageRoot.getStylesheets().add(new ScreensPaths().getStageCssSheet());
+        setCloseBStyle();
+        setMinimizeBStyle();
+    }
+
+    @Override
+    public Parent getParent() {
+        return stageRoot;
+    }
 
 }

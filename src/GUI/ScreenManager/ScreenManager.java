@@ -1,5 +1,7 @@
 package GUI.ScreenManager;
 
+import GUI.IControllers;
+import GUI.Observer.IObserver;
 import GUI.Observer.Observer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -10,23 +12,20 @@ import java.util.Stack;
 
 public class ScreenManager extends Observer {
 
-    private final Stack<Parent> layoutsStack;
-    private final HashMap<Parent, EventHandler<ActionEvent>> updateStyleEventsHM;
+    private final Stack<IControllers> layoutsStack;
     private boolean lockScreen;
 
     public ScreenManager() {
         layoutsStack = new Stack<>();
-        updateStyleEventsHM = new HashMap<>();
         lockScreen = false;
     }
 
-    public void changeScreen(Parent layout, EventHandler<ActionEvent> updateStyleEvent) {
+    public void changeScreen(IControllers controller) {
 
         if (lockScreen)
             return;
 
-        layoutsStack.add(layout);
-        updateStyleEventsHM.put(layout, updateStyleEvent);
+        layoutsStack.add(controller);
         notifyObservers();
 
     }
@@ -37,16 +36,14 @@ public class ScreenManager extends Observer {
             return;
 
 
-        updateStyleEventsHM.remove(layoutsStack.pop());
+        layoutsStack.pop();
 
-
-        Parent lastLayout = layoutsStack.pop();
-        changeScreen(lastLayout, updateStyleEventsHM.remove(lastLayout));
+        changeScreen(layoutsStack.pop());
 
     }
 
     public Parent getCurrentLayout() {
-        return layoutsStack.peek();
+        return layoutsStack.peek().getParent();
     }
 
     public void setLockScreen(boolean lockScreen) {
@@ -59,8 +56,11 @@ public class ScreenManager extends Observer {
 
     public void updateScreensStyle() {
 
-        for (EventHandler<ActionEvent> event : updateStyleEventsHM.values())
-            event.handle(null);
+        for (IControllers controller : layoutsStack)
+            controller.updateStyle();
+
+        for (IObserver observer : getObservers())
+            observer.updateStyle();
 
     }
 

@@ -1,6 +1,8 @@
 package GUI.Screens.SignUpScreen;
 
 import DataBase.DataAccess;
+import GUI.IControllers;
+import GUI.Style.ScreensPaths;
 import GUI.Style.Themes;
 import Main.Main;
 import com.jfoenix.controls.JFXButton;
@@ -9,7 +11,7 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -30,7 +32,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
-public class SignUpScreenController implements Initializable {
+public class SignUpScreenController implements IControllers {
 
     @FXML
     private AnchorPane signUpPane;
@@ -75,12 +77,22 @@ public class SignUpScreenController implements Initializable {
 
     private void setupUserImageV() {
 
+        loadUserImageVImage();
+
+    }
+
+    private void loadUserImageVImage() {
+
         try {
-            FileInputStream fileInputStream = new FileInputStream("resources/Users/defaultUserProfileImage.png");
+
+            FileInputStream fileInputStream = new FileInputStream(Main.theme.getThemeResourcesPath()
+                    + "/SignUpScreen/defaultUserProfileImage.png");
+
             Image image = new Image(fileInputStream);
             userImageV.setImage(image);
+
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("can't load default user profile image in sign up screen.");
         }
 
     }
@@ -106,7 +118,7 @@ public class SignUpScreenController implements Initializable {
 
     private void setupChooseImageB() {
 
-        chooseImageB.setGraphic(loadButtonImage("resources/Users/chooseImage.png", 35, 40));
+        loadChooseImageBImage();
 
         chooseImageB.setOnAction(e -> {
             FileChooser fileChooser = new FileChooser();
@@ -116,6 +128,11 @@ public class SignUpScreenController implements Initializable {
 
         });
 
+    }
+
+    private void loadChooseImageBImage() {
+        chooseImageB.setGraphic(loadButtonImage(Main.theme.getThemeResourcesPath()
+                + "/SignUpScreen/chooseImage.png", 35, 40));
     }
 
     private void updateUserImageFile(File file) {
@@ -188,12 +205,17 @@ public class SignUpScreenController implements Initializable {
 
     private void setupCancelB() {
 
-        returnB.setGraphic(loadButtonImage("resources/Themes/LightTheme/SignUpScreen/return.png", 50, 50));
+        loadCancelBImage();
 
         returnB.setOnAction(e -> {
             Main.screenManager.changeToLastScreen();
         });
 
+    }
+
+    private void loadCancelBImage() {
+        returnB.setGraphic(loadButtonImage(Main.theme.getThemeResourcesPath()
+                + "/SignUpScreen/return.png", 50, 50));
     }
 
     private ImageView loadButtonImage(String path, double h, double w) {
@@ -289,6 +311,20 @@ public class SignUpScreenController implements Initializable {
         setupPasswordTF();
         setupConfirmPasswordTF();
         setupThemesComboBox();
+    }
+
+    @Override
+    public void updateStyle() {
+        signUpPane.getStylesheets().clear();
+        signUpPane.getStylesheets().add(new ScreensPaths().getLoginScreenCssSheet());
+        loadUserImageVImage();
+        loadCancelBImage();
+        loadChooseImageBImage();
+    }
+
+    @Override
+    public Parent getParent() {
+        return signUpPane;
     }
 
 }

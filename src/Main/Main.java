@@ -14,8 +14,6 @@ import GUI.SearchBox.SearchBox;
 import GUI.Style.Style;
 import com.jfoenix.controls.JFXChipView;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -40,21 +38,18 @@ public class Main extends Application {
         Parent loginScreenParent = null;
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Screens/LoginScreen/LoginScreenStyle.fxml"));
+
+            ScreensPaths paths = new ScreensPaths();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(paths.getLoginScreenFxml()));
             loader.setController(loginScreenController);
             loginScreenParent = loader.load();
-            loginScreenParent.getStylesheets().add("GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/LoginScreen/LoginSheet.css");
+            loginScreenParent.getStylesheets().add(paths.getLoginScreenCssSheet());
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        Parent finalLoginScreenParent = loginScreenParent;
-        CustomStage customStage = new CustomStage(700, 1000, loginScreenParent, e -> {
-            finalLoginScreenParent.getStylesheets().clear();
-            finalLoginScreenParent.getStylesheets().add("GUI/Style/ThemesCss/"
-                    + Main.theme.getThemeName() + "/LoginScreen/LoginSheet.css");
-        });
+        CustomStage customStage = new CustomStage(700, 1000, loginScreenController);
 
         customStage.showStageAndWait();
 

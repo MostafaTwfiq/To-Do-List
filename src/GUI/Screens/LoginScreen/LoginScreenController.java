@@ -2,7 +2,9 @@ package GUI.Screens.LoginScreen;
 
 import DataBase.DataAccess;
 import DataClasses.User;
+import GUI.IControllers;
 import GUI.Screens.SignUpScreen.SignUpScreenController;
+import GUI.Style.ScreensPaths;
 import Main.Main;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
@@ -13,7 +15,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
-import javafx.fxml.Initializable;
 import javafx.scene.layout.HBox;
 import tray.animations.AnimationType;
 import tray.notification.NotificationType;
@@ -23,7 +24,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class LoginScreenController implements Initializable {
+public class LoginScreenController implements IControllers {
 
     @FXML
     private AnchorPane loginPane;
@@ -113,17 +114,14 @@ public class LoginScreenController implements Initializable {
             try {
                 SignUpScreenController signUpScreenController = new SignUpScreenController();
                 Parent signUpScreenParent = null;
+                ScreensPaths paths = new ScreensPaths();
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/Screens/SignUpScreen/SignUpScreenDesign.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(paths.getSignUpScreenFxml()));
                 loader.setController(signUpScreenController);
                 signUpScreenParent = loader.load();
-                signUpScreenParent.getStylesheets().add("GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/SignUpScreen/SignUpSheet.css");
+                signUpScreenParent.getStylesheets().add(paths.getSignUpScreenCssSheet());
 
-                Parent finalSignUpScreenParent = signUpScreenParent;
-                Main.screenManager.changeScreen(signUpScreenParent, event -> {
-                    finalSignUpScreenParent.getStylesheets().clear();
-                    finalSignUpScreenParent.getStylesheets().add("GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/SignUpScreen/SignUpSheet.css");
-                });
+                Main.screenManager.changeScreen(signUpScreenController);
 
             } catch (Exception exception) {
                 exception.printStackTrace();
@@ -178,6 +176,17 @@ public class LoginScreenController implements Initializable {
         setupRegisterLblBtn();
         setupUserNameTF();
         setupPasswordTF();
+    }
+
+    @Override
+    public void updateStyle() {
+        loginPane.getStylesheets().clear();
+        loginPane.getStylesheets().add(new ScreensPaths().getLoginScreenCssSheet());
+    }
+
+    @Override
+    public Parent getParent() {
+        return loginPane;
     }
 
 }

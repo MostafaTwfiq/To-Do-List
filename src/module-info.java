@@ -19,4 +19,9 @@ module ToDoList {
     opens GUI.Style.ThemesCss.LightTheme.LoginScreen;
     opens GUI.Style.ThemesCss.LightTheme.SignUpScreen;
 
+    //Dark mode theme
+    opens GUI.Style.ThemesCss.DarkTheme.Stage;
+    opens GUI.Style.ThemesCss.DarkTheme.LoginScreen;
+    opens GUI.Style.ThemesCss.DarkTheme.SignUpScreen;
+
 }

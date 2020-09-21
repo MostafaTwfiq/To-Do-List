@@ -3,12 +3,15 @@ package GUI.Screens.SignUpScreen;
 import DataBase.DataAccess;
 import GUI.IControllers;
 import GUI.Style.ScreensPaths;
+import GUI.Style.StyleFactory;
 import GUI.Style.Themes;
 import Main.Main;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -278,9 +281,24 @@ public class SignUpScreenController implements IControllers {
     }
 
     private void setupThemesComboBox() {
+
         Themes[] themes = Themes.values();
         for (Themes theme : themes)
             themesComboBox.getItems().add(theme.toString());
+
+        themesComboBox.valueProperty().addListener(new ChangeListener<String>() {
+
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+
+                if(newValue != null && !newValue.equals(oldValue)) {
+                    Main.theme = new StyleFactory().generateTheme(Themes.valueOf(newValue));
+                    Main.screenManager.updateScreensStyle();
+                }
+
+            }
+
+        });
 
     }
 
@@ -316,7 +334,7 @@ public class SignUpScreenController implements IControllers {
     @Override
     public void updateStyle() {
         signUpPane.getStylesheets().clear();
-        signUpPane.getStylesheets().add(new ScreensPaths().getLoginScreenCssSheet());
+        signUpPane.getStylesheets().add(new ScreensPaths().getSignUpScreenCssSheet());
         loadUserImageVImage();
         loadCancelBImage();
         loadChooseImageBImage();

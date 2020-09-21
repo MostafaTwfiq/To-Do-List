@@ -2,7 +2,7 @@ package GUI.Style;
 
 import javafx.scene.paint.Color;
 
-public class ColorHandling {
+public class ColorTransformer {
 
     public String colorToHex(Color color) {
         return String.format( "#%02X%02X%02X",

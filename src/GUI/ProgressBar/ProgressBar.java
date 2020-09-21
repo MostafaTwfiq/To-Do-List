@@ -1,6 +1,6 @@
 package GUI.ProgressBar;
 
-import GUI.Style.ColorHandling;
+import GUI.Style.ColorTransformer;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -69,7 +69,7 @@ public class ProgressBar extends AnchorPane {
 
     private void setupProgressPStyle() {
 
-        progressP.styleProperty().set("-fx-background-color: " + new ColorHandling().colorToHex(progressC) + ";"
+        progressP.styleProperty().set("-fx-background-color: " + new ColorTransformer().colorToHex(progressC) + ";"
                 + "-fx-background-radius: " + String.format("%f", getPrefHeight() / 7.0)+ ";"
                 + "-fx-border-color: transparent;"
                 + "-fx-border-radius: " + String.format("%f", getPrefHeight() / 7.0)+ ";");
@@ -91,7 +91,7 @@ public class ProgressBar extends AnchorPane {
 
     private void setupProgressLStyle() {
 
-        progressLabel.setStyle("-fx-text-fill: " + new ColorHandling().colorToHex(labelC) + ";"
+        progressLabel.setStyle("-fx-text-fill: " + new ColorTransformer().colorToHex(labelC) + ";"
                 + "-fx-font-size: " + String.format("%f", getPrefHeight() * 0.6)+ "px;"
                 + "-fx-font-weight: bold;");
 
@@ -113,7 +113,7 @@ public class ProgressBar extends AnchorPane {
 
     private void setupProgressBarStyle() {
 
-        styleProperty().set("-fx-background-color: " + new ColorHandling().colorToHex(progressBarC) + ";"
+        styleProperty().set("-fx-background-color: " + new ColorTransformer().colorToHex(progressBarC) + ";"
                 + "-fx-background-radius: " + String.format("%f", getPrefHeight() / 7.0) + ";"
                 + "-fx-border-radius: " + String.format("%f", getPrefHeight() / 7) + ";");
 

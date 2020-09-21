@@ -3,7 +3,7 @@ package GUI.ScreenManager.Stage;
 import GUI.IControllers;
 import GUI.Style.ScreensPaths;
 import Main.Main;
-import GUI.Style.ColorHandling;
+import GUI.Style.ColorTransformer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -106,7 +106,7 @@ public class StageRootController implements IControllers {
         minimizeB.setOnMouseEntered(e -> {
             minimizeB.styleProperty().setValue(
                     "-fx-background-color: "
-                            + new ColorHandling().colorToHex(Main.theme.getStageStyle().getMinimizeBOnMoveColor())
+                            + new ColorTransformer().colorToHex(Main.theme.getStageStyle().getMinimizeBOnMoveColor())
                             + ";"
             );
 
@@ -136,7 +136,7 @@ public class StageRootController implements IControllers {
         closeB.setOnMouseEntered(e -> {
 
             closeB.styleProperty().setValue("-fx-background-color: "
-                    + new ColorHandling().colorToHex(Main.theme.getStageStyle().getCloseBOnMoveColor())
+                    + new ColorTransformer().colorToHex(Main.theme.getStageStyle().getCloseBOnMoveColor())
                     + ";"
             );
 

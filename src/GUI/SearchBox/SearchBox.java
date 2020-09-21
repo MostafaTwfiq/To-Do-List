@@ -1,7 +1,7 @@
 package GUI.SearchBox;
 
 import GUI.Observer.IObserver;
-import GUI.Style.ColorHandling;
+import GUI.Style.ColorTransformer;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -174,7 +174,7 @@ public class SearchBox extends HBox {
         styleProperty().set("-fx-background-radius: " + getPrefHeight() / 5.0 + ";"
                 + "-fx-border-radius: " + getPrefHeight() / 5.0 + ";"
                 + "-fx-border-color: transparent;"
-                + "-fx-background-color: " + new ColorHandling().colorToHex(searchBoxColor) + ";");
+                + "-fx-background-color: " + new ColorTransformer().colorToHex(searchBoxColor) + ";");
 
     }
 
@@ -243,11 +243,11 @@ public class SearchBox extends HBox {
     }
 
     private String getSearchFieldStyle() {
-        ColorHandling colorHandling = new ColorHandling();
+        ColorTransformer colorTransformer = new ColorTransformer();
         return    "-fx-border-color: transparent;"
                 + "-fx-background-color: transparent;"
-                + "-fx-text-fill: " + colorHandling.colorToHex(textColor) + ";"
-                + "-fx-prompt-text-fill: " + colorHandling.colorToHex(promptTextColor) + ";";
+                + "-fx-text-fill: " + colorTransformer.colorToHex(textColor) + ";"
+                + "-fx-prompt-text-fill: " + colorTransformer.colorToHex(promptTextColor) + ";";
     }
 
 

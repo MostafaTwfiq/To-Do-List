@@ -9,24 +9,24 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="loginPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1000.0" stylesheets="@../../Style/ThemesCss/LightTheme/LoginScreen/LoginSheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="loginPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="welcomeL" alignment="CENTER" layoutX="367.0" layoutY="96.0" text="Welcome" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+      <Label fx:id="welcomeL" alignment="CENTER" layoutX="367.0" layoutY="96.0" text="Welcome" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
          <font>
             <Font name="Arial" size="96.0" />
          </font>
       </Label>
-      <Label fx:id="infoL" alignment="CENTER" layoutX="440.0" layoutY="266.0" text="Please login in to continue" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="220.0">
+      <Label fx:id="infoL" alignment="CENTER" layoutX="440.0" layoutY="266.0" text="Please login in to continue" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="170.0">
          <font>
             <Font name="Arial" size="25.0" />
          </font>
       </Label>
-      <JFXTextField fx:id="userNameTF" focusColor="BLACK" layoutX="291.0" layoutY="356.0" prefHeight="40.0" prefWidth="500.0" promptText="User name" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="350.0">
+      <JFXTextField fx:id="userNameTF" focusColor="BLACK" layoutX="291.0" layoutY="356.0" prefHeight="40.0" prefWidth="500.0" promptText="User name" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="300.0">
          <font>
             <Font name="Arial" size="18.0" />
          </font>
       </JFXTextField>
-      <JFXButton fx:id="loginB" layoutX="248.0" layoutY="540.0" prefHeight="50.0" prefWidth="1000.0" text="Login" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="550.0">
+      <JFXButton fx:id="loginB" layoutX="248.0" layoutY="540.0" prefHeight="50.0" prefWidth="1000.0" text="Login" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="500.0">
          <font>
             <Font size="24.0" />
          </font>
@@ -34,17 +34,17 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXPasswordField fx:id="passwordTF" focusColor="BLACK" layoutX="253.0" layoutY="447.0" prefHeight="40.0" prefWidth="500.0" promptText="Password" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="450.0">
+      <JFXPasswordField fx:id="passwordTF" focusColor="BLACK" layoutX="253.0" layoutY="447.0" prefHeight="40.0" prefWidth="500.0" promptText="Password" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="400.0">
          <font>
             <Font size="18.0" />
          </font>
       </JFXPasswordField>
-      <Label fx:id="errorL" layoutX="255.0" layoutY="507.0" prefHeight="30.0" prefWidth="500.0" textFill="RED" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="500.0">
+      <Label fx:id="errorL" layoutX="255.0" layoutY="507.0" prefHeight="30.0" prefWidth="500.0" textFill="RED" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="450.0">
          <font>
             <Font name="Arial" size="14.0" />
          </font>
       </Label>
-      <HBox fx:id="registerLblHBx" alignment="CENTER" layoutX="124.0" layoutY="637.0" prefHeight="30.0" prefWidth="200.0" spacing="5.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="620.0">
+      <HBox fx:id="registerLblHBx" alignment="CENTER" layoutX="124.0" layoutY="637.0" prefHeight="30.0" prefWidth="200.0" spacing="5.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="570.0">
          <children>
             <Label fx:id="registerLblTxt" text="Don't have login ?">
                <font>

@@ -1,8 +1,10 @@
 package GUI.Screens.SignUpScreen;
 
 import DataBase.DataAccess;
+import GUI.Style.Themes;
 import Main.Main;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.EventHandler;
@@ -43,9 +45,6 @@ public class SignUpScreenController implements Initializable {
     private JFXTextField userNameTF;
 
     @FXML
-    private JFXButton cancelB;
-
-    @FXML
     private JFXButton signUpB;
 
     @FXML
@@ -53,6 +52,15 @@ public class SignUpScreenController implements Initializable {
 
     @FXML
     private Label errorL;
+
+    @FXML
+    private JFXPasswordField confirmPasswordTF;
+
+    @FXML
+    private JFXComboBox<String> themesComboBox;
+
+    @FXML
+    private Button returnB;
 
     private String userImagePath;
 
@@ -98,20 +106,7 @@ public class SignUpScreenController implements Initializable {
 
     private void setupChooseImageB() {
 
-        try {
-
-            FileInputStream imageStream = new FileInputStream("resources/Users/chooseImage.png");
-
-            Image buttonImage = new Image(imageStream);
-            ImageView buttonImageView = new ImageView(buttonImage);
-            buttonImageView.setFitHeight(35);
-            buttonImageView.setFitWidth(40);
-
-            chooseImageB.setGraphic(buttonImageView);
-
-        } catch (Exception e) {
-            System.out.println("There is an error happened while loading images.");
-        }
+        chooseImageB.setGraphic(loadButtonImage("resources/Users/chooseImage.png", 35, 40));
 
         chooseImageB.setOnAction(e -> {
             FileChooser fileChooser = new FileChooser();
@@ -148,8 +143,11 @@ public class SignUpScreenController implements Initializable {
 
         signUpB.setOnAction(e -> {
 
-            if (userNameTF.getText().equals("") || passwordTF.getText().equals("")) {
+            if (userNameTF.getText().equals("") || passwordTF.getText().equals("") || confirmPasswordTF.getText().equals("")) {
                 errorL.setText("Please enter a valid user name and password.");
+                return;
+            } else if (!passwordTF.getText().equals(confirmPasswordTF.getText())) {
+                errorL.setText("Passwords don't match.");
                 return;
             }
 
@@ -190,9 +188,32 @@ public class SignUpScreenController implements Initializable {
 
     private void setupCancelB() {
 
-        cancelB.setOnAction(e -> {
+        returnB.setGraphic(loadButtonImage("resources/Themes/LightTheme/SignUpScreen/return.png", 50, 50));
+
+        returnB.setOnAction(e -> {
             Main.screenManager.changeToLastScreen();
         });
+
+    }
+
+    private ImageView loadButtonImage(String path, double h, double w) {
+
+        try {
+
+            FileInputStream imageStream = new FileInputStream(path);
+
+            Image buttonImage = new Image(imageStream);
+            ImageView buttonImageView = new ImageView(buttonImage);
+            buttonImageView.setFitHeight(h);
+            buttonImageView.setFitWidth(w);
+
+            return buttonImageView;
+
+        } catch (Exception e) {
+            System.out.println("There is an error happened while loading images.");
+        }
+
+        return new ImageView();
 
     }
 
@@ -212,27 +233,49 @@ public class SignUpScreenController implements Initializable {
 
         passwordTF.setOnKeyReleased(e -> {
 
+            if (e.getCode() == KeyCode.UP)
+                userNameTF.requestFocus();
+            else if (e.getCode() == KeyCode.ENTER || e.getCode() == KeyCode.DOWN)
+                confirmPasswordTF.requestFocus();
+
+        });
+
+    }
+
+    private void setupConfirmPasswordTF() {
+
+        confirmPasswordTF.setOnKeyReleased(e -> {
+
             if (e.getCode() == KeyCode.ENTER)
                 signUpB.fire();
             else if (e.getCode() == KeyCode.UP)
-                userNameTF.requestFocus();
+                passwordTF.requestFocus();
 
         });
+
+    }
+
+    private void setupThemesComboBox() {
+        Themes[] themes = Themes.values();
+        for (Themes theme : themes)
+            themesComboBox.getItems().add(theme.toString());
 
     }
 
     private void lockSignUpScreen() {
         userNameTF.setDisable(true);
         passwordTF.setDisable(true);
+        confirmPasswordTF.setDisable(true);
         signUpB.setDisable(true);
-        cancelB.setDisable(true);
+        returnB.setDisable(true);
     }
 
     private void unlockSignUpScreen() {
         userNameTF.setDisable(false);
         passwordTF.setDisable(false);
+        confirmPasswordTF.setDisable(false);
         signUpB.setDisable(false);
-        cancelB.setDisable(false);
+        returnB.setDisable(false);
     }
 
     @Override
@@ -244,6 +287,8 @@ public class SignUpScreenController implements Initializable {
         setupCancelB();
         setupUserNameTF();
         setupPasswordTF();
+        setupConfirmPasswordTF();
+        setupThemesComboBox();
     }
 
 }

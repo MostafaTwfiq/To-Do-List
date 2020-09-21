@@ -7,9 +7,7 @@
 #chooseImageB {
 
 -fx-background-color: transparent;
--fx-background-radius: 25;
 -fx-border-color: transparent;
--fx-border-radius: 25;
 
 }
 
@@ -41,6 +39,17 @@
 
 }
 
+
+#confirmPasswordTF {
+
+-fx-text-fill: black;
+-fx-prompt-text-fill: #4f5254;
+-jfx-focus-color: black;
+-jfx-unfocus-color: #4f5254;
+
+}
+
+
 #signUpB {
 
 -fx-background-color: #FAFAFA;
@@ -50,11 +59,19 @@
 
 }
 
-#cancelB {
+#returnB {
 
--fx-background-color: #FAFAFA;
--fx-border-color: black;
--fx-border-radius: 5;
--fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5),4,0,0,1);
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+
+}
+
+
+#themesComboBox {
+
+-fx-font-size: 16px;
+-fx-prompt-text-fill: black;
+-jfx-focus-color: black;
+-jfx-unfocus-color: #4f5254;
 
 }

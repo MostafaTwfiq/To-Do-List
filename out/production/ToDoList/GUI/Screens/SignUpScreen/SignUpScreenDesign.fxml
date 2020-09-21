@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.Cursor?>
@@ -12,19 +13,19 @@
 
 <AnchorPane fx:id="signUpPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fx:id="userImageV" fitHeight="200.0" fitWidth="200.0" layoutX="399.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="100.0">
+      <ImageView fx:id="userImageV" fitHeight="200.0" fitWidth="200.0" layoutX="432.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="20.0">
       </ImageView>
-      <Button fx:id="chooseImageB" layoutX="607.0" layoutY="244.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" AnchorPane.leftAnchor="615.0" AnchorPane.rightAnchor="345.0" AnchorPane.topAnchor="250.0">
+      <Button fx:id="chooseImageB" layoutX="605.0" layoutY="175.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" AnchorPane.leftAnchor="605.0" AnchorPane.topAnchor="175.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <JFXTextField fx:id="userNameTF" focusColor="BLACK" layoutX="270.0" layoutY="393.0" prefHeight="40.0" prefWidth="500.0" promptText="User name" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="350.0">
+      <JFXTextField fx:id="userNameTF" focusColor="BLACK" layoutX="270.0" layoutY="393.0" prefHeight="40.0" prefWidth="500.0" promptText="User name" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="320.0">
          <font>
             <Font name="Arial" size="18.0" />
          </font>
       </JFXTextField>
-      <JFXButton fx:id="cancelB" layoutX="567.0" layoutY="597.0" prefHeight="50.0" prefWidth="150.0" text="Cancel" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="550.0">
+      <JFXButton fx:id="signUpB" layoutX="259.0" layoutY="592.0" prefHeight="50.0" prefWidth="150.0" text="Sign up" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="550.0">
          <font>
             <Font size="24.0" />
          </font>
@@ -32,23 +33,26 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton fx:id="signUpB" layoutX="259.0" layoutY="592.0" prefHeight="50.0" prefWidth="150.0" text="Sign up" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="550.0">
-         <font>
-            <Font size="24.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </JFXButton>
-      <JFXPasswordField fx:id="passwordTF" focusColor="BLACK" layoutX="374.0" layoutY="508.0" prefHeight="40.0" prefWidth="500.0" promptText="Password" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="450.0">
+      <JFXPasswordField fx:id="passwordTF" focusColor="BLACK" layoutX="374.0" layoutY="508.0" prefHeight="40.0" prefWidth="500.0" promptText="Password" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="390.0">
          <font>
             <Font name="Arial" size="18.0" />
          </font>
       </JFXPasswordField>
-      <Label fx:id="errorL" layoutX="255.0" layoutY="565.0" prefHeight="30.0" prefWidth="500.0" textFill="RED" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="500.0">
+      <Label fx:id="errorL" layoutX="255.0" layoutY="565.0" prefHeight="30.0" prefWidth="500.0" textFill="RED" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="510.0">
          <font>
             <Font name="Arial" size="14.0" />
          </font>
       </Label>
+      <JFXPasswordField fx:id="confirmPasswordTF" focusColor="BLACK" layoutX="286.0" layoutY="575.0" prefHeight="40.0" prefWidth="500.0" promptText="Confirm password" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="460.0">
+         <font>
+            <Font name="Arial" size="18.0" />
+         </font>
+      </JFXPasswordField>
+      <JFXComboBox fx:id="themesComboBox" focusColor="BLACK" layoutX="374.0" layoutY="285.0" prefHeight="40.0" prefWidth="500.0" promptText="Choose theme" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="250.0" />
+      <Button fx:id="returnB" layoutX="42.0" layoutY="54.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </AnchorPane>

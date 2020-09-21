@@ -5,6 +5,7 @@ import DataClasses.User;
 import GUI.IControllers;
 import GUI.Screens.SignUpScreen.SignUpScreenController;
 import GUI.Style.ScreensPaths;
+import GUI.Style.Theme;
 import Main.Main;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
@@ -83,7 +84,8 @@ public class LoginScreenController implements IControllers {
                 else {
 
                     String userImagePath = dataAccess.getUserImagePath(userID);
-                    Main.user = new User((short) userID, userNameTF.getText());
+                    Theme userTheme = dataAccess.getUserTheme(userID);
+                    Main.user = new User((short) userID, userNameTF.getText(), userTheme);
                     if (userImagePath != null)
                         Main.user.setUserImagePath(userImagePath);
 

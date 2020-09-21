@@ -3,7 +3,7 @@ package DataBase;
 import DataClasses.Task;
 import DataClasses.TaskStatus.TaskPriority;
 import DataClasses.TaskStatus.TaskStatus;
-import GUI.Style.Themes;
+import GUI.Style.Theme;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -85,7 +85,7 @@ public class DataAccess {
      * @throws SQLException exception in case something went wrong while reading the data
      */
 
-    public Themes getUserTheme(int userID) throws SQLException {
+    public Theme getUserTheme(int userID) throws SQLException {
 
         ArrayList<String> parameters = new ArrayList<>();
         parameters.add(String.format("%d", userID));
@@ -97,7 +97,7 @@ public class DataAccess {
         );
 
         if (resultSet.next())
-            return Themes.valueOf(resultSet.getString(1));
+            return Theme.valueOf(resultSet.getString(1));
 
         return null;
 
@@ -516,7 +516,7 @@ public class DataAccess {
      * @throws SQLException exception in case something went wrong
      */
 
-    public void addNewUser(String userName, String password, Themes theme) throws SQLException {
+    public void addNewUser(String userName, String password, Theme theme) throws SQLException {
 
         ArrayList<String> parameters = new ArrayList<>();
         parameters.add(addStringBetweenSingleQuote(userName));
@@ -771,7 +771,7 @@ public class DataAccess {
      * @throws SQLException exception in case something went wrong
      */
 
-    public void updateUserTheme(int userID, Themes theme) throws SQLException {
+    public void updateUserTheme(int userID, Theme theme) throws SQLException {
 
         ArrayList<String> parameters = new ArrayList<>();
         parameters.add(String.format("%d", userID));

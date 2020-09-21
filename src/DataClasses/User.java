@@ -1,14 +1,17 @@
 package DataClasses;
 
 
+import GUI.Style.Theme;
+
 public class User {
 
     private short userID;
     private String userName;
     private String userImagePath;
     private final String defaultUserImagePath = "resources/Users/defaultUserProfileImage.png";
+    private Theme theme;
 
-    public User(short userID, String userName) {
+    public User(short userID, String userName, Theme theme) {
 
         if (userName == null)
             throw new IllegalArgumentException();
@@ -16,10 +19,11 @@ public class User {
         this.userID = userID;
         this.userName = userName;
         this.userImagePath = defaultUserImagePath;
+        this.theme = theme;
 
     }
 
-    public User(short userID, String userName, String userImagePath) {
+    public User(short userID, String userName, String userImagePath, Theme theme) {
 
         if (userName == null || userImagePath == null)
             throw new IllegalArgumentException();
@@ -27,6 +31,7 @@ public class User {
         this.userID = userID;
         this.userName = userName;
         this.userImagePath = userImagePath;
+        this.theme = theme;
     }
 
     public String getUserName() {
@@ -72,4 +77,15 @@ public class User {
         return defaultUserImagePath;
     }
 
+    public Theme getTheme() {
+        return theme;
+    }
+
+    public void setTheme(Theme theme) {
+
+        if (theme == null)
+            throw new IllegalArgumentException();
+
+        this.theme = theme;
+    }
 }

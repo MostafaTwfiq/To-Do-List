@@ -3,7 +3,7 @@ package GUI.Style;
 public class StyleFactory {
 
 
-    public Style generateTheme(Themes theme) {
+    public Style generateTheme(Theme theme) {
 
         switch (theme) {
             case LightTheme:

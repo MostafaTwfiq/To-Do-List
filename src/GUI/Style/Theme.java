@@ -1,5 +1,5 @@
 package GUI.Style;
 
-public enum Themes {
+public enum Theme {
     LightTheme, DarkTheme
 }

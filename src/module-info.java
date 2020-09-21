@@ -18,10 +18,12 @@ module ToDoList {
     opens GUI.Style.ThemesCss.LightTheme.Stage;
     opens GUI.Style.ThemesCss.LightTheme.LoginScreen;
     opens GUI.Style.ThemesCss.LightTheme.SignUpScreen;
+    opens GUI.Style.ThemesCss.LightTheme.MainScreen;
 
     //Dark mode theme
     opens GUI.Style.ThemesCss.DarkTheme.Stage;
     opens GUI.Style.ThemesCss.DarkTheme.LoginScreen;
     opens GUI.Style.ThemesCss.DarkTheme.SignUpScreen;
+    opens GUI.Style.ThemesCss.DarkTheme.MainScreen;
 
 }

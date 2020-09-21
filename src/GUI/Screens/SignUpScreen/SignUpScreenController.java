@@ -4,7 +4,7 @@ import DataBase.DataAccess;
 import GUI.IControllers;
 import GUI.Style.ScreensPaths;
 import GUI.Style.StyleFactory;
-import GUI.Style.Themes;
+import GUI.Style.Theme;
 import Main.Main;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -179,7 +179,7 @@ public class SignUpScreenController implements IControllers {
                     errorL.setText("This user name already exits.");
                 }  else {
 
-                    Themes userTheme = Themes.valueOf(themesComboBox.getValue());
+                    Theme userTheme = Theme.valueOf(themesComboBox.getValue());
                     dataAccess.addNewUser(userNameTF.getText(), passwordTF.getText(), userTheme);
 
                     if (userImagePath != null)
@@ -283,11 +283,11 @@ public class SignUpScreenController implements IControllers {
 
     private void setupThemesComboBox() {
 
-        Themes[] themes = Themes.values();
-        for (Themes theme : themes)
+        Theme[] themes = Theme.values();
+        for (Theme theme : themes)
             themesComboBox.getItems().add(theme.toString());
 
-        themesComboBox.setValue("LightTheme");
+        themesComboBox.setValue(Main.theme.getThemeName());
 
         themesComboBox.valueProperty().addListener(new ChangeListener<String>() {
 
@@ -295,7 +295,7 @@ public class SignUpScreenController implements IControllers {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 
                 if(newValue != null && !newValue.equals(oldValue)) {
-                    Main.theme = new StyleFactory().generateTheme(Themes.valueOf(newValue));
+                    Main.theme = new StyleFactory().generateTheme(Theme.valueOf(newValue));
                     Main.screenManager.updateScreensStyle();
                 }
 
@@ -341,7 +341,7 @@ public class SignUpScreenController implements IControllers {
 
         if (userImagePath == null)
             loadUserImageVImage();
-        
+
         loadCancelBImage();
         loadChooseImageBImage();
     }

@@ -1,0 +1,141 @@
+
+#parentLayout {
+
+-fx-background-color: white;
+
+}
+
+#tasksViewLayout {
+
+-fx-background-color: white;
+
+}
+
+
+#tasksScrollPane {
+
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+
+}
+
+
+#tasksScrollPane .viewport {
+
+-fx-background-color: transparent;
+
+}
+
+
+#toolsLayout {
+
+-fx-background-color: #FAFAFA;
+
+}
+
+
+#userOverviewLayout {
+
+-fx-background-color: transparent;
+-fx-border-color: trasnparent;
+
+}
+
+#userNameLbl {
+
+-fx-text-fill: black;
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+-fx-font-size: 20px;
+-fx-font-weight: bold;
+
+}
+
+#userSettingsB {
+
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+
+}
+
+#searchBoxLayout {
+
+-fx-background-color: transparent;
+-fx-border-color: trasnparent;
+
+}
+
+
+#datePicker {
+
+-fx-background-color: transparent;
+-fx-font-size: 15px;
+-fx-font-weight: bold;
+
+}
+
+
+#optionsScrollPane {
+
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+
+}
+
+
+#optionsScrollPane .viewport {
+
+-fx-background-color: transparent;
+
+}
+
+
+#optionsListLayout {
+
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+
+}
+
+
+#optionsListView {
+
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+
+}
+
+
+#filtersLayout {
+
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+
+}
+
+
+#filtersLbl {
+
+-fx-text-fill: black;
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+-fx-font-size: 14px;
+-fx-font-weight: bold;
+
+}
+
+
+#filtersChipView {
+
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+
+}
+
+
+#progressBarsLayout {
+
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+
+}

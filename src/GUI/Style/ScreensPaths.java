@@ -7,6 +7,7 @@ public class ScreensPaths {
     private final String stageCssSheet = "GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/Stage/StageSheet.css";
     private final String loginScreenCssSheet = "GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/LoginScreen/LoginSheet.css";
     private final String signUpScreenCssSheet = "GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/SignUpScreen/SignUpSheet.css";
+    private final String mainScreenCssSheet = "GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/MainScreen/AppMainSheet.css";
 
 
     public String getStageFxml() {
@@ -19,8 +20,7 @@ public class ScreensPaths {
     }
 
     public String getLoginScreenFxml() {
-        String loginScreenFxml = "/GUI/Screens/LoginScreen/LoginScreenStyle.fxml";
-        return loginScreenFxml;
+        return "/GUI/Screens/LoginScreen/LoginScreenStyle.fxml";
     }
 
     public String getLoginScreenCssSheet() {
@@ -28,12 +28,19 @@ public class ScreensPaths {
     }
 
     public String getSignUpScreenFxml() {
-        String signUpScreenFxml = "/GUI/Screens/SignUpScreen/SignUpScreenDesign.fxml";
-        return signUpScreenFxml;
+        return "/GUI/Screens/SignUpScreen/SignUpScreenDesign.fxml";
     }
 
     public String getSignUpScreenCssSheet() {
         return signUpScreenCssSheet;
     }
 
+
+    public String getMainScreenFxml() {
+        return "/GUI/Screens/MainScreen/MainScreenDesign.fxml";
+    }
+
+    public String getMainScreenCssSheet() {
+        return mainScreenCssSheet;
+    }
 }

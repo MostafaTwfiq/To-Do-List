@@ -338,7 +338,10 @@ public class SignUpScreenController implements IControllers {
     public void updateStyle() {
         signUpPane.getStylesheets().clear();
         signUpPane.getStylesheets().add(new ScreensPaths().getSignUpScreenCssSheet());
-        loadUserImageVImage();
+
+        if (userImagePath == null)
+            loadUserImageVImage();
+        
         loadCancelBImage();
         loadChooseImageBImage();
     }

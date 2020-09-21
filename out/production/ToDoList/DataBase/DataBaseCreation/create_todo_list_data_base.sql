@@ -334,7 +334,7 @@ END $$
 DELIMITER ;
 
 
--- This funciton will return the number of tasks for a user on a specific date.
+-- This function will return the number of tasks for a user on a specific date.
 DROP FUNCTION IF EXISTS get_user_tasks_num_at_date;
 DELIMITER $$
 CREATE FUNCTION get_user_tasks_num_at_date (user_id SMALLINT, datetime DATETIME)
@@ -600,7 +600,7 @@ END $$
 DELIMITER ;
 
 
--- This procedure will update a tag for a spesific task.
+-- This procedure will update a tag for a specific task.
 DROP PROCEDURE IF EXISTS update_tag;
 DELIMITER $$
 CREATE PROCEDURE update_tag(task_id INT, old_tag VARCHAR(50), new_tag VARCHAR(50))
@@ -628,7 +628,7 @@ DELIMITER ;
 
 /** Start check if exists functions*/
 
--- This function will check if the passed user id exisits or not.
+-- This function will check if the passed user id exists or not.
 DROP FUNCTION IF EXISTS user_id_exists;
 DELIMITER $$ 
 CREATE FUNCTION user_id_exists ( user_id SMALLINT )

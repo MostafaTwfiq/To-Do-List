@@ -33,7 +33,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class MainScreenController implements IControllers {
+public class MainScreenController implements IControllersObserver {
 
     @FXML
     private AnchorPane parentLayout;
@@ -245,5 +245,10 @@ public class MainScreenController implements IControllers {
         setupOptionsListView();
     }
 
+
+    @Override
+    public void updateTasks() {
+
+    }
 
 }

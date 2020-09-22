@@ -1,30 +1,32 @@
 package GUI.Screens.MainScreen;
 
 import DataBase.DataAccess;
-import GUI.IControllers;
+import DataClasses.DateFormat;
+import DataClasses.Task;
+import DataClasses.TaskStatus.TaskPriority;
+import DataClasses.TaskStatus.TaskStatus;
 import GUI.MultiProgressBar.MultiProgressBar;
 import GUI.ProgressBar.ProgressBar;
+import GUI.Screens.MainScreen.TasksOverview.TasksOverviewList;
 import GUI.SearchBox.SearchBox;
-import GUI.Style.Style.ExtraComponents.ProgressBarTheme;
 import GUI.Style.Style.ExtraComponents.SearchBoxTheme;
-import GUI.Style.Style.Theme;
-import GUI.Style.StyleFactory;
 import Main.Main;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.animation.AnimationTimer;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 
 import java.io.FileInputStream;
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 import com.jfoenix.controls.JFXChipView;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXListView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -96,9 +98,39 @@ public class MainScreenController implements IControllersObserver {
 
     private ProgressBar progressBar;
 
+    private List<Task> todayTasks;
+
+    private AnimationTimer reminderChecker;
+
+    private Date todayDate;
+
+    private TasksOverviewList tasksOverviewList;
 
     public MainScreenController() throws Exception {
+
         dataAccess = new DataAccess();
+        todayTasks = new Vector<>();
+        todayDate = new Date();
+
+        tasksOverviewList = new TasksOverviewList();
+        tasksOverviewList.addObserver(this);
+
+        reminderChecker = new AnimationTimer() {
+            @Override
+            public void handle(long l) {
+
+                if (todayDate.before(new Date())) {
+                    loadTodayTasks();
+                }
+
+            }
+        };
+    }
+
+    private void checkForReminders() {
+        for (Task task : todayTasks) {
+            //if (todayDate.compareTo(task.getDateTime().toLocalTime().tos))
+        }
     }
 
 
@@ -122,10 +154,6 @@ public class MainScreenController implements IControllersObserver {
         AnchorPane.setBottomAnchor(searchBox, 0.0);
         AnchorPane.setRightAnchor(searchBox, 5.0);
         AnchorPane.setLeftAnchor(searchBox, 5.0);
-
-    }
-
-    private void searchForTasks() {
 
     }
 
@@ -198,9 +226,8 @@ public class MainScreenController implements IControllersObserver {
 
         datePicker.valueProperty().addListener((ov, oldValue, newValue) -> {
 
-            if (oldValue == null || !oldValue.isEqual(newValue)) {
+            if (oldValue == null || !oldValue.isEqual(newValue))
                 searchForTasks();
-            }
 
         });
 
@@ -227,6 +254,21 @@ public class MainScreenController implements IControllersObserver {
 
     }
 
+    private void loadTodayTasks() {
+
+        try {
+
+            todayTasks = dataAccess.getTaskInfo(dataAccess.getTasksIDs(Main.user.getUserID(),
+                    new SimpleDateFormat(DateFormat.getDateTimeFormat()).format(new Date()))
+            );
+
+        } catch (Exception e) {
+            System.out.println("Something wrong happened while trying to load today's tasks from the database.");
+        }
+
+    }
+
+
     @Override
     public void updateStyle() {
 
@@ -243,11 +285,97 @@ public class MainScreenController implements IControllersObserver {
         setupSearchBox();
         setupDatePicker();
         setupOptionsListView();
+        loadTodayTasks();
+
+        tasksScrollPane.contentProperty().set(tasksOverviewList);
+        tasksOverviewList.displayTasks(todayTasks);
+
     }
 
 
     @Override
     public void updateTasks() {
+
+        List<Task> tasks = searchForTasks();
+        if (tasks != null)
+            tasksOverviewList.displayTasks(tasks);
+
+    }
+
+
+    private List<Task> searchForTasks() {
+        String title = searchBox.getText();
+        String date = datePicker.valueProperty().get().format(DateTimeFormatter.ofPattern(DateFormat.getDateFormat()));
+        ObservableList<String> list = filtersChipView.getChips();
+
+        ArrayList<String> tags = new ArrayList<>();
+        ArrayList<String> statuses = new ArrayList<>();
+        ArrayList<String> priorities = new ArrayList<>();
+        Boolean isStarred = null;
+        boolean STARRED = false;
+        boolean NOT_STARRED = false;
+
+        TaskStatus[] taskStatuses = TaskStatus.values();
+        TaskPriority[] taskPriorities = TaskPriority.values();
+        boolean found;
+        for (String filter : list) {
+            found = false;
+
+            if (filter.equals("STARRED")) {
+                STARRED = true;
+                continue;
+            } else if (filter.equals("NOT_STARRED")) {
+                NOT_STARRED = true;
+                continue;
+            }
+
+            for (TaskStatus status : taskStatuses) {
+                if (status.toString().equals(filter)) {
+                    statuses.add(filter);
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found)
+                continue;
+
+            for (TaskPriority priority : taskPriorities) {
+
+                if (priority.toString().equals(filter)) {
+                    priorities.add(filter);
+                    found = true;
+                    break;
+                }
+
+            }
+
+            if (!found)
+                tags.add(filter);
+
+        }
+
+        isStarred = STARRED == NOT_STARRED ? null : STARRED;
+
+        try {
+
+            return dataAccess.getTaskInfo(
+                    dataAccess.getTasksIDs(
+                            Main.user.getUserID(),
+                            title,
+                            tags,
+                            statuses,
+                            priorities,
+                            date,
+                            isStarred
+                    )
+            );
+
+        } catch (Exception e) {
+            System.out.println("Something wrong happened while trying to filter tasks.");
+        }
+
+        return null;
 
     }
 

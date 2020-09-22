@@ -164,7 +164,7 @@ public class SearchBox extends HBox {
         setPrefHeight(h);
         setPrefWidth(w);
 
-        setPadding(new Insets(2, 2, 2, 2));
+        setPadding(new Insets(2, 2, 2, 5));
 
         setSpacing(2);
 

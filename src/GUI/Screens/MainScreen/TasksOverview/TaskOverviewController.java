@@ -17,6 +17,7 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -67,6 +68,9 @@ public class TaskOverviewController implements IControllers {
 
         });
 
+        tskDoneStatusBtn.setContentDisplay(ContentDisplay.CENTER);
+        setTskDoneStatusBtnStatus();
+
     }
 
     private void setTskDoneStatusBtnStatus() {
@@ -75,7 +79,7 @@ public class TaskOverviewController implements IControllers {
 
             tskDoneStatusBtn.setGraphic(loadButtonImage(
                     Main.theme.getThemeResourcesPath() + "MainScreen/taskDone.png"
-                    , 30, 30));
+                    , 29, 29));
 
         } else {
             tskDoneStatusBtn.setGraphic(null);
@@ -97,7 +101,7 @@ public class TaskOverviewController implements IControllers {
 
         moreOptionsBtn.setGraphic(loadButtonImage(
                 Main.theme.getThemeResourcesPath() + "MainScreen/moreOptions.png",
-                30, 50)
+                30, 30)
         );
 
     }
@@ -117,6 +121,7 @@ public class TaskOverviewController implements IControllers {
 
         } catch (Exception e) {
             System.out.println("There is an error happened while loading images.");
+            e.printStackTrace();
         }
 
         return new ImageView();

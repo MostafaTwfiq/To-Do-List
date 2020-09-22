@@ -13,6 +13,7 @@ module ToDoList {
     opens GUI.Screens.LoginScreen;
     opens GUI.Screens.SignUpScreen;
     opens GUI.Screens.MainScreen;
+    opens GUI.Screens.MainScreen.TasksOverview;
     opens JFoenix;
 
     //Light mode theme:

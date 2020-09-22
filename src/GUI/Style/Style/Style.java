@@ -1,9 +1,6 @@
 package GUI.Style.Style;
 
-import GUI.Style.Style.ExtraComponents.MultiProgressBarTheme;
-import GUI.Style.Style.ExtraComponents.ProgressBarTheme;
-import GUI.Style.Style.ExtraComponents.SearchBoxTheme;
-import GUI.Style.Style.ExtraComponents.StageTheme;
+import GUI.Style.Style.ExtraComponents.*;
 import javafx.scene.paint.Color;
 
 public abstract class Style {
@@ -20,18 +17,24 @@ public abstract class Style {
 
     private final Color optionsLabelsC;
 
+    private final PrioritiesColors prioritiesColors;
+
     public Style(String themeResourcesPath,
                  StageTheme stageStyle,
                  SearchBoxTheme searchBoxTheme,
                  MultiProgressBarTheme multiProgressBarTheme,
                  ProgressBarTheme progressBarTheme,
-                 Color optionsLabelsC) {
+                 Color optionsLabelsC,
+                 PrioritiesColors prioritiesColors) {
+
         this.themeResourcesPath = themeResourcesPath;
         this.stageStyle = stageStyle;
         this.searchBoxTheme = searchBoxTheme;
         this.multiProgressBarTheme = multiProgressBarTheme;
         this.progressBarTheme = progressBarTheme;
         this.optionsLabelsC = optionsLabelsC;
+        this.prioritiesColors = prioritiesColors;
+
     }
 
     public String getThemeResourcesPath() {
@@ -56,6 +59,10 @@ public abstract class Style {
 
     public Color getOptionsLabelsC() {
         return optionsLabelsC;
+    }
+
+    public PrioritiesColors getPrioritiesColors() {
+        return prioritiesColors;
     }
 
     public abstract String getThemeName();

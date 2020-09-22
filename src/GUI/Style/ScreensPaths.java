@@ -8,7 +8,7 @@ public class ScreensPaths {
     private final String loginScreenCssSheet = "GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/LoginScreen/LoginSheet.css";
     private final String signUpScreenCssSheet = "GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/SignUpScreen/SignUpSheet.css";
     private final String mainScreenCssSheet = "GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/MainScreen/AppMainSheet.css";
-
+    private final String taskOverviewCssSheet = "GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/MainScreen/TaskOverviewSheet.css";
 
     public String getStageFxml() {
         String stageFxml = "/GUI/ScreenManager/Stage/StageDesign.fxml";
@@ -43,4 +43,13 @@ public class ScreensPaths {
     public String getMainScreenCssSheet() {
         return mainScreenCssSheet;
     }
+
+    public String getTaskOverviewFxml() {
+        return "/GUI/Screens/MainScreen/TasksOverview/TaskOverviewDesign.fxml";
+    }
+
+    public String getTaskOverviewCssSheet() {
+        return taskOverviewCssSheet;
+    }
+
 }

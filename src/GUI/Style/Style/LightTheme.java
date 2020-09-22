@@ -1,9 +1,6 @@
 package GUI.Style.Style;
 
-import GUI.Style.Style.ExtraComponents.MultiProgressBarTheme;
-import GUI.Style.Style.ExtraComponents.ProgressBarTheme;
-import GUI.Style.Style.ExtraComponents.SearchBoxTheme;
-import GUI.Style.Style.ExtraComponents.StageTheme;
+import GUI.Style.Style.ExtraComponents.*;
 import javafx.scene.paint.Color;
 
 public class LightTheme extends Style {
@@ -33,7 +30,13 @@ public class LightTheme extends Style {
                         Color.rgb(236,240,241),
                         Color.rgb(0,0,0)
                 ),
-                Color.rgb(0, 0, 0)
+                Color.rgb(0, 0, 0),
+                new PrioritiesColors(
+                        Color.rgb(226, 103, 90),
+                        Color.rgb(230,126,34),
+                        Color.rgb(247, 248, 121),
+                        Color.rgb(98, 220, 165)
+                )
 
         );
 

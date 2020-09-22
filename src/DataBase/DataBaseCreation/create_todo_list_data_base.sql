@@ -292,9 +292,9 @@ END IF;
 SELECT 
 	DISTINCT tk.task_id 
 FROM tasks tk 
-JOIN tags tg USING (task_id) 
+LEFT JOIN tags tg USING (task_id) 
 WHERE 
-	tg.tag REGEXP CONCAT('^(' , tags , ')$')
+	IF (tg.tag IS NULL, TRUE, tg.tag REGEXP CONCAT('^(' , tags , ')$'))
     AND tk.task_status REGEXP CONCAT('^(' , statuses , ')$')
     AND tk.task_priority REGEXP CONCAT('^(' , priorities , ')$')
     AND tk.is_starred = IF(is_starred IS NOT NULL, is_starred, tk.is_starred)

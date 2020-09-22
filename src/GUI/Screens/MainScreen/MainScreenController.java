@@ -227,7 +227,7 @@ public class MainScreenController implements IControllersObserver {
         datePicker.valueProperty().addListener((ov, oldValue, newValue) -> {
 
             if (oldValue == null || !oldValue.isEqual(newValue))
-                searchForTasks();
+                updateTasks();
 
         });
 

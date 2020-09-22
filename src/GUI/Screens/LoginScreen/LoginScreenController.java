@@ -3,9 +3,10 @@ package GUI.Screens.LoginScreen;
 import DataBase.DataAccess;
 import DataClasses.User;
 import GUI.IControllers;
+import GUI.Screens.MainScreen.MainScreenController;
 import GUI.Screens.SignUpScreen.SignUpScreenController;
 import GUI.Style.ScreensPaths;
-import GUI.Style.Theme;
+import GUI.Style.Style.Theme;
 import Main.Main;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
@@ -96,7 +97,21 @@ public class LoginScreenController implements IControllers {
                     trayNotification.setTitle("Logged in successfully");
                     trayNotification.showAndWait();
 
-                    //Main.screenManager.changeScreen(null); // add here the new screen.
+                    try {
+                        MainScreenController mainScreenController = new MainScreenController();
+                        Parent mainScreenParent = null;
+                        ScreensPaths paths = new ScreensPaths();
+
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource(paths.getMainScreenFxml()));
+                        loader.setController(mainScreenController);
+                        mainScreenParent = loader.load();
+                        mainScreenParent.getStylesheets().add(paths.getMainScreenCssSheet());
+
+                        Main.screenManager.changeScreen(mainScreenController);
+
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
 
                 }
 

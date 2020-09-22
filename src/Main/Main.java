@@ -1,6 +1,5 @@
 package Main;
 
-import DataBase.DataAccess;
 import DataClasses.User;
 import GUI.ScreenManager.Stage.CustomStage;
 import GUI.MultiProgressBar.MultiProgressBar;
@@ -12,7 +11,8 @@ import DataClasses.TaskStatus.TaskPriority;
 import DataClasses.TaskStatus.TaskStatus;
 import GUI.Screens.LoginScreen.LoginScreenController;
 import GUI.SearchBox.SearchBox;
-import GUI.Style.Style;
+import GUI.Style.Style.LightTheme;
+import GUI.Style.Style.Style;
 import com.jfoenix.controls.JFXChipView;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

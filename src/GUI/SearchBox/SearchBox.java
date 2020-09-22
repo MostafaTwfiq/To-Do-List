@@ -5,6 +5,8 @@ import GUI.Style.ColorTransformer;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
@@ -22,8 +24,6 @@ import java.util.Vector;
 
 public class SearchBox extends HBox {
 
-    private List<IObserver> observers;
-
     private TextField searchField;
     private ImageView searchIcon;
     private Color searchBoxColor;
@@ -31,21 +31,22 @@ public class SearchBox extends HBox {
     private Color promptTextColor;
     private final String defaultSearchIconPath = "resources/SearchBox/searchBoxIcon.png";
     private boolean animationLocker;
+    private EventHandler<ActionEvent> onEnterEvent;
 
     public SearchBox(double h, double w, String promptText,
-                     List<IObserver> observers,
+                     EventHandler<ActionEvent> onEnterEvent,
                      Color searchBoxColor,
                      Color textColor,
                      Color promptTextColor) {
 
-        if (promptText == null || observers == null
+        if (promptText == null || onEnterEvent == null
                 || searchBoxColor == null || textColor == null
                 || promptTextColor == null) {
             throw new IllegalArgumentException();
         }
 
         this.searchBoxColor = searchBoxColor;
-        this.observers = observers;
+        this.onEnterEvent = onEnterEvent;
         this.textColor = textColor;
         this.promptTextColor = promptTextColor;
         animationLocker = false;
@@ -70,7 +71,6 @@ public class SearchBox extends HBox {
         }
 
         this.searchBoxColor = searchBoxColor;
-        observers = new ArrayList<>();
         this.textColor = textColor;
         this.promptTextColor = promptTextColor;
         animationLocker = false;
@@ -89,19 +89,19 @@ public class SearchBox extends HBox {
 
     public SearchBox(double h, double w,
                      String promptText, String searchIconPath,
-                     List<IObserver> observers,
+                     EventHandler<ActionEvent> onEnterEvent,
                      Color searchBoxColor,
                      Color textColor,
                      Color promptTextColor) {
 
-        if (promptText == null || searchIconPath == null || observers == null
+        if (promptText == null || searchIconPath == null || onEnterEvent == null
                 || searchBoxColor == null || textColor == null
                 || promptTextColor == null) {
             throw new IllegalArgumentException();
         }
 
         this.searchBoxColor = searchBoxColor;
-        this.observers = observers;
+        this.onEnterEvent = onEnterEvent;
         this.textColor = textColor;
         this.promptTextColor = promptTextColor;
         animationLocker = false;
@@ -127,7 +127,6 @@ public class SearchBox extends HBox {
         }
 
         this.searchBoxColor = searchBoxColor;
-        observers = new ArrayList<>();
         this.textColor = textColor;
         this.promptTextColor = promptTextColor;
         animationLocker = false;
@@ -174,7 +173,10 @@ public class SearchBox extends HBox {
         styleProperty().set("-fx-background-radius: " + getPrefHeight() / 5.0 + ";"
                 + "-fx-border-radius: " + getPrefHeight() / 5.0 + ";"
                 + "-fx-border-color: transparent;"
-                + "-fx-background-color: " + new ColorTransformer().colorToHex(searchBoxColor) + ";");
+                + "-fx-background-color: " + new ColorTransformer().colorToHex(searchBoxColor) + ";"
+                + "-fx-border-color: " + new ColorTransformer().colorToHex(textColor) + ";"
+                + "-fx-border-width: 0.3;"
+        );
 
     }
 
@@ -211,10 +213,10 @@ public class SearchBox extends HBox {
 
             if (e.getCode() == KeyCode.ENTER) {
 
-                if (searchIcon != null)
+                if (searchIcon != null && onEnterEvent != null) {
                     activateIconAnimation();
-
-                notifyObservers();
+                    onEnterEvent.handle(null);
+                }
 
             }
 
@@ -262,43 +264,6 @@ public class SearchBox extends HBox {
 
         searchField.setText(text);
 
-    }
-
-    public void addObserver(IObserver observer) {
-
-        if (observer == null)
-            throw new IllegalArgumentException();
-
-        observers.add(observer);
-
-    }
-
-    public void deleteObserver(IObserver observer) {
-
-        if (observer == null)
-            throw new IllegalArgumentException();
-
-        observers.remove(observer);
-
-    }
-
-    private void notifyObservers() {
-
-        for (IObserver observer : observers)
-            observer.update();
-
-    }
-
-    public List<IObserver> getObservers() {
-        return observers;
-    }
-
-    public void setObservers(Vector<IObserver> observers) {
-
-        if (observers == null)
-            throw new IllegalArgumentException();
-
-        this.observers = observers;
     }
 
 }

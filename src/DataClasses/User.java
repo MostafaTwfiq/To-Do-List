@@ -1,7 +1,7 @@
 package DataClasses;
 
 
-import GUI.Style.Theme;
+import GUI.Style.Style.Theme;
 
 public class User {
 

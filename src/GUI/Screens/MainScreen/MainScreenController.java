@@ -2,7 +2,17 @@ package GUI.Screens.MainScreen;
 
 import DataBase.DataAccess;
 import GUI.IControllers;
+import GUI.MultiProgressBar.MultiProgressBar;
+import GUI.ProgressBar.ProgressBar;
+import GUI.SearchBox.SearchBox;
+import GUI.Style.Style.ExtraComponents.ProgressBarTheme;
+import GUI.Style.Style.ExtraComponents.SearchBoxTheme;
+import GUI.Style.Style.Theme;
+import GUI.Style.StyleFactory;
 import Main.Main;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 
 import java.io.FileInputStream;
@@ -14,6 +24,7 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXListView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -23,7 +34,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class MainScreenController implements IControllers {
-
 
     @FXML
     private AnchorPane parentLayout;
@@ -44,16 +54,16 @@ public class MainScreenController implements IControllers {
     private AnchorPane optionsListLayout;
 
     @FXML
-    private JFXListView<Label> optionsListView;
+    private JFXListView<Node> optionsListView;
 
     @FXML
     private AnchorPane filtersLayout;
 
     @FXML
-    private JFXChipView<String> filtersChipView;
+    private Label filtersLbl;
 
     @FXML
-    private Label filtersLbl;
+    private JFXChipView<String> filtersChipView;
 
     @FXML
     private VBox progressBarsLayout;
@@ -78,13 +88,51 @@ public class MainScreenController implements IControllers {
 
     private DataAccess dataAccess;
 
+    private OptionsLabels optionsLabels;
+
+    private SearchBox searchBox;
+
+    private MultiProgressBar multiProgressBar;
+
+    private ProgressBar progressBar;
+
+
     public MainScreenController() throws Exception {
         dataAccess = new DataAccess();
+    }
+
+
+    private void setupSearchBox() {
+
+        SearchBoxTheme searchBoxTheme = Main.theme.getSearchBoxTheme();
+
+        searchBox = new SearchBox(
+                20, 290,
+                "Search",
+                e -> searchForTasks(),
+                searchBoxTheme.getSearchBoxColor(),
+                searchBoxTheme.getTextColor(),
+                searchBoxTheme.getPromptTextColor()
+
+        );
+
+        searchBoxLayout.getChildren().add(searchBox);
+
+        AnchorPane.setTopAnchor(searchBox, 0.0);
+        AnchorPane.setBottomAnchor(searchBox, 0.0);
+        AnchorPane.setRightAnchor(searchBox, 5.0);
+        AnchorPane.setLeftAnchor(searchBox, 5.0);
+
+    }
+
+    private void searchForTasks() {
+
     }
 
     private void setupUserOverview() {
         setupUserImage();
         setupUserName();
+        setupUserSettingsB();
     }
 
     private void setupUserImage() {
@@ -115,7 +163,69 @@ public class MainScreenController implements IControllers {
         userNameLbl.setText(Main.user.getUserName());
     }
 
-    private void setup
+    private void setupUserSettingsB() {
+
+        setUserSettingBImage();
+
+        userSettingsB.setOnAction(e -> {
+
+        });
+
+    }
+
+    private void setUserSettingBImage() {
+
+        try {
+
+            FileInputStream imageStream = new FileInputStream(
+                    Main.theme.getThemeResourcesPath() + "MainScreen/settings.png"
+            );
+
+            Image buttonImage = new Image(imageStream);
+            ImageView buttonImageView = new ImageView(buttonImage);
+            buttonImageView.setFitHeight(20);
+            buttonImageView.setFitWidth(20);
+
+            userSettingsB.setGraphic(buttonImageView);
+
+        } catch (Exception e) {
+            System.out.println("There is an error happened while loading images.");
+        }
+
+    }
+
+    private void setupDatePicker() {
+
+        datePicker.valueProperty().addListener((ov, oldValue, newValue) -> {
+
+            if (oldValue == null || !oldValue.isEqual(newValue)) {
+                searchForTasks();
+            }
+
+        });
+
+    }
+
+    private void setupOptionsListView() {
+
+        optionsLabels = new OptionsLabels();
+        optionsLabels.getTodayLbl().setOnMouseClicked(e -> {
+
+        });
+
+        optionsLabels.getSortByReminderLbl().setOnMouseClicked(e -> {
+
+        });
+
+        optionsLabels.getSortByPriorityLbl().setOnMouseClicked(e -> {
+
+        });
+
+        optionsListView.getItems().add(optionsLabels.getTodayLbl());
+        optionsListView.getItems().add(optionsLabels.getSortByReminderLbl());
+        optionsListView.getItems().add(optionsLabels.getSortByPriorityLbl());
+
+    }
 
     @Override
     public void updateStyle() {
@@ -129,7 +239,10 @@ public class MainScreenController implements IControllers {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        setupUserOverview();
+        setupSearchBox();
+        setupDatePicker();
+        setupOptionsListView();
     }
 
 

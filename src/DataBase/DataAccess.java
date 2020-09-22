@@ -3,7 +3,7 @@ package DataBase;
 import DataClasses.Task;
 import DataClasses.TaskStatus.TaskPriority;
 import DataClasses.TaskStatus.TaskStatus;
-import GUI.Style.Theme;
+import GUI.Style.Style.Theme;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

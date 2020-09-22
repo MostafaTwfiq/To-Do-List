@@ -1,4 +1,4 @@
-package GUI.Style;
+package GUI.Style.Style.ExtraComponents;
 
 import javafx.scene.paint.Color;
 

@@ -1,5 +1,10 @@
 package GUI.Style;
 
+import GUI.Style.Style.DarkTheme;
+import GUI.Style.Style.LightTheme;
+import GUI.Style.Style.Style;
+import GUI.Style.Style.Theme;
+
 public class StyleFactory {
 
 

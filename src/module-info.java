@@ -12,6 +12,7 @@ module ToDoList {
     opens GUI.ScreenManager.Stage;
     opens GUI.Screens.LoginScreen;
     opens GUI.Screens.SignUpScreen;
+    opens GUI.Screens.MainScreen;
     opens JFoenix;
 
     //Light mode theme:
@@ -24,6 +25,6 @@ module ToDoList {
     opens GUI.Style.ThemesCss.DarkTheme.Stage;
     opens GUI.Style.ThemesCss.DarkTheme.LoginScreen;
     opens GUI.Style.ThemesCss.DarkTheme.SignUpScreen;
-    opens GUI.Style.ThemesCss.DarkTheme.MainScreen;
+    //opens GUI.Style.ThemesCss.DarkTheme.MainScreen;
 
 }

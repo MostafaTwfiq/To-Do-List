@@ -4,7 +4,7 @@ import DataBase.DataAccess;
 import GUI.IControllers;
 import GUI.Style.ScreensPaths;
 import GUI.Style.StyleFactory;
-import GUI.Style.Theme;
+import GUI.Style.Style.Theme;
 import Main.Main;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;

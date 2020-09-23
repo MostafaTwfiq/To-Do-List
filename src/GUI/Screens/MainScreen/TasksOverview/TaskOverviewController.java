@@ -4,7 +4,6 @@ import DataBase.DataAccess;
 import DataClasses.Task;
 import DataClasses.TaskStatus.TaskPriority;
 import DataClasses.TaskStatus.TaskStatus;
-import GUI.IControllers;
 import GUI.Screens.MainScreen.IControllersObserver;
 import GUI.Style.ScreensPaths;
 import GUI.Style.Style.ExtraComponents.PrioritiesColorGetter;
@@ -14,8 +13,6 @@ import javafx.scene.Parent;
 import java.io.FileInputStream;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
@@ -54,17 +51,17 @@ public class TaskOverviewController implements IControllersObserver {
 
     private Task task;
 
-    private List<IControllersObserver> observers;
+    private IControllersObserver observer;
 
-    public TaskOverviewController(Task task, List<IControllersObserver> observers) throws SQLException {
+    public TaskOverviewController(Task task, IControllersObserver observer) throws SQLException {
         this.task = task;
-        this.observers = observers;
+        this.observer = observer;
         dataAccess = new DataAccess();
     }
 
     public TaskOverviewController(Task task) throws SQLException {
         this.task = task;
-        this.observers = new ArrayList<>();
+        this.observer = null;
 
         dataAccess = new DataAccess();
     }
@@ -250,39 +247,21 @@ public class TaskOverviewController implements IControllersObserver {
     @Override
     public void updateTasks() {
 
-        for (IControllersObserver observer : observers)
+        if (observer != null)
             observer.updateTasks();
 
     }
 
-    public void addObserver(IControllersObserver observer) {
+    public IControllersObserver getObserver() {
+        return observer;
+    }
+
+    public void setObserver(IControllersObserver observer) {
 
         if (observer == null)
             throw new IllegalArgumentException();
 
-        observers.add(observer);
-
-    }
-
-    public void removeObserver(IControllersObserver observer) {
-
-        if (observer == null)
-            throw new IllegalArgumentException();
-
-        observers.remove(observer);
-
-    }
-
-    public List<IControllersObserver> getObservers() {
-        return observers;
-    }
-
-    public void setObservers(List<IControllersObserver> observers) {
-
-        if (observers == null)
-            throw new IllegalArgumentException();
-
-        this.observers = observers;
+        this.observer = observer;
 
     }
 

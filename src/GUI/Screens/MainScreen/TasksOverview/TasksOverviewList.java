@@ -22,6 +22,8 @@ public class TasksOverviewList extends VBox implements IControllersObserver {
 
     private List<TaskOverviewController> taskOverviewControllers;
 
+    private TaskOverviewAddTaskController taskOverviewAddTaskController;
+
     private List<IControllersObserver> observers;
 
     public TasksOverviewList() {
@@ -67,14 +69,15 @@ public class TasksOverviewList extends VBox implements IControllersObserver {
         getChildren().clear();
         taskOverviewControllers.clear();
 
+        ScreensPaths paths = new ScreensPaths();
+        Parent parentLayout = null;
+
         for (Task task : tasks) {
 
             try {
 
-                TaskOverviewController taskOverviewController = new TaskOverviewController(task, observers);
-                Parent parentLayout = null;
+                TaskOverviewController taskOverviewController = new TaskOverviewController(task, this);
 
-                ScreensPaths paths = new ScreensPaths();
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(paths.getTaskOverviewFxml()));
                 loader.setController(taskOverviewController);
                 parentLayout = loader.load();
@@ -89,6 +92,21 @@ public class TasksOverviewList extends VBox implements IControllersObserver {
 
         }
 
+        try {
+
+            taskOverviewAddTaskController = new TaskOverviewAddTaskController(this);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(paths.getTaskOverviewAddTaskFxml()));
+            loader.setController(taskOverviewAddTaskController);
+            parentLayout = loader.load();
+            parentLayout.getStylesheets().add(paths.getTaskOverviewAddTaskSheet());
+
+            getChildren().add(parentLayout);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -96,6 +114,8 @@ public class TasksOverviewList extends VBox implements IControllersObserver {
 
         for (TaskOverviewController controller : taskOverviewControllers)
             controller.updateStyle();
+
+        taskOverviewAddTaskController.updateStyle();
 
     }
 

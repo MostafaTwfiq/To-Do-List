@@ -5,14 +5,19 @@ import DataClasses.Task;
 import DataClasses.TaskStatus.TaskPriority;
 import DataClasses.TaskStatus.TaskStatus;
 import GUI.Screens.MainScreen.IControllersObserver;
+import GUI.Style.ColorTransformer;
 import GUI.Style.ScreensPaths;
+import GUI.Style.Style.ExtraComponents.PopUpOptionsTheme;
 import GUI.Style.Style.ExtraComponents.PrioritiesColorGetter;
 import Main.Main;
+import com.jfoenix.controls.JFXPopup;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 
 import java.io.FileInputStream;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
@@ -22,6 +27,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 
 public class TaskOverviewController implements IControllersObserver {
@@ -46,6 +52,8 @@ public class TaskOverviewController implements IControllersObserver {
 
     @FXML
     private Button moreOptionsBtn;
+
+    private JFXPopup popupOptions;
 
     private DataAccess dataAccess;
 
@@ -104,11 +112,58 @@ public class TaskOverviewController implements IControllersObserver {
 
     private void setupMoreOptionsBtn() {
 
-        moreOptionsBtn.setOnAction(e -> {
+        moreOptionsBtn.setOnMouseClicked(e -> {
+
+            popupOptions.show(moreOptionsBtn,
+                    JFXPopup.PopupVPosition.BOTTOM, JFXPopup.PopupHPosition.LEFT);
 
         });
 
         setMoreOptionsBtnImage();
+
+    }
+
+    private void setupPopupOptions() {
+        popupOptions = new JFXPopup();
+        ColorTransformer colorTransformer = new ColorTransformer();
+        PopUpOptionsTheme popUpOptionsTheme = Main.theme.getPopUpOptionsTheme();
+
+        JFXButton viewBtn = new JFXButton("View");
+        JFXButton removeBtn = new JFXButton("Remove");
+        VBox vBox = new VBox(viewBtn, removeBtn);
+        vBox.styleProperty().set("-fx-background-color: " + colorTransformer.colorToHex(popUpOptionsTheme.getListBackgroundC()) + ";");
+        popupOptions.setPopupContent(vBox);
+
+        viewBtn.setCursor(Cursor.HAND);
+        viewBtn.setStyle("-fx-background-color: transparent;"
+                + "-fx-background-radius: 0;"
+                + "-fx-border-color: transparent;"
+                + "-fx-border-radius: 0;"
+                + "-fx-text-fill:" + colorTransformer.colorToHex(popUpOptionsTheme.getButtonsTextC()) + ";"
+        );
+        viewBtn.setPrefWidth(90);
+        viewBtn.setOnAction(e -> {
+            //open here the view task screen
+        });
+
+
+        removeBtn.setCursor(Cursor.HAND);
+        removeBtn.setStyle("-fx-background-color: transparent;"
+                + "-fx-background-radius: 0;"
+                + "-fx-border-color: transparent;"
+                + "-fx-border-radius: 0;"
+                + "-fx-text-fill:" + colorTransformer.colorToHex(popUpOptionsTheme.getButtonsTextC()) + ";"
+        );
+        removeBtn.setPrefWidth(90);
+        removeBtn.setOnAction(e -> {
+            try {
+                dataAccess.deleteTask(task.getTaskID());
+                popupOptions.hide();
+                updateTasks();
+            } catch (SQLException sqlException) {
+                System.out.println("Something went wrong while trying to delete a task from the database.");
+            }
+        });
 
     }
 
@@ -182,8 +237,7 @@ public class TaskOverviewController implements IControllersObserver {
     }
 
     private void setTaskTimeLbl() {
-        String time = task.getDateTime().toString();
-        taskTimeLbl.setText(time.substring(time.lastIndexOf('T') + 1));
+        taskTimeLbl.setText(task.getDateTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
     }
 
     private void setTaskPriorityRec() {
@@ -225,6 +279,9 @@ public class TaskOverviewController implements IControllersObserver {
     public void updateStyle() {
         setTskDoneStatusBtnStatus();
         setMoreOptionsBtnImage();
+        setStarredBtnImage();
+        setTaskPriorityRecColor();
+        setupPopupOptions();
         parentLayout.getStylesheets().clear();
         parentLayout.getStylesheets().add(new ScreensPaths().getMainScreenCssSheet());
     }
@@ -242,6 +299,7 @@ public class TaskOverviewController implements IControllersObserver {
         setTaskNameLbl();
         setTaskTimeLbl();
         setTaskPriorityRec();
+        setupPopupOptions();
     }
 
     @Override

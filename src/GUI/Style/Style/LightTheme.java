@@ -20,22 +20,26 @@ public class LightTheme extends Style {
                         Color.rgb(0,0,0)
                 ),
                 new MultiProgressBarTheme(
-                        Color.rgb(98, 220, 165),
-                        Color.rgb(247, 248, 121),
-                        Color.rgb(230,126,34),
-                        Color.rgb(226, 103, 90)
+                        Color.rgb(60, 155, 13),
+                        Color.rgb(254, 207, 5),
+                        Color.rgb(255, 144, 0),
+                        Color.rgb(209, 69, 59)
                 ),
                 new ProgressBarTheme(
-                        Color.rgb(149,165,166),
-                        Color.rgb(236,240,241),
-                        Color.rgb(0,0,0)
+                        Color.rgb(255,255,255),
+                        Color.rgb(61,61,61),
+                        Color.rgb(113, 113, 113)
                 ),
                 Color.rgb(0, 0, 0),
                 new PrioritiesColors(
-                        Color.rgb(226, 103, 90),
-                        Color.rgb(230,126,34),
-                        Color.rgb(247, 248, 121),
-                        Color.rgb(98, 220, 165)
+                        Color.rgb(209, 69, 59),
+                        Color.rgb(255, 144, 0),
+                        Color.rgb(254, 207, 5),
+                        Color.rgb(60, 155, 13)
+                ),
+                new PopUpOptionsTheme(
+                        Color.BLACK,
+                        Color.WHITE
                 )
 
         );

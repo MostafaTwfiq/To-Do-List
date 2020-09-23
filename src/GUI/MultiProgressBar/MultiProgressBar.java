@@ -28,8 +28,11 @@ public class MultiProgressBar extends HBox {
 
         calculateTotalRatio();
 
+        setMaxHeight(h);
+        setMaxWidth(w);
         setPrefHeight(h);
         setPrefWidth(w);
+
         setSpacing(spacing);
 
         setupProgressBarStyle();
@@ -49,6 +52,8 @@ public class MultiProgressBar extends HBox {
 
         calculateTotalRatio();
 
+        setMaxHeight(h);
+        setMaxWidth(w);
         setPrefHeight(h);
         setPrefWidth(w);
         setSpacing(spacing);
@@ -67,12 +72,14 @@ public class MultiProgressBar extends HBox {
     }
 
     public void changeHeight(double h) {
+        setMaxHeight(h);
         setPrefHeight(h);
         setupProgressBarStyle();
         updateProgress();
     }
 
     public void changeWidth(double w) {
+        setMaxWidth(w);
         setPrefWidth(w);
         setupProgressBarStyle();
         updateProgress();

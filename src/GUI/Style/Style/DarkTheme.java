@@ -36,6 +36,10 @@ public class DarkTheme extends Style {
                         Color.rgb(230,126,34),
                         Color.rgb(247, 248, 121),
                         Color.rgb(98, 220, 165)
+                ),
+                new PopUpOptionsTheme(
+                        Color.BLACK,
+                        Color.WHITE
                 )
 
         );

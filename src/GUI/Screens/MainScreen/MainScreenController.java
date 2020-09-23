@@ -12,20 +12,25 @@ import GUI.Screens.MainScreen.TasksOverview.TasksOverviewList;
 import GUI.Screens.userProfileScreen.UserProfileController;
 import GUI.SearchBox.SearchBox;
 import GUI.Style.ScreensPaths;
+import GUI.Style.ColorTransformer;
 import GUI.Style.Style.ExtraComponents.MultiProgressBarTheme;
+import GUI.Style.Style.ExtraComponents.PopUpOptionsTheme;
 import GUI.Style.Style.ExtraComponents.ProgressBarTheme;
 import GUI.Style.Style.ExtraComponents.SearchBoxTheme;
 import Main.Main;
 import TasksListHandling.TasksListHandling;
+import com.jfoenix.controls.*;
 import javafx.animation.AnimationTimer;
 import javafx.beans.InvalidationListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 
 import java.io.FileInputStream;
 import java.net.URL;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -33,9 +38,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
-import com.jfoenix.controls.JFXChipView;
-import com.jfoenix.controls.JFXDatePicker;
-import com.jfoenix.controls.JFXListView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -45,6 +47,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import tray.animations.AnimationType;
 import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
@@ -101,6 +104,8 @@ public class MainScreenController implements IControllersObserver {
 
     @FXML
     private ScrollPane tasksScrollPane;
+
+    private JFXPopup popupUserOptions;
 
     private DataAccess dataAccess;
 
@@ -170,10 +175,22 @@ public class MainScreenController implements IControllersObserver {
                 trayNotification.setNotificationType(NotificationType.NOTICE);
                 trayNotification.setMessage("Don't forget to " + todayTasks.get(currentIndex).getTitle());
                 trayNotification.setTitle("Reminder");
+                trayNotification.setImage(loadReminderImage());
+                trayNotification.setRectangleFill(Color.rgb(255, 206, 86));
                 trayNotification.showAndWait();
             } else if (todayTasks.get(currentIndex).getDateTime().isAfter(LocalDateTime.now()))
                 break;
         }
+    }
+
+    private Image loadReminderImage() {
+        try {
+            return new Image(new FileInputStream(Main.theme.getThemeResourcesPath() + "MainScreen/reminder.png"));
+        } catch (Exception e) {
+            System.out.println("Can't load the reminder image.");
+        }
+
+        return null;
     }
 
 
@@ -204,6 +221,7 @@ public class MainScreenController implements IControllersObserver {
         setupUserImage();
         setupUserName();
         setupUserSettingsB();
+        setupPopupUserOptions();
     }
 
     private void setupUserImage() {
@@ -254,6 +272,8 @@ public class MainScreenController implements IControllersObserver {
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
+            popupUserOptions.show(userSettingsB,
+                    JFXPopup.PopupVPosition.BOTTOM, JFXPopup.PopupHPosition.LEFT);
         });
 
     }
@@ -268,14 +288,54 @@ public class MainScreenController implements IControllersObserver {
 
             Image buttonImage = new Image(imageStream);
             ImageView buttonImageView = new ImageView(buttonImage);
-            buttonImageView.setFitHeight(22);
-            buttonImageView.setFitWidth(22);
+            buttonImageView.setFitHeight(30);
+            buttonImageView.setFitWidth(30);
 
             userSettingsB.setGraphic(buttonImageView);
 
         } catch (Exception e) {
             System.out.println("There is an error happened while loading images.");
         }
+
+    }
+
+
+    private void setupPopupUserOptions() {
+        popupUserOptions = new JFXPopup();
+        ColorTransformer colorTransformer = new ColorTransformer();
+        PopUpOptionsTheme popUpOptionsTheme = Main.theme.getPopUpOptionsTheme();
+
+        JFXButton settingsBtn = new JFXButton("Settings");
+        JFXButton logOutBtn = new JFXButton("Log out");
+        VBox vBox = new VBox(settingsBtn, logOutBtn);
+        vBox.styleProperty().set("-fx-background-color: " + colorTransformer.colorToHex(popUpOptionsTheme.getListBackgroundC()) + ";");
+        popupUserOptions.setPopupContent(vBox);
+
+        settingsBtn.setCursor(Cursor.HAND);
+        settingsBtn.setStyle("-fx-background-color: transparent;"
+                + "-fx-background-radius: 0;"
+                + "-fx-border-color: transparent;"
+                + "-fx-border-radius: 0;"
+                + "-fx-text-fill:" + colorTransformer.colorToHex(popUpOptionsTheme.getButtonsTextC()) + ";"
+        );
+        settingsBtn.setPrefWidth(90);
+        settingsBtn.setOnAction(e -> {
+            //open here the view user screen
+        });
+
+
+        logOutBtn.setCursor(Cursor.HAND);
+        logOutBtn.setStyle("-fx-background-color: transparent;"
+                + "-fx-background-radius: 0;"
+                + "-fx-border-color: transparent;"
+                + "-fx-border-radius: 0;"
+                + "-fx-text-fill:" + colorTransformer.colorToHex(popUpOptionsTheme.getButtonsTextC()) + ";"
+        );
+        logOutBtn.setPrefWidth(90);
+        logOutBtn.setOnAction(e -> {
+            popupUserOptions.hide();
+            Main.screenManager.changeToLastScreen();
+        });
 
     }
 
@@ -422,7 +482,8 @@ public class MainScreenController implements IControllersObserver {
 
             for (TaskStatus status : taskStatuses) {
                 if (status.toString().equals(filter)) {
-                    statuses.add(filter);
+                    if (!statuses.contains(filter))
+                        statuses.add(filter);
                     found = true;
                     break;
                 }
@@ -434,7 +495,8 @@ public class MainScreenController implements IControllersObserver {
             for (TaskPriority priority : taskPriorities) {
 
                 if (priority.toString().equals(filter)) {
-                    priorities.add(filter);
+                    if (!priorities.contains(filter))
+                        priorities.add(filter);
                     found = true;
                     break;
                 }
@@ -502,11 +564,11 @@ public class MainScreenController implements IControllersObserver {
     public void updateTasks() {
 
         List<Task> tasks = searchForTasks();
-        if (tasks != null)
+        if (tasks != null) {
             tasksOverviewList.displayTasks(tasks);
-
-        updateMultiProgressBarElements(tasks);
-        updateProgressBar(tasks);
+            updateMultiProgressBarElements(tasks);
+            updateProgressBar(tasks);
+        }
 
     }
 

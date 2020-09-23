@@ -115,7 +115,9 @@ public class ProgressBar extends AnchorPane {
 
         styleProperty().set("-fx-background-color: " + new ColorTransformer().colorToHex(progressBarC) + ";"
                 + "-fx-background-radius: " + String.format("%f", getPrefHeight() / 7.0) + ";"
-                + "-fx-border-radius: " + String.format("%f", getPrefHeight() / 7) + ";");
+                + "-fx-border-radius: " + String.format("%f", getPrefHeight() / 7) + ";"
+                + "-fx-border-color: " + new ColorTransformer().colorToHex(progressC) + ";"
+                + "-fx-border-width: 0.5;");
 
     }
 

@@ -1,0 +1,46 @@
+#userProfilePane {
+-fx-background-color: #FAFAFA;
+}
+
+#passwordTitlelbl{
+-fx-text-fill: black;
+-fx-prompt-text-fill: #4f5254;
+-jfx-focus-color: black;
+-jfx-unfocus-color: #4f5254;
+}
+
+#ThemeTitlelbl{
+-fx-text-fill: black;
+-fx-prompt-text-fill: #4f5254;
+-jfx-focus-color: black;
+-jfx-unfocus-color: #4f5254;
+}
+
+#passwordTF {
+-fx-text-fill: black;
+-fx-prompt-text-fill: #4f5254;
+-jfx-focus-color: black;
+-jfx-unfocus-color: #4f5254;
+}
+
+
+#confirmPasswordTF {
+-fx-text-fill: black;
+-fx-prompt-text-fill: #4f5254;
+-jfx-focus-color: black;
+-jfx-unfocus-color: #4f5254;
+}
+
+
+#chooseImageB {
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+}
+
+
+#themesComboBox {
+-fx-font-size: 16px;
+-fx-prompt-text-fill: black;
+-jfx-focus-color: black;
+-jfx-unfocus-color: #4f5254;
+}

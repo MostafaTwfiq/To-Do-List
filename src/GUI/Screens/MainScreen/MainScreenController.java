@@ -9,7 +9,9 @@ import GUI.MultiProgressBar.MultiProgressBar;
 import GUI.MultiProgressBar.MultiProgressElement;
 import GUI.ProgressBar.ProgressBar;
 import GUI.Screens.MainScreen.TasksOverview.TasksOverviewList;
+import GUI.Screens.userProfileScreen.UserProfileController;
 import GUI.SearchBox.SearchBox;
+import GUI.Style.ScreensPaths;
 import GUI.Style.Style.ExtraComponents.MultiProgressBarTheme;
 import GUI.Style.Style.ExtraComponents.ProgressBarTheme;
 import GUI.Style.Style.ExtraComponents.SearchBoxTheme;
@@ -18,6 +20,7 @@ import TasksListHandling.TasksListHandling;
 import javafx.animation.AnimationTimer;
 import javafx.beans.InvalidationListener;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 
@@ -236,7 +239,21 @@ public class MainScreenController implements IControllersObserver {
         setUserSettingBImage();
 
         userSettingsB.setOnAction(e -> {
+            try {
+                UserProfileController userProfileController = new UserProfileController();
+                Parent mainScreenParent = null;
+                ScreensPaths paths = new ScreensPaths();
 
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(paths.getUserProfileScreenFxml()));
+                loader.setController(userProfileController);
+                mainScreenParent = loader.load();
+                mainScreenParent.getStylesheets().add(paths.getMainScreenCssSheet());
+
+                Main.screenManager.changeScreen(userProfileController);
+
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         });
 
     }

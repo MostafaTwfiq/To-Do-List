@@ -19,13 +19,16 @@ public abstract class Style {
 
     private final PrioritiesColors prioritiesColors;
 
+    private final PopUpOptionsTheme popUpOptionsTheme;
+
     public Style(String themeResourcesPath,
                  StageTheme stageStyle,
                  SearchBoxTheme searchBoxTheme,
                  MultiProgressBarTheme multiProgressBarTheme,
                  ProgressBarTheme progressBarTheme,
                  Color optionsLabelsC,
-                 PrioritiesColors prioritiesColors) {
+                 PrioritiesColors prioritiesColors,
+                 PopUpOptionsTheme popUpOptionsTheme) {
 
         this.themeResourcesPath = themeResourcesPath;
         this.stageStyle = stageStyle;
@@ -34,6 +37,7 @@ public abstract class Style {
         this.progressBarTheme = progressBarTheme;
         this.optionsLabelsC = optionsLabelsC;
         this.prioritiesColors = prioritiesColors;
+        this.popUpOptionsTheme = popUpOptionsTheme;
 
     }
 
@@ -65,6 +69,9 @@ public abstract class Style {
         return prioritiesColors;
     }
 
-    public abstract String getThemeName();
+    public PopUpOptionsTheme getPopUpOptionsTheme() {
+        return popUpOptionsTheme;
+    }
 
+    public abstract String getThemeName();
 }

@@ -20,6 +20,33 @@
 }
 
 
+#tasksScrollPane > .scroll-bar:horizontal, #tasksScrollPane > .scroll-bar:vertical{
+    -fx-background-color: #E8E8E8;
+}
+
+#tasksScrollPane > .increment-button, #tasksScrollPane > .decrement-button {
+    -fx-background-color: #E8E8E8;
+    -fx-border-color: #E8E8E8;
+}
+
+#tasksScrollPane > .scroll-bar:horizontal .track,
+#tasksScrollPane > .scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}
+
+#tasksScrollPane > .scroll-bar:horizontal .thumb,
+#tasksScrollPane > .scroll-bar:vertical .thumb {
+    -fx-background-color: #BABABA;
+    -fx-background-radius: 0em;
+}
+
+#tasksScrollPane > .corner {
+    -fx-background-color: #E8E8E8;
+}
+
+
 #tasksScrollPane .viewport {
 
 -fx-background-color: transparent;
@@ -71,6 +98,7 @@
 #datePicker {
 
 -fx-background-color: transparent;
+-jfx-default-color: #d2483e;
 -fx-font-size: 15px;
 -fx-font-weight: bold;
 
@@ -137,6 +165,17 @@
 
 }
 
+
+#filtersChipView .jfx-chip > HBox {
+    -fx-font-family: "Roboto Medium";
+    -fx-font-size: 14.0;
+    -fx-background-color: #c7ecee;
+    -fx-background-radius: 40px;
+    -fx-padding: 5px 8px 5px 12px;
+    -fx-pref-height: 32px;
+    -fx-alignment: center-left;
+    -fx-spacing: 8;
+}
 
 #progressBarsLayout {
 

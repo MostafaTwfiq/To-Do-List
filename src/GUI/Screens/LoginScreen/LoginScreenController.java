@@ -7,6 +7,7 @@ import GUI.Screens.MainScreen.MainScreenController;
 import GUI.Screens.SignUpScreen.SignUpScreenController;
 import GUI.Style.ScreensPaths;
 import GUI.Style.Style.Theme;
+import GUI.Style.StyleFactory;
 import Main.Main;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
@@ -90,12 +91,8 @@ public class LoginScreenController implements IControllers {
                     if (userImagePath != null)
                         Main.user.setUserImagePath(userImagePath);
 
-                    TrayNotification trayNotification = new TrayNotification();
-                    trayNotification.setAnimationType(AnimationType.POPUP);
-                    trayNotification.setNotificationType(NotificationType.SUCCESS);
-                    trayNotification.setMessage("Welcome " + userNameTF.getText());
-                    trayNotification.setTitle("Logged in successfully");
-                    trayNotification.showAndWait();
+                    Main.theme = new StyleFactory().generateTheme(userTheme);
+                    Main.screenManager.updateScreensStyle();
 
                     try {
                         MainScreenController mainScreenController = new MainScreenController();
@@ -108,6 +105,13 @@ public class LoginScreenController implements IControllers {
                         mainScreenParent.getStylesheets().add(paths.getMainScreenCssSheet());
 
                         Main.screenManager.changeScreen(mainScreenController);
+
+                        TrayNotification trayNotification = new TrayNotification();
+                        trayNotification.setAnimationType(AnimationType.POPUP);
+                        trayNotification.setNotificationType(NotificationType.SUCCESS);
+                        trayNotification.setMessage("Welcome " + userNameTF.getText());
+                        trayNotification.setTitle("Logged in successfully");
+                        trayNotification.showAndWait();
 
                     } catch (Exception exception) {
                         exception.printStackTrace();

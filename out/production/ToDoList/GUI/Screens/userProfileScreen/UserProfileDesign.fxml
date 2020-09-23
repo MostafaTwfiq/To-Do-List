@@ -12,11 +12,19 @@
 <AnchorPane id="userProfilePane" fx:id="parentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <ImageView fx:id="userImageV" fitHeight="200.0" fitWidth="200.0" layoutX="432.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="20.0">
     </ImageView>
+
     <Button fx:id="chooseImageB" layoutX="609.0" layoutY="187.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" AnchorPane.leftAnchor="609.0" AnchorPane.topAnchor="187.0">
         <cursor>
             <Cursor fx:constant="HAND" />
         </cursor>
     </Button>
+
+    <JFXTextField fx:id="userNameTF" focusColor="BLACK" layoutX="247.0" layoutY="249.0" prefHeight="40.0" prefWidth="500.0" promptText="User name" AnchorPane.leftAnchor="247.0" AnchorPane.rightAnchor="253.0" AnchorPane.topAnchor="249.0">
+        <font>
+            <Font name="Arial" size="18.0" />
+        </font>
+    </JFXTextField>
+    
     <JFXPasswordField fx:id="passwordTF" focusColor="BLACK" layoutX="244.0" layoutY="350.0" prefHeight="40.0" prefWidth="500.0" promptText="Password" AnchorPane.leftAnchor="244.0" AnchorPane.rightAnchor="256.0" AnchorPane.topAnchor="350.0">
         <font>
             <Font name="Arial" size="18.0" />
@@ -32,13 +40,13 @@
         <Font name="Arial" size="18.0" />
     </font>
     </JFXPasswordField>
-   <Label id="passwordTitlelbl" layoutX="238.0" layoutY="283.0" text="Change Password">
+   <Label id="passwordTitlelbl" layoutX="238.0" layoutY="307.0" text="Change Password">
       <font>
          <Font name="Arial" size="20.0" />
       </font>
    </Label>
-   <Line endX="430.60003662109375" layoutX="370.0" layoutY="311.0" startX="-135.00001525878906" stroke="#c5c3c3" strokeWidth="2.0" />
-   <Label id="themeTitlelbl" layoutX="237.0" layoutY="497.0" text="Change Theme">
+   <Line endX="430.60003662109375" layoutX="370.0" layoutY="335.0" startX="-135.00001525878906" stroke="#c5c3c3" strokeWidth="2.0" />
+   <Label id="ThemeTitlelbl" layoutX="237.0" layoutY="497.0" text="Change Theme">
       <font>
          <Font name="Arial" size="20.0" />
       </font>
@@ -50,7 +58,7 @@
         </font>
     </Label>
     <JFXComboBox id="themesComboBox" fx:id="themesComboBox" layoutX="308.0" layoutY="558.0" prefHeight="25.0" prefWidth="190.0" />
-    <JFXButton layoutX="769.0" layoutY="611.0" prefHeight="40.0" prefWidth="98.0" style="-fx-background-color:#F1C40F" text="Save" textFill="WHITE">
+    <JFXButton layoutX="769.0" layoutY="611.0" prefHeight="40.0" prefWidth="98.0" style="-fx-background-color:#F1C40F" text="Save" textFill="WHITE" fx:id="SaveBtn">
       <font>
          <Font name="Arial" size="15.0" />
       </font>
@@ -58,7 +66,8 @@
          <DropShadow offsetY="0.4" radius="4.85" spread="0.3" width="0.4" />
       </effect>
     </JFXButton>
-    <JFXButton layoutX="877.0" layoutY="611.0" prefHeight="40.0" prefWidth="98.0" style="-fx-background-color:#E0E0E0" text="Cancel" textFill="#8c8c8c">
+
+    <JFXButton layoutX="877.0" layoutY="611.0"  prefHeight="40.0" prefWidth="98.0" style="-fx-background-color:#E0E0E0" text="Cancel" textFill="#8c8c8c" fx:id="CancelBtn">
         <font>
             <Font name="Arial" size="15.0" />
         </font>
@@ -67,7 +76,7 @@
       </effect>
     </JFXButton>
 
-    <JFXButton layoutX="66.0" layoutY="611.0" prefHeight="40.0" prefWidth="150" style="-fx-background-color: #eb4d4b; -fx-background-size: 18 18;-fx-background-repeat: no-repeat;-fx-background-position:left;" text="Delete Account" textFill="WHITE">
+    <JFXButton layoutX="66.0" layoutY="611.0" prefHeight="40.0" prefWidth="150" style="-fx-background-color: #eb4d4b; -fx-background-size: 18 18;-fx-background-repeat: no-repeat;-fx-background-position:left;" text="Delete Account" textFill="WHITE" fx:id="DeleteAccBtn">
         <font>
             <Font name="Arial" size="15.0" />
         </font>

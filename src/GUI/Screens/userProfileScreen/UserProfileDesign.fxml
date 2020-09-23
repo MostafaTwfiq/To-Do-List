@@ -58,7 +58,7 @@
         </font>
     </Label>
     <JFXComboBox id="themesComboBox" fx:id="themesComboBox" layoutX="308.0" layoutY="558.0" prefHeight="25.0" prefWidth="190.0" />
-    <JFXButton layoutX="769.0" layoutY="611.0" prefHeight="40.0" prefWidth="98.0" style="-fx-background-color:#F1C40F" text="Save" textFill="WHITE">
+    <JFXButton layoutX="769.0" layoutY="611.0" prefHeight="40.0" prefWidth="98.0" style="-fx-background-color:#F1C40F" text="Save" textFill="WHITE" fx:id="SaveBtn">
       <font>
          <Font name="Arial" size="15.0" />
       </font>
@@ -66,7 +66,8 @@
          <DropShadow offsetY="0.4" radius="4.85" spread="0.3" width="0.4" />
       </effect>
     </JFXButton>
-    <JFXButton layoutX="877.0" layoutY="611.0" prefHeight="40.0" prefWidth="98.0" style="-fx-background-color:#E0E0E0" text="Cancel" textFill="#8c8c8c">
+
+    <JFXButton layoutX="877.0" layoutY="611.0"  prefHeight="40.0" prefWidth="98.0" style="-fx-background-color:#E0E0E0" text="Cancel" textFill="#8c8c8c" fx:id="CancelBtn">
         <font>
             <Font name="Arial" size="15.0" />
         </font>
@@ -75,7 +76,7 @@
       </effect>
     </JFXButton>
 
-    <JFXButton layoutX="66.0" layoutY="611.0" prefHeight="40.0" prefWidth="150" style="-fx-background-color: #eb4d4b; -fx-background-size: 18 18;-fx-background-repeat: no-repeat;-fx-background-position:left;" text="Delete Account" textFill="WHITE">
+    <JFXButton layoutX="66.0" layoutY="611.0" prefHeight="40.0" prefWidth="150" style="-fx-background-color: #eb4d4b; -fx-background-size: 18 18;-fx-background-repeat: no-repeat;-fx-background-position:left;" text="Delete Account" textFill="WHITE" fx:id="DeleteAccBtn">
         <font>
             <Font name="Arial" size="15.0" />
         </font>

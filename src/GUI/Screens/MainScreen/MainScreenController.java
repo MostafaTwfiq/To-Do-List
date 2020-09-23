@@ -119,47 +119,6 @@ public class MainScreenController implements IControllersObserver {
 
     private TasksOverviewList tasksOverviewList;
 
-    private void setupMultiProgressBar() {
-        MultiProgressBarTheme multiProgressBarTheme = Main.theme.getMultiProgressBarTheme();
-        multiProgressBar = new MultiProgressBar(
-                700, 2, 17, 290
-        );
-
-        progressBarsLayout.getChildren().add(multiProgressBar);
-    }
-
-    private void updateMultiProgressBarElements(List<Task> tasks) {
-        List<Double> ratios = new TasksListHandling().getAllTasksPriorityRatioInOrder(tasks);
-        MultiProgressBarTheme multiProgressBarTheme = Main.theme.getMultiProgressBarTheme();
-        ArrayList<MultiProgressElement> multiProgressElements = new ArrayList<>();
-
-        multiProgressElements.add(new MultiProgressElement(ratios.get(3), multiProgressBarTheme.getPriority1()));
-        multiProgressElements.add(new MultiProgressElement(ratios.get(2), multiProgressBarTheme.getPriority2()));
-        multiProgressElements.add(new MultiProgressElement(ratios.get(1), multiProgressBarTheme.getPriority3()));
-        multiProgressElements.add(new MultiProgressElement(ratios.get(0), multiProgressBarTheme.getPriority4()));
-
-        multiProgressBar.setElements(multiProgressElements);
-        multiProgressBar.updateProgress();
-    }
-
-    private void setupProgressBar() {
-        ProgressBarTheme progressBarTheme = Main.theme.getProgressBarTheme();
-        progressBar = new ProgressBar(
-                progressBarTheme.getProgressBarC(),
-                progressBarTheme.getProgressC(),
-                progressBarTheme.getLabelC(),
-                300,
-                20,
-                290
-        );
-
-        progressBarsLayout.getChildren().add(progressBar);
-    }
-
-    private void updateProgressBar(List<Task> tasks) {
-        progressBar.updateProgress(new TasksListHandling().getTasksStatusRatio(tasks, TaskStatus.DONE));
-    }
-
     public MainScreenController() throws Exception {
 
         dataAccess = new DataAccess();
@@ -292,8 +251,8 @@ public class MainScreenController implements IControllersObserver {
 
             Image buttonImage = new Image(imageStream);
             ImageView buttonImageView = new ImageView(buttonImage);
-            buttonImageView.setFitHeight(20);
-            buttonImageView.setFitWidth(20);
+            buttonImageView.setFitHeight(22);
+            buttonImageView.setFitWidth(22);
 
             userSettingsB.setGraphic(buttonImageView);
 
@@ -326,6 +285,9 @@ public class MainScreenController implements IControllersObserver {
         for (TaskPriority priority : priorities)
             filtersChipView.getSuggestions().add(priority.toString());
 
+        filtersChipView.getSuggestions().add("STARRED");
+        filtersChipView.getSuggestions().add("NOT_STARRED");
+
 
         filtersChipView.getChips().addListener((InvalidationListener) e -> updateTasks());
 
@@ -354,6 +316,47 @@ public class MainScreenController implements IControllersObserver {
         optionsListView.getItems().add(optionsLabels.getSortByReminderLbl());
         optionsListView.getItems().add(optionsLabels.getSortByPriorityLbl());
 
+    }
+
+    private void setupMultiProgressBar() {
+        MultiProgressBarTheme multiProgressBarTheme = Main.theme.getMultiProgressBarTheme();
+        multiProgressBar = new MultiProgressBar(
+                700, 2, 17, 290
+        );
+
+        progressBarsLayout.getChildren().add(multiProgressBar);
+    }
+
+    private void updateMultiProgressBarElements(List<Task> tasks) {
+        List<Double> ratios = new TasksListHandling().getAllTasksPriorityRatioInOrder(tasks);
+        MultiProgressBarTheme multiProgressBarTheme = Main.theme.getMultiProgressBarTheme();
+        ArrayList<MultiProgressElement> multiProgressElements = new ArrayList<>();
+
+        multiProgressElements.add(new MultiProgressElement(ratios.get(3), multiProgressBarTheme.getPriority1()));
+        multiProgressElements.add(new MultiProgressElement(ratios.get(2), multiProgressBarTheme.getPriority2()));
+        multiProgressElements.add(new MultiProgressElement(ratios.get(1), multiProgressBarTheme.getPriority3()));
+        multiProgressElements.add(new MultiProgressElement(ratios.get(0), multiProgressBarTheme.getPriority4()));
+
+        multiProgressBar.setElements(multiProgressElements);
+        multiProgressBar.updateProgress();
+    }
+
+    private void setupProgressBar() {
+        ProgressBarTheme progressBarTheme = Main.theme.getProgressBarTheme();
+        progressBar = new ProgressBar(
+                progressBarTheme.getProgressBarC(),
+                progressBarTheme.getProgressC(),
+                progressBarTheme.getLabelC(),
+                300,
+                20,
+                290
+        );
+
+        progressBarsLayout.getChildren().add(progressBar);
+    }
+
+    private void updateProgressBar(List<Task> tasks) {
+        progressBar.updateProgress(new TasksListHandling().getTasksStatusRatio(tasks, TaskStatus.DONE));
     }
 
     private void loadTodayTasks() {

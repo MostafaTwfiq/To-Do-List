@@ -40,7 +40,7 @@
             <HBox fx:id="userOverviewLayout" alignment="CENTER_LEFT" layoutX="38.0" layoutY="-31.0" prefHeight="40.0" prefWidth="300.0" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <ImageView fx:id="userImage" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label fx:id="userNameLbl" prefHeight="50.0" prefWidth="170.0" text="Name">
+                  <Label fx:id="userNameLbl" prefHeight="50.0" prefWidth="180.0" text="Name">
                      <font>
                         <Font size="18.0" />
                      </font>

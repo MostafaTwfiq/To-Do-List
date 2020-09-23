@@ -15,31 +15,31 @@ public class DarkTheme extends Style {
                         Color.rgb(79, 82, 84) //#4f5254
                 ),
                 new SearchBoxTheme(
-                        Color.rgb(255,255,255),
+                        Color.rgb(190, 190, 190),
                         Color.rgb(0, 0, 0),
                         Color.rgb(0,0,0)
                 ),
                 new MultiProgressBarTheme(
-                        Color.rgb(98, 220, 165),
-                        Color.rgb(247, 248, 121),
-                        Color.rgb(230,126,34),
-                        Color.rgb(226, 103, 90)
+                        Color.rgb(42, 139, 68),
+                        Color.rgb(218, 180, 29),
+                        Color.rgb(218, 119, 32),
+                        Color.rgb(200, 62, 82)
                 ),
                 new ProgressBarTheme(
-                        Color.rgb(149,165,166),
-                        Color.rgb(236,240,241),
-                        Color.rgb(0,0,0)
+                        Color.rgb(190, 190, 190),
+                        Color.rgb(47, 170, 219),
+                        Color.rgb(39, 44, 46)
                 ),
-                Color.rgb(0, 0, 0),
+                Color.rgb(207, 207, 207),
                 new PrioritiesColors(
-                        Color.rgb(226, 103, 90),
-                        Color.rgb(230,126,34),
-                        Color.rgb(247, 248, 121),
-                        Color.rgb(98, 220, 165)
+                        Color.rgb(200, 62, 82),
+                        Color.rgb(218, 119, 32),
+                        Color.rgb(218, 180, 29),
+                        Color.rgb(42, 139, 68)
                 ),
                 new PopUpOptionsTheme(
-                        Color.BLACK,
-                        Color.WHITE
+                        Color.rgb(207, 207, 207),
+                        Color.rgb(39, 44, 46)
                 )
 
         );

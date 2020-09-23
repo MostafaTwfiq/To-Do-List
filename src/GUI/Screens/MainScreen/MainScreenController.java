@@ -270,8 +270,8 @@ public class MainScreenController implements IControllersObserver {
 
             Image buttonImage = new Image(imageStream);
             ImageView buttonImageView = new ImageView(buttonImage);
-            buttonImageView.setFitHeight(30);
-            buttonImageView.setFitWidth(30);
+            buttonImageView.setFitHeight(25);
+            buttonImageView.setFitWidth(25);
 
             userSettingsB.setGraphic(buttonImageView);
 

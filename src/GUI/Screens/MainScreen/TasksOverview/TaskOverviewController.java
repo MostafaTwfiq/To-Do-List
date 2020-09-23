@@ -17,6 +17,7 @@ import javafx.scene.Parent;
 import java.io.FileInputStream;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
@@ -236,8 +237,7 @@ public class TaskOverviewController implements IControllersObserver {
     }
 
     private void setTaskTimeLbl() {
-        String time = task.getDateTime().toString();
-        taskTimeLbl.setText(time.substring(time.lastIndexOf('T') + 1));
+        taskTimeLbl.setText(task.getDateTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
     }
 
     private void setTaskPriorityRec() {

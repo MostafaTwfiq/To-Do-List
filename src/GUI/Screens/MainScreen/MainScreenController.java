@@ -44,6 +44,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import tray.animations.AnimationType;
 import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
@@ -171,10 +172,22 @@ public class MainScreenController implements IControllersObserver {
                 trayNotification.setNotificationType(NotificationType.NOTICE);
                 trayNotification.setMessage("Don't forget to " + todayTasks.get(currentIndex).getTitle());
                 trayNotification.setTitle("Reminder");
+                trayNotification.setImage(loadReminderImage());
+                trayNotification.setRectangleFill(Color.rgb(255, 206, 86));
                 trayNotification.showAndWait();
             } else if (todayTasks.get(currentIndex).getDateTime().isAfter(LocalDateTime.now()))
                 break;
         }
+    }
+
+    private Image loadReminderImage() {
+        try {
+            return new Image(new FileInputStream(Main.theme.getThemeResourcesPath() + "MainScreen/reminder.png"));
+        } catch (Exception e) {
+            System.out.println("Can't load the reminder image.");
+        }
+
+        return null;
     }
 
 

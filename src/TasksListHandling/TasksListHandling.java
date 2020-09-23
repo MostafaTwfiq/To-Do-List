@@ -100,6 +100,8 @@ public class TasksListHandling {
     }
 
     public double getTasksStatusRatio(List<Task> tasks, TaskStatus status) {
+        if (tasks.size() == 0)
+            return 0;
         return getTasksStatusNum(tasks, status) / (tasks.size() * 1.0);
     }
 
@@ -115,6 +117,8 @@ public class TasksListHandling {
     }
 
     public double getTasksPriorityRatio(List<Task> tasks, TaskPriority priority) {
+        if (tasks.size() == 0)
+            return 0;
         return getTasksPriorityNum(tasks, priority) / (tasks.size() * 1.0);
     }
 

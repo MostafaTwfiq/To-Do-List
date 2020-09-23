@@ -33,7 +33,10 @@
                   <JFXChipView fx:id="filtersChipView" layoutX="72.0" layoutY="123.0" maxHeight="-Infinity" maxWidth="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0" />
                </children>
             </AnchorPane>
-            <VBox fx:id="progressBarsLayout" layoutX="62.0" layoutY="636.0" prefHeight="50.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+            <VBox fx:id="progressBarsLayout" alignment="CENTER" layoutX="62.0" layoutY="636.0" prefHeight="60.0" prefWidth="300.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding></VBox>
             <HBox fx:id="userOverviewLayout" alignment="CENTER_LEFT" layoutX="38.0" layoutY="-31.0" prefHeight="40.0" prefWidth="300.0" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <ImageView fx:id="userImage" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />

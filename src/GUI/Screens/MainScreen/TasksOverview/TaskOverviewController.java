@@ -27,7 +27,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
 
-public class TaskOverviewController implements IControllers {
+public class TaskOverviewController implements IControllersObserver {
 
     @FXML
     private HBox parentLayout;
@@ -75,11 +75,11 @@ public class TaskOverviewController implements IControllers {
 
             try {
                 dataAccess.updateTaskStatus(task.getTaskID(), task.getTaskStatus());
+                setTskDoneStatusBtnStatus();
+                updateTasks();
             } catch (Exception exception) {
                 System.out.println("Something went wrong while trying to update task status in the database.");
             }
-
-            setTskDoneStatusBtnStatus();
 
         });
 
@@ -172,6 +172,7 @@ public class TaskOverviewController implements IControllers {
                 dataAccess.updateTaskPriority(task.getTaskID(), nextPriority);
                 task.setPriority(nextPriority);
                 setTaskPriorityRecColor();
+                updateTasks();
             } catch (Exception exception) {
                 System.out.println("Something wrong happened while trying to update the task priority in the database.");
             }
@@ -208,6 +209,14 @@ public class TaskOverviewController implements IControllers {
         setTaskPriorityRec();
     }
 
+    @Override
+    public void updateTasks() {
+
+        for (IControllersObserver observer : observers)
+            observer.updateTasks();
+
+    }
+
     public void addObserver(IControllersObserver observer) {
 
         if (observer == null)
@@ -242,4 +251,5 @@ public class TaskOverviewController implements IControllers {
     public Task getTask() {
         return task;
     }
+
 }

@@ -6,9 +6,12 @@ import DataClasses.Task;
 import DataClasses.TaskStatus.TaskPriority;
 import DataClasses.TaskStatus.TaskStatus;
 import GUI.MultiProgressBar.MultiProgressBar;
+import GUI.MultiProgressBar.MultiProgressElement;
 import GUI.ProgressBar.ProgressBar;
 import GUI.Screens.MainScreen.TasksOverview.TasksOverviewList;
 import GUI.SearchBox.SearchBox;
+import GUI.Style.Style.ExtraComponents.MultiProgressBarTheme;
+import GUI.Style.Style.ExtraComponents.ProgressBarTheme;
 import GUI.Style.Style.ExtraComponents.SearchBoxTheme;
 import Main.Main;
 import TasksListHandling.TasksListHandling;
@@ -116,6 +119,47 @@ public class MainScreenController implements IControllersObserver {
 
     private TasksOverviewList tasksOverviewList;
 
+    private void setupMultiProgressBar() {
+        MultiProgressBarTheme multiProgressBarTheme = Main.theme.getMultiProgressBarTheme();
+        multiProgressBar = new MultiProgressBar(
+                700, 2, 17, 290
+        );
+
+        progressBarsLayout.getChildren().add(multiProgressBar);
+    }
+
+    private void updateMultiProgressBarElements(List<Task> tasks) {
+        List<Double> ratios = new TasksListHandling().getAllTasksPriorityRatioInOrder(tasks);
+        MultiProgressBarTheme multiProgressBarTheme = Main.theme.getMultiProgressBarTheme();
+        ArrayList<MultiProgressElement> multiProgressElements = new ArrayList<>();
+
+        multiProgressElements.add(new MultiProgressElement(ratios.get(3), multiProgressBarTheme.getPriority1()));
+        multiProgressElements.add(new MultiProgressElement(ratios.get(2), multiProgressBarTheme.getPriority2()));
+        multiProgressElements.add(new MultiProgressElement(ratios.get(1), multiProgressBarTheme.getPriority3()));
+        multiProgressElements.add(new MultiProgressElement(ratios.get(0), multiProgressBarTheme.getPriority4()));
+
+        multiProgressBar.setElements(multiProgressElements);
+        multiProgressBar.updateProgress();
+    }
+
+    private void setupProgressBar() {
+        ProgressBarTheme progressBarTheme = Main.theme.getProgressBarTheme();
+        progressBar = new ProgressBar(
+                progressBarTheme.getProgressBarC(),
+                progressBarTheme.getProgressC(),
+                progressBarTheme.getLabelC(),
+                300,
+                20,
+                290
+        );
+
+        progressBarsLayout.getChildren().add(progressBar);
+    }
+
+    private void updateProgressBar(List<Task> tasks) {
+        progressBar.updateProgress(new TasksListHandling().getTasksStatusRatio(tasks, TaskStatus.DONE));
+    }
+
     public MainScreenController() throws Exception {
 
         dataAccess = new DataAccess();
@@ -156,6 +200,7 @@ public class MainScreenController implements IControllersObserver {
             if (
                     todayTasks.get(currentIndex).getDateTime().isEqual(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                     && !alertedTasks.contains(todayTasks.get(currentIndex))
+                    && todayTasks.get(currentIndex).getTaskStatus() == TaskStatus.NOT_DONE
             ) {
                 alertedTasks.add(todayTasks.get(currentIndex));
                 TrayNotification trayNotification = new TrayNotification();
@@ -423,10 +468,12 @@ public class MainScreenController implements IControllersObserver {
         setupDatePicker();
         setupOptionsListView();
         setupFiltersChipView();
+        setupMultiProgressBar();
+        setupProgressBar();
         loadTodayTasks();
 
         tasksScrollPane.contentProperty().set(tasksOverviewList);
-        tasksOverviewList.displayTasks(todayTasks);
+        tasksOverviewList.updateTasks();
 
     }
 
@@ -437,6 +484,9 @@ public class MainScreenController implements IControllersObserver {
         List<Task> tasks = searchForTasks();
         if (tasks != null)
             tasksOverviewList.displayTasks(tasks);
+
+        updateMultiProgressBarElements(tasks);
+        updateProgressBar(tasks);
 
     }
 

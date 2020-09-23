@@ -7,11 +7,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
+import java.util.List;
 import java.util.Vector;
 
 public class MultiProgressBar extends HBox {
 
-    Vector<MultiProgressElement> elements;
+    List<MultiProgressElement> elements;
     double totalRatio;
     double updatingTime;
 
@@ -34,6 +35,25 @@ public class MultiProgressBar extends HBox {
         setupProgressBarStyle();
 
         updateProgress();
+
+    }
+
+    public MultiProgressBar(double updatingTime, double spacing, double h, double w) {
+
+        if (updatingTime < 0 || h < 0 || w < 0)
+            throw new IllegalArgumentException();
+
+        this.updatingTime = updatingTime;
+
+        this.elements = new Vector<>();
+
+        calculateTotalRatio();
+
+        setPrefHeight(h);
+        setPrefWidth(w);
+        setSpacing(spacing);
+
+        setupProgressBarStyle();
 
     }
 
@@ -124,11 +144,11 @@ public class MultiProgressBar extends HBox {
 
     }
 
-    public Vector<MultiProgressElement> getElements() {
+    public List<MultiProgressElement> getElements() {
         return elements;
     }
 
-    public void setElements(Vector<MultiProgressElement> elements) {
+    public void setElements(List<MultiProgressElement> elements) {
 
         if (elements == null)
             throw new IllegalArgumentException();

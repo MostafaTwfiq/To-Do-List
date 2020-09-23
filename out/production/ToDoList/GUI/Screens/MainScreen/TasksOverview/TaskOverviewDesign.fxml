@@ -17,7 +17,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <Label fx:id="taskNameLbl" prefWidth="360.0" text="Task Name">
+      <Label fx:id="taskNameLbl" prefWidth="290.0" text="Task Name">
          <font>
             <Font name="Arial" size="24.0" />
          </font>
@@ -27,6 +27,11 @@
             <Font name="Arial" size="24.0" />
          </font>
       </Label>
+      <JFXButton fx:id="starredBtn" prefHeight="30.0" prefWidth="30.0" text=" ">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
       <Rectangle fx:id="taskPriorityRec" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="30.0" stroke="BLACK" strokeType="INSIDE" width="30.0">
          <cursor>
             <Cursor fx:constant="HAND" />

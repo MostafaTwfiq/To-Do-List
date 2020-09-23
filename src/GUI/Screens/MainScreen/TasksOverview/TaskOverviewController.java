@@ -45,6 +45,9 @@ public class TaskOverviewController implements IControllersObserver {
     private Rectangle taskPriorityRec;
 
     @FXML
+    private JFXButton starredBtn;
+
+    @FXML
     private Button moreOptionsBtn;
 
     private DataAccess dataAccess;
@@ -118,6 +121,40 @@ public class TaskOverviewController implements IControllersObserver {
                 Main.theme.getThemeResourcesPath() + "MainScreen/moreOptions.png",
                 30, 30)
         );
+
+    }
+
+    private void setupStarredBtn() {
+
+        starredBtn.setOnMouseClicked(e -> {
+            task.setStarred(!task.isStarred());
+
+            try {
+                dataAccess.updateTaskStarredStatus(task.getTaskID(), task.isStarred());
+                setStarredBtnImage();
+                updateTasks();
+            } catch (Exception exception) {
+                System.out.println("Something went wrong while trying to update task is starred status in the database.");
+            }
+        });
+
+        starredBtn.setContentDisplay(ContentDisplay.CENTER);
+        setStarredBtnImage();
+    }
+
+    private void setStarredBtnImage() {
+
+        if (task.isStarred()) {
+
+            starredBtn.setGraphic(loadButtonImage(
+                    Main.theme.getThemeResourcesPath() + "MainScreen/starred.png"
+                    , 30, 30));
+
+        } else {
+            starredBtn.setGraphic(loadButtonImage(
+                    Main.theme.getThemeResourcesPath() + "MainScreen/notStarred.png"
+                    , 30, 30));
+        }
 
     }
 
@@ -204,6 +241,7 @@ public class TaskOverviewController implements IControllersObserver {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupTskDoneStatusBtn();
         setupMoreOptionsBtn();
+        setupStarredBtn();
         setTaskNameLbl();
         setTaskTimeLbl();
         setTaskPriorityRec();

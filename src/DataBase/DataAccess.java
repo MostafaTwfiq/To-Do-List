@@ -897,6 +897,27 @@ public class DataAccess {
     }
 
 
+    /** This function will update the status is the task starred or not for the passed task id.
+     * @param taskID the task id
+     * @param isStarred the status of the task if it was starred or not
+     * @throws SQLException exception in case something went wrong
+     */
+
+    public void updateTaskStarredStatus(int taskID, boolean isStarred) throws SQLException {
+
+        ArrayList<String> parameters = new ArrayList<>();
+        parameters.add(String.format("%d", taskID));
+        parameters.add(String.format("%b", isStarred));
+
+        statement.executeQuery(
+                "CALL update_task_is_starred"
+                        + convertStringToParameters(parameters)
+                        + ";"
+        );
+
+    }
+
+
     /** This function will update the priority for the passed task id.
      * @param taskID the task id
      * @param priority the new priority

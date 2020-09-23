@@ -2,6 +2,7 @@ package GUI.Screens.MainScreen;
 
 import GUI.Style.ColorTransformer;
 import Main.Main;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,8 +18,11 @@ public class OptionsLabels {
     public OptionsLabels() {
 
         todayLbl = new Label("Today's tasks");
+        todayLbl.setCursor(Cursor.HAND);
         sortByReminderLbl = new Label("Sort by reminder");
+        sortByReminderLbl.setCursor(Cursor.HAND);
         sortByPriorityLbl = new Label("Sort by priority");
+        sortByPriorityLbl.setCursor(Cursor.HAND);
 
         setTodayLblStyle();
         setSortByReminderLblStyle();

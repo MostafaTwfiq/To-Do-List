@@ -11,7 +11,9 @@ import GUI.Screens.MainScreen.TasksOverview.TasksOverviewList;
 import GUI.SearchBox.SearchBox;
 import GUI.Style.Style.ExtraComponents.SearchBoxTheme;
 import Main.Main;
+import TasksListHandling.TasksListHandling;
 import javafx.animation.AnimationTimer;
+import javafx.beans.InvalidationListener;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -19,7 +21,10 @@ import javafx.scene.Parent;
 import java.io.FileInputStream;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 import com.jfoenix.controls.JFXChipView;
@@ -34,6 +39,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import tray.animations.AnimationType;
+import tray.notification.NotificationType;
+import tray.notification.TrayNotification;
 
 public class MainScreenController implements IControllersObserver {
 
@@ -100,9 +108,11 @@ public class MainScreenController implements IControllersObserver {
 
     private List<Task> todayTasks;
 
+    private HashSet<Task> alertedTasks;
+
     private AnimationTimer reminderChecker;
 
-    private Date todayDate;
+    private LocalDate todayDate;
 
     private TasksOverviewList tasksOverviewList;
 
@@ -110,7 +120,8 @@ public class MainScreenController implements IControllersObserver {
 
         dataAccess = new DataAccess();
         todayTasks = new Vector<>();
-        todayDate = new Date();
+        alertedTasks = new HashSet<>();
+        todayDate = LocalDate.now();
 
         tasksOverviewList = new TasksOverviewList();
         tasksOverviewList.addObserver(this);
@@ -119,17 +130,42 @@ public class MainScreenController implements IControllersObserver {
             @Override
             public void handle(long l) {
 
-                if (todayDate.before(new Date())) {
+                if (todayDate.isBefore(LocalDate.now())) {
+                    todayDate = LocalDate.now();
                     loadTodayTasks();
                 }
 
+                checkForReminders();
+
             }
         };
+
+        reminderChecker.start();
     }
 
     private void checkForReminders() {
-        for (Task task : todayTasks) {
-            //if (todayDate.compareTo(task.getDateTime().toLocalTime().tos))
+        int currentIndex = todayTasks.size() / 2;
+        while (currentIndex > 0) {
+            if (todayTasks.get(currentIndex).getDateTime().isAfter(LocalDateTime.now()))
+                currentIndex /= 2;
+            else
+                break;
+        }
+
+        for (;currentIndex < todayTasks.size(); currentIndex++) {
+            if (
+                    todayTasks.get(currentIndex).getDateTime().isEqual(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                    && !alertedTasks.contains(todayTasks.get(currentIndex))
+            ) {
+                alertedTasks.add(todayTasks.get(currentIndex));
+                TrayNotification trayNotification = new TrayNotification();
+                trayNotification.setAnimationType(AnimationType.POPUP);
+                trayNotification.setNotificationType(NotificationType.NOTICE);
+                trayNotification.setMessage("Don't forget to " + todayTasks.get(currentIndex).getTitle());
+                trayNotification.setTitle("Reminder");
+                trayNotification.showAndWait();
+            } else if (todayTasks.get(currentIndex).getDateTime().isAfter(LocalDateTime.now()))
+                break;
         }
     }
 
@@ -141,7 +177,7 @@ public class MainScreenController implements IControllersObserver {
         searchBox = new SearchBox(
                 20, 290,
                 "Search",
-                e -> searchForTasks(),
+                e -> updateTasks(),
                 searchBoxTheme.getSearchBoxColor(),
                 searchBoxTheme.getTextColor(),
                 searchBoxTheme.getPromptTextColor()
@@ -224,6 +260,8 @@ public class MainScreenController implements IControllersObserver {
 
     private void setupDatePicker() {
 
+        datePicker.valueProperty().set(LocalDate.now());
+
         datePicker.valueProperty().addListener((ov, oldValue, newValue) -> {
 
             if (oldValue == null || !oldValue.isEqual(newValue))
@@ -233,19 +271,38 @@ public class MainScreenController implements IControllersObserver {
 
     }
 
+    private void setupFiltersChipView() {
+        TaskStatus[] statuses = TaskStatus.values();
+        TaskPriority[] priorities = TaskPriority.values();
+
+        for (TaskStatus status : statuses)
+            filtersChipView.getSuggestions().add(status.toString());
+
+        for (TaskPriority priority : priorities)
+            filtersChipView.getSuggestions().add(priority.toString());
+
+
+        filtersChipView.getChips().addListener((InvalidationListener) e -> updateTasks());
+
+    }
+
     private void setupOptionsListView() {
 
         optionsLabels = new OptionsLabels();
         optionsLabels.getTodayLbl().setOnMouseClicked(e -> {
-
+            datePicker.valueProperty().set(LocalDate.now());
         });
 
         optionsLabels.getSortByReminderLbl().setOnMouseClicked(e -> {
-
+            List<Task> currentTasks = tasksOverviewList.getCurrentTasks();
+            new TasksListHandling().sortTasksByDate(currentTasks, false);
+            tasksOverviewList.displayTasks(currentTasks);
         });
 
         optionsLabels.getSortByPriorityLbl().setOnMouseClicked(e -> {
-
+            List<Task> currentTasks = tasksOverviewList.getCurrentTasks();
+            new TasksListHandling().sortTasksPriority(currentTasks, true);
+            tasksOverviewList.displayTasks(currentTasks);
         });
 
         optionsListView.getItems().add(optionsLabels.getTodayLbl());
@@ -262,43 +319,12 @@ public class MainScreenController implements IControllersObserver {
                     new SimpleDateFormat(DateFormat.getDateTimeFormat()).format(new Date()))
             );
 
+            alertedTasks.clear();
+            new TasksListHandling().sortTasksByDate(todayTasks, false);
+
         } catch (Exception e) {
             System.out.println("Something wrong happened while trying to load today's tasks from the database.");
         }
-
-    }
-
-
-    @Override
-    public void updateStyle() {
-
-    }
-
-    @Override
-    public Parent getParent() {
-        return parentLayout;
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        setupUserOverview();
-        setupSearchBox();
-        setupDatePicker();
-        setupOptionsListView();
-        loadTodayTasks();
-
-        tasksScrollPane.contentProperty().set(tasksOverviewList);
-        tasksOverviewList.displayTasks(todayTasks);
-
-    }
-
-
-    @Override
-    public void updateTasks() {
-
-        List<Task> tasks = searchForTasks();
-        if (tasks != null)
-            tasksOverviewList.displayTasks(tasks);
 
     }
 
@@ -376,6 +402,41 @@ public class MainScreenController implements IControllersObserver {
         }
 
         return null;
+
+    }
+
+
+    @Override
+    public void updateStyle() {
+
+    }
+
+    @Override
+    public Parent getParent() {
+        return parentLayout;
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        setupUserOverview();
+        setupSearchBox();
+        setupDatePicker();
+        setupOptionsListView();
+        setupFiltersChipView();
+        loadTodayTasks();
+
+        tasksScrollPane.contentProperty().set(tasksOverviewList);
+        tasksOverviewList.displayTasks(todayTasks);
+
+    }
+
+
+    @Override
+    public void updateTasks() {
+
+        List<Task> tasks = searchForTasks();
+        if (tasks != null)
+            tasksOverviewList.displayTasks(tasks);
 
     }
 

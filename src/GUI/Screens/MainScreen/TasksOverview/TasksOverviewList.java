@@ -1,13 +1,16 @@
 package GUI.Screens.MainScreen.TasksOverview;
 
 import DataClasses.Task;
-import GUI.IControllers;
 import GUI.Screens.MainScreen.IControllersObserver;
 import GUI.Style.ScreensPaths;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -51,6 +54,16 @@ public class TasksOverviewList extends VBox implements IControllersObserver {
 
     public void displayTasks(List<Task> tasks) {
 
+        setOpacity(0);
+        Timeline displayingTasksAnimation = new Timeline(
+                new KeyFrame(
+                        Duration.millis(300),
+                        new KeyValue(opacityProperty(), 1)
+                )
+        );
+
+        displayingTasksAnimation.setCycleCount(1);
+        displayingTasksAnimation.play();
         getChildren().clear();
         taskOverviewControllers.clear();
 
@@ -103,6 +116,15 @@ public class TasksOverviewList extends VBox implements IControllersObserver {
             throw new IllegalArgumentException();
 
         observers.add(observer);
+
+    }
+
+    public List<Task> getCurrentTasks() {
+        Vector<Task> tasks = new Vector<>();
+        for (TaskOverviewController controller : taskOverviewControllers)
+            tasks.add(controller.getTask());
+
+        return tasks;
 
     }
 

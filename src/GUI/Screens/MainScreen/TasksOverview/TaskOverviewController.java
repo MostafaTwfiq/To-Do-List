@@ -1,6 +1,8 @@
 package GUI.Screens.MainScreen.TasksOverview;
 
+import DataBase.DataAccess;
 import DataClasses.Task;
+import DataClasses.TaskStatus.TaskPriority;
 import DataClasses.TaskStatus.TaskStatus;
 import GUI.IControllers;
 import GUI.Screens.MainScreen.IControllersObserver;
@@ -11,6 +13,7 @@ import javafx.scene.Parent;
 
 import java.io.FileInputStream;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -44,25 +47,37 @@ public class TaskOverviewController implements IControllers {
     @FXML
     private Button moreOptionsBtn;
 
+    private DataAccess dataAccess;
+
     private Task task;
 
     private List<IControllersObserver> observers;
 
-    public TaskOverviewController(Task task, List<IControllersObserver> observers) {
+    public TaskOverviewController(Task task, List<IControllersObserver> observers) throws SQLException {
         this.task = task;
         this.observers = observers;
+        dataAccess = new DataAccess();
     }
 
-    public TaskOverviewController(Task task) {
+    public TaskOverviewController(Task task) throws SQLException {
         this.task = task;
         this.observers = new ArrayList<>();
+
+        dataAccess = new DataAccess();
     }
 
 
     private void setupTskDoneStatusBtn() {
 
         tskDoneStatusBtn.setOnAction(e -> {
+
             task.setTaskStatus(task.getTaskStatus() == TaskStatus.NOT_DONE ? TaskStatus.DONE : TaskStatus.NOT_DONE);
+
+            try {
+                dataAccess.updateTaskStatus(task.getTaskID(), task.getTaskStatus());
+            } catch (Exception exception) {
+                System.out.println("Something went wrong while trying to update task status in the database.");
+            }
 
             setTskDoneStatusBtnStatus();
 
@@ -138,6 +153,34 @@ public class TaskOverviewController implements IControllers {
     }
 
     private void setTaskPriorityRec() {
+
+        setTaskPriorityRecColor();
+
+        taskPriorityRec.setOnMouseClicked(e -> {
+            TaskPriority[] priorities = TaskPriority.values();
+            int index;
+            for (index = 0; index < priorities.length; index++) {
+                if (priorities[index] == task.getPriority())
+                    break;
+
+            }
+
+            index++;
+            index = index >= priorities.length ? index % priorities.length : index;
+            TaskPriority nextPriority = priorities[index];
+            try {
+                dataAccess.updateTaskPriority(task.getTaskID(), nextPriority);
+                task.setPriority(nextPriority);
+                setTaskPriorityRecColor();
+            } catch (Exception exception) {
+                System.out.println("Something wrong happened while trying to update the task priority in the database.");
+            }
+
+        });
+
+    }
+
+    private void setTaskPriorityRecColor() {
         taskPriorityRec.setFill(new PrioritiesColorGetter().getPriorityColor(Main.theme, task.getPriority()));
     }
 
@@ -196,4 +239,7 @@ public class TaskOverviewController implements IControllers {
 
     }
 
+    public Task getTask() {
+        return task;
+    }
 }

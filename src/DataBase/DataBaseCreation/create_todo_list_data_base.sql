@@ -114,7 +114,7 @@ DROP PROCEDURE IF EXISTS get_user_id;
 DELIMITER $$
 CREATE PROCEDURE get_user_id ( user_name VARCHAR(50), password VARCHAR(50) )
 BEGIN
-SELECT user_id FROM users WHERE users.user_name = user_name AND users.password = password; 
+SELECT user_id FROM users WHERE BINARY users.user_name = user_name AND users.password = password; 
 END $$
 DELIMITER ;
 

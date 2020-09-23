@@ -275,8 +275,8 @@ public class MainScreenController implements IControllersObserver {
         PopUpOptionsTheme popUpOptionsTheme = Main.theme.getPopUpOptionsTheme();
 
         JFXButton settingsBtn = new JFXButton("Settings");
-        JFXButton signOutBtn = new JFXButton("Sign out");
-        VBox vBox = new VBox(settingsBtn, signOutBtn);
+        JFXButton logOutBtn = new JFXButton("Log out");
+        VBox vBox = new VBox(settingsBtn, logOutBtn);
         vBox.styleProperty().set("-fx-background-color: " + colorTransformer.colorToHex(popUpOptionsTheme.getListBackgroundC()) + ";");
         popupUserOptions.setPopupContent(vBox);
 
@@ -293,15 +293,15 @@ public class MainScreenController implements IControllersObserver {
         });
 
 
-        signOutBtn.setCursor(Cursor.HAND);
-        signOutBtn.setStyle("-fx-background-color: transparent;"
+        logOutBtn.setCursor(Cursor.HAND);
+        logOutBtn.setStyle("-fx-background-color: transparent;"
                 + "-fx-background-radius: 0;"
                 + "-fx-border-color: transparent;"
                 + "-fx-border-radius: 0;"
                 + "-fx-text-fill:" + colorTransformer.colorToHex(popUpOptionsTheme.getButtonsTextC()) + ";"
         );
-        signOutBtn.setPrefWidth(90);
-        signOutBtn.setOnAction(e -> {
+        logOutBtn.setPrefWidth(90);
+        logOutBtn.setOnAction(e -> {
             popupUserOptions.hide();
             Main.screenManager.changeToLastScreen();
         });

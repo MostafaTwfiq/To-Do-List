@@ -283,7 +283,7 @@ public class TaskOverviewController implements IControllersObserver {
         setTaskPriorityRecColor();
         setupPopupOptions();
         parentLayout.getStylesheets().clear();
-        parentLayout.getStylesheets().add(new ScreensPaths().getMainScreenCssSheet());
+        parentLayout.getStylesheets().add(new ScreensPaths().getTaskOverviewCssSheet());
     }
 
     @Override

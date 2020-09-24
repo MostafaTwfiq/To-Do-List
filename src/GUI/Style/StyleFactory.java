@@ -1,9 +1,6 @@
 package GUI.Style;
 
-import GUI.Style.Style.DarkTheme;
-import GUI.Style.Style.LightTheme;
-import GUI.Style.Style.Style;
-import GUI.Style.Style.Theme;
+import GUI.Style.Style.*;
 
 public class StyleFactory {
 
@@ -15,6 +12,8 @@ public class StyleFactory {
                 return new LightTheme();
             case DarkTheme:
                 return new DarkTheme();
+            case PurkTheme:
+                return new PurkTheme();
         }
 
         return null;

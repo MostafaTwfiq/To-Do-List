@@ -222,6 +222,15 @@
     -jfx-size: 8;
 }
 
+#filtersChipView .jfx-popup-container {
+    -fx-background-color: black;
+    -fx-pref-width: 151.0px;
+}
+
+#filtersChipView .jfx-snackbar-content {
+    -fx-background-color: black;
+}
+
 #progressBarsLayout {
 
 -fx-background-color: transparent;

@@ -205,10 +205,6 @@
     -jfx-size: 8;
 }
 
-.list-cell {
-    -fx-background-color: black;
-    -fx-text-fill: black; /* 5 */
-}
 
 #progressBarsLayout {
 

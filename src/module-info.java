@@ -17,6 +17,7 @@ module ToDoList {
     opens GUI.Screens.userProfileScreen;
     opens JFoenix;
 
+
     //Light mode theme:
     opens GUI.Style.ThemesCss.LightTheme.Stage;
     opens GUI.Style.ThemesCss.LightTheme.LoginScreen;
@@ -31,5 +32,14 @@ module ToDoList {
     opens GUI.Style.ThemesCss.DarkTheme.SignUpScreen;
     opens GUI.Style.ThemesCss.DarkTheme.UserProfileScreen;
     opens GUI.Style.ThemesCss.DarkTheme.MainScreen;
+
+
+    //Purk mode theme:
+    opens GUI.Style.ThemesCss.PurkTheme.Stage;
+    opens GUI.Style.ThemesCss.PurkTheme.LoginScreen;
+    opens GUI.Style.ThemesCss.PurkTheme.SignUpScreen;
+    opens GUI.Style.ThemesCss.PurkTheme.UserProfileScreen;
+    opens GUI.Style.ThemesCss.PurkTheme.MainScreen;
+
 
 }

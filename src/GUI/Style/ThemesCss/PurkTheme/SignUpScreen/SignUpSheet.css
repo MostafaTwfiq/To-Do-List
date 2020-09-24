@@ -1,0 +1,110 @@
+#signUpPane {
+
+-fx-background-color: #8e2663;
+
+}
+
+#userImageC {
+
+    -fx-stroke-width: 1;
+    -fx-stroke: white;
+
+}
+
+#chooseImageB {
+
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+
+}
+
+#errorL {
+
+-fx-text-fill: #ef5350;
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+-fx-font-size: 14px;
+-fx-font-weight: bold;
+
+}
+
+#userNameTF {
+
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: white;
+    -jfx-focus-color: white;
+    -jfx-unfocus-color: #c3c3c3;
+
+}
+
+#passwordTF {
+
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: white;
+    -jfx-focus-color: white;
+    -jfx-unfocus-color: #c3c3c3;
+
+}
+
+
+#confirmPasswordTF {
+
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: white;
+    -jfx-focus-color: white;
+    -jfx-unfocus-color: #c3c3c3;
+
+}
+
+
+#signUpB {
+
+    -fx-background-color: transparent;
+    -fx-border-color: white;
+    -fx-border-radius: 25;
+    -fx-text-fill: white;
+
+}
+
+#returnB {
+
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+
+}
+
+
+#themesComboBox {
+
+-fx-font-size: 16px;
+-fx-prompt-text-fill: white;
+-jfx-focus-color: white;
+-jfx-unfocus-color: #c3c3c3;
+
+}
+
+#themesComboBox > .cell {
+    -fx-text-fill: white;
+}
+
+#themesComboBox .list-view {
+    -fx-background-color: #2d2d2d;
+}
+
+#themesComboBox .list-view .jfx-list-cell .jfx-rippler {
+    -jfx-rippler-fill: #2d2d2d;
+}
+
+#themesComboBox .prompt-container .text {
+    -fx-fill: #8e2663;
+}
+
+#themesComboBox .list-cell:selected:filled {
+    -fx-text-fill: black;
+    -fx-background-color: #ababab;
+}
+
+#themesComboBox .list-cell {
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+}

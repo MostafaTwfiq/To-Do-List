@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `todoListDB`.`users` (
   `user_id` SMALLINT NOT NULL AUTO_INCREMENT,
   `user_name` VARCHAR(50) NOT NULL,
   `password` VARCHAR(50) NOT NULL,
-  `theme` ENUM('LightTheme', 'DarkTheme') NOT NULL,
+  `theme` ENUM('LightTheme', 'DarkTheme', 'PurkTheme') NOT NULL,
   PRIMARY KEY (`user_id`))
 ENGINE = InnoDB;
 

@@ -1,13 +1,13 @@
 
 #parentLayout {
 
--fx-background-color: #1f1f1f;
+-fx-background-color: #8e2663;
 
 }
 
 #tasksViewLayout {
 
--fx-background-color: #1f1f1f;
+-fx-background-color: #8e2663;
 
 }
 
@@ -56,8 +56,8 @@
 
 #toolsLayout {
 
--fx-background-color: #282828;
--fx-border-color: transparent #717171 transparent transparent;
+-fx-background-color: #2d2d2d;
+-fx-border-color: transparent white transparent transparent;
 
 }
 
@@ -65,7 +65,7 @@
 #userOverviewLayout {
 
 -fx-background-color: transparent;
--fx-border-color: transparent transparent #717171 transparent;
+-fx-border-color: transparent transparent white transparent;
 -fx-border-width: 0.3;
 
 }
@@ -74,14 +74,14 @@
 #userImageC {
 
     -fx-stroke-width: 1.5;
-    -fx-stroke: #717171;
+    -fx-stroke: white;
 
 }
 
 
 #userNameLbl {
 
--fx-text-fill: 	#cfcfcf;
+-fx-text-fill: 	white;
 -fx-background-color: transparent;
 -fx-border-color: transparent;
 -fx-font-size: 16px;
@@ -107,15 +107,15 @@
 #datePicker {
 
 -fx-background-color: transparent;
--jfx-default-color: #c53e51;
+-jfx-default-color: #ef5350;
 -fx-font-size: 15px;
 -fx-font-weight: bold;
 
 }
 
 #datePicker .text-field {
-    -fx-prompt-text-fill: #cfcfcf;
-    -fx-text-fill: #cfcfcf;
+    -fx-prompt-text-fill: white;
+    -fx-text-fill: white;
     -jfx-unfocus-color: #717171;
 }
 
@@ -131,7 +131,7 @@
 
 #optionsListView:selected {
 
--fx-background-color: #363636;
+-fx-background-color: white;
 
 }
 

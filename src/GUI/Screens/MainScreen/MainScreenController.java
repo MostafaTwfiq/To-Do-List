@@ -257,21 +257,6 @@ public class MainScreenController implements IControllersObserver {
         setUserSettingBImage();
 
         userSettingsB.setOnAction(e -> {
-            try {
-                UserProfileController userProfileController = new UserProfileController();
-                Parent mainScreenParent = null;
-                ScreensPaths paths = new ScreensPaths();
-
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(paths.getUserProfileScreenFxml()));
-                loader.setController(userProfileController);
-                mainScreenParent = loader.load();
-                mainScreenParent.getStylesheets().add(paths.getMainScreenCssSheet());
-
-                Main.screenManager.changeScreen(userProfileController);
-
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
             popupUserOptions.show(userSettingsB,
                     JFXPopup.PopupVPosition.BOTTOM, JFXPopup.PopupHPosition.LEFT);
         });
@@ -288,8 +273,8 @@ public class MainScreenController implements IControllersObserver {
 
             Image buttonImage = new Image(imageStream);
             ImageView buttonImageView = new ImageView(buttonImage);
-            buttonImageView.setFitHeight(30);
-            buttonImageView.setFitWidth(30);
+            buttonImageView.setFitHeight(25);
+            buttonImageView.setFitWidth(25);
 
             userSettingsB.setGraphic(buttonImageView);
 
@@ -319,8 +304,24 @@ public class MainScreenController implements IControllersObserver {
                 + "-fx-text-fill:" + colorTransformer.colorToHex(popUpOptionsTheme.getButtonsTextC()) + ";"
         );
         settingsBtn.setPrefWidth(90);
+
         settingsBtn.setOnAction(e -> {
-            //open here the view user screen
+            try {
+                UserProfileController userProfileController = new UserProfileController();
+                Parent mainScreenParent = null;
+                ScreensPaths paths = new ScreensPaths();
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(paths.getUserProfileScreenFxml()));
+                loader.setController(userProfileController);
+                mainScreenParent = loader.load();
+                mainScreenParent.getStylesheets().add(paths.getUserProfileScreenCssSheet());
+
+                Main.screenManager.changeScreen(userProfileController);
+                popupUserOptions.hide();
+
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         });
 
 

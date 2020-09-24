@@ -102,7 +102,7 @@ public class TaskOverviewController implements IControllersObserver {
 
             tskDoneStatusBtn.setGraphic(loadButtonImage(
                     Main.theme.getThemeResourcesPath() + "MainScreen/taskDone.png"
-                    , 29, 29));
+                    , 31, 31));
 
         } else {
             tskDoneStatusBtn.setGraphic(null);

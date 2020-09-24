@@ -11,10 +11,12 @@ import GUI.ProgressBar.ProgressBar;
 import GUI.Screens.MainScreen.TasksOverview.TasksOverviewList;
 import GUI.SearchBox.SearchBox;
 import GUI.Style.ColorTransformer;
+import GUI.Style.ScreensPaths;
 import GUI.Style.Style.ExtraComponents.MultiProgressBarTheme;
 import GUI.Style.Style.ExtraComponents.PopUpOptionsTheme;
 import GUI.Style.Style.ExtraComponents.ProgressBarTheme;
 import GUI.Style.Style.ExtraComponents.SearchBoxTheme;
+import GUI.Style.Style.LightTheme;
 import Main.Main;
 import TasksListHandling.TasksListHandling;
 import com.jfoenix.controls.*;
@@ -24,10 +26,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-
 import java.io.FileInputStream;
 import java.net.URL;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -517,7 +517,21 @@ public class MainScreenController implements IControllersObserver {
 
     @Override
     public void updateStyle() {
+        setUserSettingBImage();
+        setupPopupUserOptions();
+        tasksOverviewList.updateStyle();
+        progressBarsLayout.getChildren().removeAll(progressBar, multiProgressBar);
+        searchBoxLayout.getChildren().remove(searchBox);
+        setupMultiProgressBar();
+        setupProgressBar();
+        setupSearchBox();
+        optionsLabels.updateStyle();
+        parentLayout.getStylesheets().clear();
+        parentLayout.getStylesheets().add(new ScreensPaths().getMainScreenCssSheet());
 
+        List<Task> currentTasks = tasksOverviewList.getCurrentTasks();
+        updateMultiProgressBarElements(currentTasks);
+        updateProgressBar(currentTasks);
     }
 
     @Override
@@ -544,7 +558,7 @@ public class MainScreenController implements IControllersObserver {
 
     @Override
     public void updateTasks() {
-
+        loadTodayTasks();
         List<Task> tasks = searchForTasks();
         if (tasks != null) {
             tasksOverviewList.displayTasks(tasks);

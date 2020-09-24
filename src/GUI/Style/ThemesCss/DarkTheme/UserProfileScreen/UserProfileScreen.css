@@ -11,21 +11,6 @@
 
 }
 
-#passwordTitlelbl{
--fx-text-fill: #c3c3c3;
--fx-prompt-text-fill: #c3c3c3;
--jfx-focus-color: white;
--jfx-unfocus-color: #c3c3c3;
-}
-
-
-#ThemeTitlelbl{
--fx-text-fill: #c3c3c3;
--fx-prompt-text-fill: #c3c3c3;
--jfx-focus-color: white;
--jfx-unfocus-color: #c3c3c3;
-}
-
 
 #userNameTF {
 
@@ -64,6 +49,18 @@
 -jfx-unfocus-color: #c3c3c3;
 
 }
+
+
+#errorL {
+
+    -fx-text-fill: #D1453B;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+
+}
+
 
 #themesComboBox {
 

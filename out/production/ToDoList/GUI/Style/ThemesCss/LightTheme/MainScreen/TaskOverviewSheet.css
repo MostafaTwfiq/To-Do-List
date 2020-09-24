@@ -8,13 +8,10 @@
 }
 
 
-#tskDoneStatusBtn {
+#tskDoneStatusC {
 
--fx-background-color: transparent;
--fx-background-radius: 15;
--fx-border-color: black;
--fx-border-radius: 15;
--fx-border-width: 0.5;
+    -fx-stroke-width: 1.5;
+    -fx-stroke: black;
 
 }
 

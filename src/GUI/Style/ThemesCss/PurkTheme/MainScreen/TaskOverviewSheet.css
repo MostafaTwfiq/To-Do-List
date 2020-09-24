@@ -2,26 +2,23 @@
 #parentLayout {
 
 -fx-background-color: transparent;
--fx-border-color: transparent transparent #717171 transparent;
+-fx-border-color: transparent transparent white transparent;
 -fx-border-width: 1;
 
 }
 
 
-#tskDoneStatusBtn {
+#tskDoneStatusC {
 
--fx-background-color: transparent;
--fx-background-radius: 15;
--fx-border-color: #cfcfcf;
--fx-border-radius: 15;
--fx-border-width: 0.5;
+    -fx-stroke-width: 1.5;
+    -fx-stroke: white;
 
 }
 
 
 #taskNameLbl {
 
--fx-text-fill: #cfcfcf;
+-fx-text-fill: white;
 -fx-background-color: transparent;
 -fx-border-color: transparent;
 -fx-font-size: 20px;
@@ -32,7 +29,7 @@
 
 #taskTimeLbl {
 
--fx-text-fill: #cfcfcf;
+-fx-text-fill: white;
 -fx-background-color: transparent;
 -fx-border-color: transparent;
 -fx-font-size: 20px;
@@ -44,7 +41,7 @@
 #taskPriorityRec {
 
 -fx-stroke-width: 1;
--fx-stroke: black;
+-fx-stroke: white;
 
 }
 

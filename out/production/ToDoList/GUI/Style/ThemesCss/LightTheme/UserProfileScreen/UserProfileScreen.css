@@ -10,20 +10,6 @@
 
 }
 
-#passwordTitlelbl{
--fx-text-fill: black;
--fx-prompt-text-fill: #4f5254;
--jfx-focus-color: black;
--jfx-unfocus-color: #4f5254;
-}
-
-#ThemeTitlelbl{
--fx-text-fill: black;
--fx-prompt-text-fill: #4f5254;
--jfx-focus-color: black;
--jfx-unfocus-color: #4f5254;
-}
-
 #passwordTF {
 -fx-text-fill: black;
 -fx-prompt-text-fill: #4f5254;
@@ -39,6 +25,15 @@
 -jfx-unfocus-color: #4f5254;
 }
 
+#errorL {
+
+    -fx-text-fill: #D1453B;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+
+}
 
 #chooseImageB {
 -fx-background-color: transparent;

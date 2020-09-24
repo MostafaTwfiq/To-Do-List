@@ -9,36 +9,36 @@ public class PurkTheme extends Style {
 
         super(
 
-                "resources/Themes/DarkTheme/",
+                "resources/Themes/PurkTheme/",
                 new StageTheme(
                         Color.rgb(209, 69, 59), //#D1453B
                         Color.rgb(79, 82, 84) //#4f5254
                 ),
                 new SearchBoxTheme(
-                        Color.rgb(190, 190, 190),
+                        Color.WHITE,
                         Color.rgb(0, 0, 0),
                         Color.rgb(0,0,0)
                 ),
                 new MultiProgressBarTheme(
-                        Color.rgb(42, 139, 68),
-                        Color.rgb(218, 180, 29),
-                        Color.rgb(218, 119, 32),
-                        Color.rgb(200, 62, 82)
+                        Color.rgb(0, 148, 50),
+                        Color.rgb(255, 195, 18),
+                        Color.rgb(238, 90, 36),
+                        Color.rgb(234, 32, 39)
                 ),
                 new ProgressBarTheme(
-                        Color.rgb(190, 190, 190),
-                        Color.rgb(47, 170, 219),
+                        Color.WHITE,
+                        Color.rgb(147,61,121),
                         Color.rgb(39, 44, 46)
                 ),
-                Color.rgb(207, 207, 207),
+                Color.rgb(255, 255, 255),
                 new PrioritiesColors(
-                        Color.rgb(200, 62, 82),
-                        Color.rgb(218, 119, 32),
-                        Color.rgb(218, 180, 29),
-                        Color.rgb(42, 139, 68)
+                        Color.rgb(234, 32, 39),
+                        Color.rgb(238, 90, 36),
+                        Color.rgb(255, 195, 18),
+                        Color.rgb(0, 148, 50)
                 ),
                 new PopUpOptionsTheme(
-                        Color.rgb(207, 207, 207),
+                        Color.WHITE,
                         Color.rgb(39, 44, 46)
                 )
 

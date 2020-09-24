@@ -28,6 +28,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 public class TaskOverviewController implements IControllersObserver {
@@ -36,7 +39,7 @@ public class TaskOverviewController implements IControllersObserver {
     private HBox parentLayout;
 
     @FXML
-    private JFXButton tskDoneStatusBtn;
+    private Circle tskDoneStatusC;
 
     @FXML
     private Label taskNameLbl;
@@ -75,15 +78,15 @@ public class TaskOverviewController implements IControllersObserver {
     }
 
 
-    private void setupTskDoneStatusBtn() {
+    private void setupTskDoneStatusC() {
 
-        tskDoneStatusBtn.setOnAction(e -> {
+        tskDoneStatusC.setOnMouseClicked(e -> {
 
             task.setTaskStatus(task.getTaskStatus() == TaskStatus.NOT_DONE ? TaskStatus.DONE : TaskStatus.NOT_DONE);
 
             try {
                 dataAccess.updateTaskStatus(task.getTaskID(), task.getTaskStatus());
-                setTskDoneStatusBtnStatus();
+                setTskDoneStatusCStatus();
                 updateTasks();
             } catch (Exception exception) {
                 System.out.println("Something went wrong while trying to update task status in the database.");
@@ -91,21 +94,22 @@ public class TaskOverviewController implements IControllersObserver {
 
         });
 
-        tskDoneStatusBtn.setContentDisplay(ContentDisplay.CENTER);
-        setTskDoneStatusBtnStatus();
+        setTskDoneStatusCStatus();
 
     }
 
-    private void setTskDoneStatusBtnStatus() {
+    private void setTskDoneStatusCStatus() {
 
         if (task.getTaskStatus() == TaskStatus.DONE) {
 
-            tskDoneStatusBtn.setGraphic(loadButtonImage(
+            ImagePattern pattern = new ImagePattern(loadButtonImage(
                     Main.theme.getThemeResourcesPath() + "MainScreen/taskDone.png"
-                    , 31, 31));
+                    , 31, 31).getImage());
+
+            tskDoneStatusC.setFill(pattern);
 
         } else {
-            tskDoneStatusBtn.setGraphic(null);
+            tskDoneStatusC.setFill(Color.TRANSPARENT);
         }
 
     }
@@ -277,7 +281,7 @@ public class TaskOverviewController implements IControllersObserver {
 
     @Override
     public void updateStyle() {
-        setTskDoneStatusBtnStatus();
+        setTskDoneStatusCStatus();
         setMoreOptionsBtnImage();
         setStarredBtnImage();
         setTaskPriorityRecColor();
@@ -293,7 +297,7 @@ public class TaskOverviewController implements IControllersObserver {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        setupTskDoneStatusBtn();
+        setupTskDoneStatusC();
         setupMoreOptionsBtn();
         setupStarredBtn();
         setTaskNameLbl();

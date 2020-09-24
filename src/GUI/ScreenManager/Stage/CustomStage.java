@@ -88,6 +88,11 @@ public class CustomStage implements IObserver {
         AnchorPane parent = rootController.getParentRoot();
 
         Parent newLayout = screenManager.getCurrentLayout();
+        if (newLayout == null) {
+            parent.getChildren().clear();
+            return;
+        }
+
         AnchorPane.setTopAnchor(newLayout, 0.0);
         AnchorPane.setBottomAnchor(newLayout, 0.0);
         AnchorPane.setLeftAnchor(newLayout, 0.0);

@@ -11,6 +11,7 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,6 +19,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -75,8 +78,6 @@ public class UserProfileController implements IControllers  {
 
     private DataAccess dataAccess;
 
-    private Theme selectedTheme;
-
     private final String imageExtensionsRegex = "^\\.(jpe?g|png|gif|bmp)$";
 
 
@@ -86,6 +87,7 @@ public class UserProfileController implements IControllers  {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        setupParentPane();
         setupUserImage();
         setupThemesComboBox();
         setUserNameLabel();
@@ -96,22 +98,34 @@ public class UserProfileController implements IControllers  {
         setupChooseImageB();
     }
 
+
+    private void setupParentPane() {
+
+        parentPane.setOnDragEntered(e -> parentPane.setOpacity(0.5));
+        parentPane.setOnDragExited(e -> parentPane.setOpacity(1));
+        parentPane.setOnDragOver(new EventHandler<>() {
+            @Override
+            public void handle(DragEvent event) {
+                if (event.getDragboard().hasFiles()) {
+                    event.acceptTransferModes(TransferMode.COPY);
+                    updateUserImageFile(event.getDragboard().getFiles().get(0));
+                }
+                event.consume();
+            }
+        });
+
+    }
+
     private void setupUserImage() {
         String imagePath = Main.user.getUserImagePath();
 
         try {
-
-            FileInputStream fileInputStream = new FileInputStream(imagePath);
-            Image image = new Image(fileInputStream);
-            userImageV.setImage(image);
-
+            userImageV.setImage(new Image(new FileInputStream(imagePath)));
         } catch (Exception e) {
 
             try {
                 imagePath = Main.user.getDefaultUserImagePath();
-                FileInputStream fileInputStream = new FileInputStream(imagePath);
-                Image image = new Image(fileInputStream);
-                userImageV.setImage(image);
+                userImageV.setImage(new Image(new FileInputStream(imagePath)));
             } catch (Exception e1) {
                 System.out.println("There is something wrong happened while trying to load user image.");
             }
@@ -133,7 +147,6 @@ public class UserProfileController implements IControllers  {
                     Theme newTheme = Theme.valueOf(newValue);
                     Main.theme = new StyleFactory().generateTheme(newTheme);
                     Main.screenManager.updateScreensStyle();
-                    selectedTheme = newTheme;
                 }
             }
         });
@@ -141,6 +154,7 @@ public class UserProfileController implements IControllers  {
 
     @Override
     public void updateStyle() {
+        loadChooseImageBImage();
         parentPane.getStylesheets().clear();
         parentPane.getStylesheets().add(new ScreensPaths().getUserProfileScreenCssSheet());
     }
@@ -181,15 +195,31 @@ public class UserProfileController implements IControllers  {
             FileChooser fileChooser = new FileChooser();
             File file = fileChooser.showOpenDialog(new Stage());
 
-            if(file!=null){
-                String filePath = file.getPath();
-                String fileExtension = filePath.substring(filePath.lastIndexOf('.'));
-                if (!Pattern.matches(imageExtensionsRegex, fileExtension))
-                    return;
-                userImageV.setImage(loadButtonImage(file.getAbsolutePath(),50,50).getImage());
-                imagePath = file.getAbsolutePath();
-            }
+            if(file != null)
+                updateUserImageFile(file);
+
         });
+    }
+
+    private void updateUserImageFile(File file) {
+        if (file != null) {
+
+            String filePath = file.getPath();
+            String fileExtension = filePath.substring(filePath.lastIndexOf('.'));
+            if (!Pattern.matches(imageExtensionsRegex, fileExtension))
+                return;
+
+            imagePath = filePath;
+
+            try {
+                FileInputStream fileInputStream = new FileInputStream(imagePath);
+                Image image = new Image(fileInputStream);
+                userImageV.setImage(image);
+            } catch (Exception exception) {
+                imagePath = null;
+            }
+
+        }
     }
 
 
@@ -221,82 +251,102 @@ public class UserProfileController implements IControllers  {
 
     }
 
-    public void SaveSettings() throws SQLException {
 
-        if (!userNameTF.getText().contains(" ") &&
-                !userNameTF.getText().equals(Main.user.getUserName())) {
+    private boolean checkIfValidUserName(String userName) {
+        if (userName.contains(" "))
+            return false;
 
-            if (!dataAccess.checkIfUserNameExists(userNameTF.getText())) {
-                dataAccess.updateUserName(Main.user.getUserID(), userNameTF.getText().trim());
-                Main.user.setUserName(userNameTF.getText().trim());
-            } else {
+        return true;
+    }
+
+    private void SaveSettings() throws SQLException {
+
+        int userID = Main.user.getUserID();
+
+        if (dataAccess.getUserID(Main.user.getUserName(), oldPasswordTF.getText()) != userID) {
+            errorL.setText("The old password is incorrect.");
+            return;
+        }
+
+        if (!userNameTF.getText().equals(Main.user.getUserName())) {
+
+            if (!checkIfValidUserName(userNameTF.getText())) {
+                errorL.setText("Please enter new valid user name.");
+                return;
+            }
+            else if (!dataAccess.checkIfUserNameExists(userNameTF.getText())) {
+                dataAccess.updateUserName(userID, userNameTF.getText());
+                Main.user.setUserName(userNameTF.getText());
+            }
+            else {
                 errorL.setText("UserName is already taken.");
+                return;
             }
+
         }
 
-        if (!isBlankOrEmpty(passwordTF.getText())){
-            if (!isBlankOrEmpty(confirmPasswordTF.getText()) &&
-                    !isBlankOrEmpty(oldPasswordTF.getText())) {
+        if (!isBlankOrEmpty(passwordTF.getText())) {
 
-                if (dataAccess.getUserID(Main.user.getUserName(), oldPasswordTF.getText()) > 0) {
-                    if (confirmPasswordTF.getText().equals(passwordTF.getText())) {
-                        dataAccess.updateUserPassword(Main.user.getUserID(), passwordTF.getText());
-                    } else {
-                        errorL.setText("Passwords Don't Match.");
-                    }
-                } else {
-                    errorL.setText("Wrong old Password.");
-                }
-            } else {
-                errorL.setText("Please fill out all missing fields.");
+            if (passwordTF.getText().equals(confirmPasswordTF.getText()))
+                dataAccess.updateUserPassword(userID, passwordTF.getText());
+            else {
+                errorL.setText("Passwords don't match.");
+                return;
             }
+
         }
 
-        if( imagePath !=null){
-           if(Main.user.getUserImagePath().equals(Main.user.getDefaultUserImagePath())) {
-               dataAccess.addNewUserImage(Main.user.getUserID(),imagePath);
-           }else{
-                dataAccess.updateUserImage(Main.user.getUserID(),imagePath);
-               Main.user.setUserImagePath(imagePath);
-            }
+
+        if(imagePath != null){
+
+           if(Main.user.getUserImagePath().equals(Main.user.getDefaultUserImagePath()))
+               dataAccess.addNewUserImage(Main.user.getUserID(), imagePath);
+           else
+               dataAccess.updateUserImage(Main.user.getUserID(), imagePath);
+
+           Main.user.setUserImagePath(imagePath);
+
         }
 
-        if(selectedTheme!=null){
-            dataAccess.updateUserTheme(Main.user.getUserID(), selectedTheme);
-            Main.user.setTheme(selectedTheme);
+        if(!themesComboBox.valueProperty().get().equals(Main.user.getTheme().toString())) {
+            dataAccess.updateUserTheme(Main.user.getUserID(), Theme.valueOf(themesComboBox.valueProperty().get()));
+            Main.user.setTheme(Theme.valueOf(themesComboBox.valueProperty().get()));
         }
+
+        Cancel();
 
     }
 
-    public void Cancel(){
-        try {
+    private void Cancel(){
+            Main.theme = new StyleFactory().generateTheme(Main.user.getTheme());
+            Main.screenManager.updateScreensStyle();
             Main.screenManager.changeToLastScreen();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        };
     }
 
     private void DeleteAccount(){
+
+        lockUserProfileScreen();
         // Deletes the user and goes to the main sign up screen
         try {
-            lockUserProfileScreen();
             dataAccess.deleteUser(Main.user.getUserID());
-            unlockUserProfileScreen();
         } catch (SQLException throwables) {
             System.out.println("Failed to delete the user.");
         }
+
+        unlockUserProfileScreen();
+
         // clean up
         Main.user = null;
 
         TrayNotification notification = new TrayNotification();
         notification.setTitle("Successfully Deleted User.");
-        notification.setMessage("Welcome " + userNameTF.getText());
+        notification.setMessage("Good bye " + userNameTF.getText());
         notification.setAnimationType(AnimationType.POPUP);
         notification.setNotificationType(NotificationType.SUCCESS);
         notification.showAndDismiss(Duration.seconds(1.0));
 
-        Main.screenManager.changeToLastScreen();
-        Main.screenManager.changeToLastScreen();
+        Main.screenManager.returnNumOfScreens(2);
+
     }
 
 
@@ -304,12 +354,22 @@ public class UserProfileController implements IControllers  {
         passwordTF.setDisable(true);
         confirmPasswordTF.setDisable(true);
         userNameTF.setDisable(true);
+        oldPasswordTF.setDisable(true);
+        SaveBtn.setDisable(true);
+        CancelBtn.setDisable(true);
+        DeleteAccBtn.setDisable(true);
+        themesComboBox.setDisable(true);
     }
 
     private void unlockUserProfileScreen(){
         passwordTF.setDisable(false);
         confirmPasswordTF.setDisable(false);
         userNameTF.setDisable(false);
+        oldPasswordTF.setDisable(false);
+        SaveBtn.setDisable(false);
+        CancelBtn.setDisable(false);
+        DeleteAccBtn.setDisable(false);
+        themesComboBox.setDisable(false);
     }
 
     @Override

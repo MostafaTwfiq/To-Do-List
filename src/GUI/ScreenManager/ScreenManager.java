@@ -42,7 +42,21 @@ public class ScreenManager extends Observer {
 
     }
 
+    public void returnNumOfScreens(int num) {
+        while (num-- > 0 && !layoutsStack.isEmpty())
+            layoutsStack.pop();
+
+        if (!layoutsStack.isEmpty())
+            changeScreen(layoutsStack.pop());
+        else
+            notifyObservers();
+
+    }
+
     public Parent getCurrentLayout() {
+        if  (layoutsStack.isEmpty())
+            return null;
+
         return layoutsStack.peek().getParent();
     }
 

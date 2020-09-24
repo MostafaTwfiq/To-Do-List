@@ -29,6 +29,16 @@
 
 }
 
+
+#oldPasswordTF {
+
+    -fx-text-fill: #c3c3c3;
+    -fx-prompt-text-fill: #c3c3c3;
+    -jfx-focus-color: white;
+    -jfx-unfocus-color: #c3c3c3;
+
+}
+
 #passwordTF {
 
 -fx-text-fill: #c3c3c3;

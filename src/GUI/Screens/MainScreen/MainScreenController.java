@@ -536,6 +536,7 @@ public class MainScreenController implements IControllersObserver {
 
     @Override
     public void updateStyle() {
+        setupUserImage();
         setUserSettingBImage();
         setupPopupUserOptions();
         tasksOverviewList.updateStyle();

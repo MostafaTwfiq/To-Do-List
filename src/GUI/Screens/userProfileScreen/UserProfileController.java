@@ -32,6 +32,7 @@ import java.net.URL;
 import java.security.PrivilegedAction;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 public class UserProfileController implements IControllers  {
     @FXML
@@ -73,6 +74,10 @@ public class UserProfileController implements IControllers  {
     private String imagePath;
 
     private DataAccess dataAccess;
+
+    private Theme selectedTheme;
+
+    private final String imageExtensionsRegex = "^\\.(jpe?g|png|gif|bmp)$";
 
 
     public UserProfileController() throws Exception{
@@ -125,14 +130,10 @@ public class UserProfileController implements IControllers  {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if(newValue != null && !newValue.equals(oldValue)) {
-                    Main.theme = new StyleFactory().generateTheme(Theme.valueOf(newValue));
-                    try {
-                        dataAccess.updateUserTheme(Main.user.getUserID(), Main.user.getTheme());
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
-                        System.out.println("Failed at updating theme.");
-                    }
+                    Theme newTheme = Theme.valueOf(newValue);
+                    Main.theme = new StyleFactory().generateTheme(newTheme);
                     Main.screenManager.updateScreensStyle();
+                    selectedTheme = newTheme;
                 }
             }
         });
@@ -179,8 +180,15 @@ public class UserProfileController implements IControllers  {
         chooseImageB.setOnAction(e -> {
             FileChooser fileChooser = new FileChooser();
             File file = fileChooser.showOpenDialog(new Stage());
-            userImageV.setImage(loadButtonImage(file.getAbsolutePath(),50,50).getImage());
-            imagePath = file.getAbsolutePath();
+
+            if(file!=null){
+                String filePath = file.getPath();
+                String fileExtension = filePath.substring(filePath.lastIndexOf('.'));
+                if (!Pattern.matches(imageExtensionsRegex, fileExtension))
+                    return;
+                userImageV.setImage(loadButtonImage(file.getAbsolutePath(),50,50).getImage());
+                imagePath = file.getAbsolutePath();
+            }
         });
     }
 
@@ -244,11 +252,20 @@ public class UserProfileController implements IControllers  {
             }
         }
 
-        if( imagePath !=null &&
-           !imagePath.equals(Main.user.getUserImagePath())){
-            dataAccess.updateUserImage(Main.user.getUserID(),imagePath);
-            Main.user.setUserImagePath(imagePath);
+        if( imagePath !=null){
+           if(Main.user.getUserImagePath().equals(Main.user.getDefaultUserImagePath())) {
+               dataAccess.addNewUserImage(Main.user.getUserID(),imagePath);
+           }else{
+                dataAccess.updateUserImage(Main.user.getUserID(),imagePath);
+               Main.user.setUserImagePath(imagePath);
+            }
         }
+
+        if(selectedTheme!=null){
+            dataAccess.updateUserTheme(Main.user.getUserID(), selectedTheme);
+            Main.user.setTheme(selectedTheme);
+        }
+
     }
 
     public void Cancel(){
@@ -278,21 +295,8 @@ public class UserProfileController implements IControllers  {
         notification.setNotificationType(NotificationType.SUCCESS);
         notification.showAndDismiss(Duration.seconds(1.0));
 
-        try {
-            LoginScreenController loginScreenController = new LoginScreenController();
-            Parent mainScreenParent = null;
-            ScreensPaths paths = new ScreensPaths();
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(paths.getLoginScreenCssSheet()));
-            loader.setController(loginScreenController);
-            mainScreenParent = loader.load();
-            mainScreenParent.getStylesheets().add(paths.getMainScreenCssSheet());
-
-            Main.screenManager.changeScreen(loginScreenController);
-
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        };
+        Main.screenManager.changeToLastScreen();
+        Main.screenManager.changeToLastScreen();
     }
 
 

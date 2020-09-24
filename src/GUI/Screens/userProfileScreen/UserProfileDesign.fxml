@@ -12,7 +12,7 @@
     <ImageView fx:id="userImageV" fitHeight="200.0" fitWidth="200.0" layoutX="432.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="20.0">
     </ImageView>
 
-    <Button fx:id="chooseImageB" layoutX="609.0" layoutY="187.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" AnchorPane.leftAnchor="609.0" AnchorPane.topAnchor="187.0">
+    <Button fx:id="chooseImageB" layoutX="609.0" layoutY="187.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="609.0" AnchorPane.topAnchor="187.0">
         <cursor>
             <Cursor fx:constant="HAND" />
         </cursor>
@@ -71,20 +71,13 @@
       </effect>
     </JFXButton>
 
-    <JFXButton fx:id="DeleteAccBtn" layoutX="66.0" layoutY="611.0" prefHeight="40.0" prefWidth="150" style="-fx-background-color: #eb4d4b; -fx-background-size: 18 18;-fx-background-repeat: no-repeat;-fx-background-position:left;" text="Delete Account" textFill="WHITE">
+    <JFXButton fx:id="DeleteAccBtn" layoutX="71.0" layoutY="611.0" prefHeight="40.0" prefWidth="140.0" style="-fx-background-color: #eb4d4b; -fx-background-size: 18 18;-fx-background-repeat: no-repeat;-fx-background-position:left;" text="Delete Account" textFill="WHITE">
         <font>
             <Font name="Arial" size="15.0" />
         </font>
         <effect>
             <DropShadow offsetY="0.4" radius="4.85" spread="0.3" width="0.4" />
         </effect>
-        <graphic>
-            <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
-                <image>
-                    <Image url="@../../../../resources/Buttons/delete.png" />
-                </image>
-            </ImageView>
-        </graphic>
     </JFXButton>
 
 </AnchorPane>

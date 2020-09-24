@@ -19,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.util.Duration;
 import tray.animations.AnimationType;
 import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
@@ -111,7 +112,7 @@ public class LoginScreenController implements IControllers {
                         trayNotification.setNotificationType(NotificationType.SUCCESS);
                         trayNotification.setMessage("Welcome " + userNameTF.getText());
                         trayNotification.setTitle("Logged in successfully");
-                        trayNotification.showAndWait();
+                        trayNotification.showAndDismiss(Duration.seconds(1));
 
                     } catch (Exception exception) {
                         exception.printStackTrace();

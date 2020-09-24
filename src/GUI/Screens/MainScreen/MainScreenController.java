@@ -13,12 +13,10 @@ import GUI.Screens.userProfileScreen.UserProfileController;
 import GUI.SearchBox.SearchBox;
 import GUI.Style.ScreensPaths;
 import GUI.Style.ColorTransformer;
-import GUI.Style.ScreensPaths;
 import GUI.Style.Style.ExtraComponents.MultiProgressBarTheme;
 import GUI.Style.Style.ExtraComponents.PopUpOptionsTheme;
 import GUI.Style.Style.ExtraComponents.ProgressBarTheme;
 import GUI.Style.Style.ExtraComponents.SearchBoxTheme;
-import GUI.Style.Style.LightTheme;
 import Main.Main;
 import TasksListHandling.TasksListHandling;
 import com.jfoenix.controls.*;
@@ -48,6 +46,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import javafx.util.Duration;
 import tray.animations.AnimationType;
 import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
@@ -91,7 +92,7 @@ public class MainScreenController implements IControllersObserver {
     private HBox userOverviewLayout;
 
     @FXML
-    private ImageView userImage;
+    private Circle userImageC;
 
     @FXML
     private Label userNameLbl;
@@ -177,7 +178,7 @@ public class MainScreenController implements IControllersObserver {
                 trayNotification.setTitle("Reminder");
                 trayNotification.setImage(loadReminderImage());
                 trayNotification.setRectangleFill(Color.rgb(255, 206, 86));
-                trayNotification.showAndWait();
+                trayNotification.showAndDismiss(Duration.minutes(1));
             } else if (todayTasks.get(currentIndex).getDateTime().isAfter(LocalDateTime.now()))
                 break;
         }
@@ -231,7 +232,8 @@ public class MainScreenController implements IControllersObserver {
 
             FileInputStream fileInputStream = new FileInputStream(imagePath);
             Image image = new Image(fileInputStream);
-            userImage.setImage(image);
+            ImagePattern pattern = new ImagePattern(image);
+            userImageC.setFill(pattern);
 
         } catch (Exception e) {
 
@@ -239,7 +241,8 @@ public class MainScreenController implements IControllersObserver {
                 imagePath = Main.user.getDefaultUserImagePath();
                 FileInputStream fileInputStream = new FileInputStream(imagePath);
                 Image image = new Image(fileInputStream);
-                userImage.setImage(image);
+                ImagePattern pattern = new ImagePattern(image);
+                userImageC.setFill(pattern);
             } catch (Exception e1) {
                 System.out.println("There is something wrong happened while trying to load user image.");
             }

@@ -2,6 +2,14 @@
 -fx-background-color: #FAFAFA;
 }
 
+
+#userImageC {
+
+    -fx-stroke-width: 1;
+    -fx-stroke: #272c2e;
+
+}
+
 #passwordTitlelbl{
 -fx-text-fill: black;
 -fx-prompt-text-fill: #4f5254;

@@ -23,8 +23,11 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import tray.animations.AnimationType;
 import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
@@ -41,7 +44,7 @@ public class SignUpScreenController implements IControllers {
     private AnchorPane signUpPane;
 
     @FXML
-    private ImageView userImageV;
+    private Circle userImageC;
 
     @FXML
     private Button chooseImageB;
@@ -78,13 +81,11 @@ public class SignUpScreenController implements IControllers {
         userImagePath = null;
     }
 
-    private void setupUserImageV() {
-
-        loadUserImageVImage();
-
+    private void setupUserImageC() {
+        loadUserImageCImage();
     }
 
-    private void loadUserImageVImage() {
+    private void loadUserImageCImage() {
 
         try {
 
@@ -92,12 +93,17 @@ public class SignUpScreenController implements IControllers {
                     + "/SignUpScreen/defaultUserProfileImage.png");
 
             Image image = new Image(fileInputStream);
-            userImageV.setImage(image);
+            setUserImageCImage(image);
 
         } catch (Exception e) {
             System.out.println("can't load default user profile image in sign up screen.");
         }
 
+    }
+
+    private void setUserImageCImage(Image image) {
+        ImagePattern pattern = new ImagePattern(image);
+        userImageC.setFill(pattern);
     }
 
 
@@ -151,7 +157,7 @@ public class SignUpScreenController implements IControllers {
             try {
                 FileInputStream fileInputStream = new FileInputStream(userImagePath);
                 Image image = new Image(fileInputStream);
-                userImageV.setImage(image);
+                setUserImageCImage(image);
             } catch (Exception exception) {
                 userImagePath = null;
             }
@@ -190,7 +196,7 @@ public class SignUpScreenController implements IControllers {
                     notification.setMessage("Welcome " + userNameTF.getText());
                     notification.setAnimationType(AnimationType.POPUP);
                     notification.setNotificationType(NotificationType.SUCCESS);
-                    notification.showAndWait();
+                    notification.showAndDismiss(Duration.seconds(1));
 
                     Main.screenManager.changeToLastScreen();
 
@@ -324,7 +330,7 @@ public class SignUpScreenController implements IControllers {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupSignUpPane();
-        setupUserImageV();
+        setupUserImageC();
         setupSignUpB();
         setupChooseImageB();
         setupCancelB();
@@ -340,7 +346,7 @@ public class SignUpScreenController implements IControllers {
         signUpPane.getStylesheets().add(new ScreensPaths().getSignUpScreenCssSheet());
 
         if (userImagePath == null)
-            loadUserImageVImage();
+            loadUserImageCImage();
 
         loadCancelBImage();
         loadChooseImageBImage();

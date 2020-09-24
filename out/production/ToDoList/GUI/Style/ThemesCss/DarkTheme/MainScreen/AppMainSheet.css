@@ -70,6 +70,15 @@
 
 }
 
+
+#userImageC {
+
+    -fx-stroke-width: 1.5;
+    -fx-stroke: #717171;
+
+}
+
+
 #userNameLbl {
 
 -fx-text-fill: 	#cfcfcf;
@@ -126,10 +135,8 @@
 
 }
 
-#optionsListView .jfx-rippler {
-
--fx-rippler-fill: #363636;
-
+#optionsListView .jfx-list-cell .jfx-rippler {
+    -jfx-rippler-fill: #2ba8d9;
 }
 
 #optionsListView:hover {
@@ -170,6 +177,7 @@
 -fx-border-width: 0.3;
 
 }
+
 
 #filtersChipView .chips-pane > .text-area {
     -fx-padding: 0.333333em 0 0.333333em 0;

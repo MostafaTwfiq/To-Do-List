@@ -1,7 +1,6 @@
 package GUI.Screens.userProfileScreen;
 import DataBase.DataAccess;
 import GUI.IControllers;
-import GUI.Screens.LoginScreen.LoginScreenController;
 import GUI.Style.ScreensPaths;
 import GUI.Style.Style.Theme;
 import GUI.Style.StyleFactory;
@@ -13,15 +12,17 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -32,17 +33,17 @@ import tray.notification.TrayNotification;
 import java.io.File;
 import java.io.FileInputStream;
 import java.net.URL;
-import java.security.PrivilegedAction;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 public class UserProfileController implements IControllers  {
+
     @FXML
     private AnchorPane parentPane;
 
     @FXML
-    private ImageView userImageV;
+    private Circle userImageC;
 
     @FXML
     private Button chooseImageB;
@@ -63,13 +64,13 @@ public class UserProfileController implements IControllers  {
     private JFXComboBox<String> themesComboBox;
 
     @FXML
-    private Button DeleteAccBtn;
+    private Button deleteAccBtn;
 
     @FXML
-    private Button CancelBtn;
+    private Button cancelBtn;
 
     @FXML
-    private Button SaveBtn;
+    private Button saveBtn;
 
     @FXML
     private JFXPasswordField oldPasswordTF;
@@ -83,19 +84,6 @@ public class UserProfileController implements IControllers  {
 
     public UserProfileController() throws Exception{
         this.dataAccess = new DataAccess();
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        setupParentPane();
-        setupUserImage();
-        setupThemesComboBox();
-        setUserNameLabel();
-        // setting up buttons
-        setDeleteAccBtn();
-        setSaveSettings();
-        setCancelButton();
-        setupChooseImageB();
     }
 
 
@@ -120,12 +108,16 @@ public class UserProfileController implements IControllers  {
         String imagePath = Main.user.getUserImagePath();
 
         try {
-            userImageV.setImage(new Image(new FileInputStream(imagePath)));
+            Image image = new Image(new FileInputStream(imagePath));
+            ImagePattern pattern = new ImagePattern(image);
+            userImageC.setFill(pattern);
         } catch (Exception e) {
 
             try {
                 imagePath = Main.user.getDefaultUserImagePath();
-                userImageV.setImage(new Image(new FileInputStream(imagePath)));
+                Image image = new Image(new FileInputStream(imagePath));
+                ImagePattern pattern = new ImagePattern(image);
+                userImageC.setFill(pattern);
             } catch (Exception e1) {
                 System.out.println("There is something wrong happened while trying to load user image.");
             }
@@ -152,15 +144,6 @@ public class UserProfileController implements IControllers  {
         });
     }
 
-    @Override
-    public void updateStyle() {
-        loadChooseImageBImage();
-        parentPane.getStylesheets().clear();
-        parentPane.getStylesheets().add(new ScreensPaths().getUserProfileScreenCssSheet());
-    }
-
-
-
 
     private void setUserNameLabel(){
         userNameTF.setText(Main.user.getUserName());
@@ -168,15 +151,15 @@ public class UserProfileController implements IControllers  {
 
 
     private void setDeleteAccBtn(){
-        DeleteAccBtn.setOnAction(e->{
-            DeleteAccount();
+        deleteAccBtn.setOnAction(e->{
+            deleteAccount();
         });
     }
 
     private void setSaveSettings(){
-        SaveBtn.setOnAction(e->{
+        saveBtn.setOnAction(e->{
             try {
-                SaveSettings();
+                saveSettings();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -184,8 +167,8 @@ public class UserProfileController implements IControllers  {
     }
 
     private void setCancelButton(){
-        CancelBtn.setOnAction(e->{
-            Cancel();
+        cancelBtn.setOnAction(e->{
+            cancel();
         });
     }
 
@@ -214,7 +197,8 @@ public class UserProfileController implements IControllers  {
             try {
                 FileInputStream fileInputStream = new FileInputStream(imagePath);
                 Image image = new Image(fileInputStream);
-                userImageV.setImage(image);
+                ImagePattern pattern = new ImagePattern(image);
+                userImageC.setFill(pattern);
             } catch (Exception exception) {
                 imagePath = null;
             }
@@ -227,7 +211,7 @@ public class UserProfileController implements IControllers  {
 
     private void loadChooseImageBImage() {
         chooseImageB.setGraphic(loadButtonImage(Main.theme.getThemeResourcesPath()
-                + "/SignUpScreen/chooseImage.png", 35, 40));
+                + "/UserProfileScreen/chooseImage.png", 35, 40));
     }
 
     private ImageView loadButtonImage(String path, double h, double w) {
@@ -259,7 +243,7 @@ public class UserProfileController implements IControllers  {
         return true;
     }
 
-    private void SaveSettings() throws SQLException {
+    private void saveSettings() throws SQLException {
 
         int userID = Main.user.getUserID();
 
@@ -299,12 +283,12 @@ public class UserProfileController implements IControllers  {
 
         if(imagePath != null){
 
-           if(Main.user.getUserImagePath().equals(Main.user.getDefaultUserImagePath()))
-               dataAccess.addNewUserImage(Main.user.getUserID(), imagePath);
-           else
-               dataAccess.updateUserImage(Main.user.getUserID(), imagePath);
+            if(Main.user.getUserImagePath().equals(Main.user.getDefaultUserImagePath()))
+                dataAccess.addNewUserImage(Main.user.getUserID(), imagePath);
+            else
+                dataAccess.updateUserImage(Main.user.getUserID(), imagePath);
 
-           Main.user.setUserImagePath(imagePath);
+            Main.user.setUserImagePath(imagePath);
 
         }
 
@@ -313,17 +297,17 @@ public class UserProfileController implements IControllers  {
             Main.user.setTheme(Theme.valueOf(themesComboBox.valueProperty().get()));
         }
 
-        Cancel();
+        cancel();
 
     }
 
-    private void Cancel(){
-            Main.theme = new StyleFactory().generateTheme(Main.user.getTheme());
-            Main.screenManager.updateScreensStyle();
-            Main.screenManager.changeToLastScreen();
+    private void cancel(){
+        Main.theme = new StyleFactory().generateTheme(Main.user.getTheme());
+        Main.screenManager.updateScreensStyle();
+        Main.screenManager.changeToLastScreen();
     }
 
-    private void DeleteAccount(){
+    private void deleteAccount(){
 
         lockUserProfileScreen();
         // Deletes the user and goes to the main sign up screen
@@ -350,14 +334,65 @@ public class UserProfileController implements IControllers  {
     }
 
 
+    private void setupUserNameTF() {
+
+        userNameTF.setOnKeyReleased(e -> {
+
+            if (e.getCode() == KeyCode.ENTER || e.getCode() == KeyCode.DOWN)
+                oldPasswordTF.requestFocus();
+
+        });
+
+    }
+
+    private void setupOldPasswordTF() {
+
+        oldPasswordTF.setOnKeyReleased(e -> {
+
+            if (e.getCode() == KeyCode.UP)
+                userNameTF.requestFocus();
+            else if (e.getCode() == KeyCode.ENTER || e.getCode() == KeyCode.DOWN)
+                passwordTF.requestFocus();
+
+        });
+
+    }
+
+    private void setupPasswordTF() {
+
+        passwordTF.setOnKeyReleased(e -> {
+
+            if (e.getCode() == KeyCode.UP)
+                oldPasswordTF.requestFocus();
+            else if (e.getCode() == KeyCode.ENTER || e.getCode() == KeyCode.DOWN)
+                confirmPasswordTF.requestFocus();
+
+        });
+
+    }
+
+    private void setupConfirmPasswordTF() {
+
+        confirmPasswordTF.setOnKeyReleased(e -> {
+
+            if (e.getCode() == KeyCode.ENTER)
+                saveBtn.fire();
+            else if (e.getCode() == KeyCode.UP)
+                passwordTF.requestFocus();
+
+        });
+
+    }
+
+
     private void lockUserProfileScreen(){
         passwordTF.setDisable(true);
         confirmPasswordTF.setDisable(true);
         userNameTF.setDisable(true);
         oldPasswordTF.setDisable(true);
-        SaveBtn.setDisable(true);
-        CancelBtn.setDisable(true);
-        DeleteAccBtn.setDisable(true);
+        saveBtn.setDisable(true);
+        cancelBtn.setDisable(true);
+        deleteAccBtn.setDisable(true);
         themesComboBox.setDisable(true);
     }
 
@@ -366,17 +401,43 @@ public class UserProfileController implements IControllers  {
         confirmPasswordTF.setDisable(false);
         userNameTF.setDisable(false);
         oldPasswordTF.setDisable(false);
-        SaveBtn.setDisable(false);
-        CancelBtn.setDisable(false);
-        DeleteAccBtn.setDisable(false);
+        saveBtn.setDisable(false);
+        cancelBtn.setDisable(false);
+        deleteAccBtn.setDisable(false);
         themesComboBox.setDisable(false);
+    }
+
+    private Boolean isBlankOrEmpty(String str){
+        return str.isBlank() || str.isEmpty();
+    }
+
+    @Override
+    public void updateStyle() {
+        loadChooseImageBImage();
+        parentPane.getStylesheets().clear();
+        parentPane.getStylesheets().add(new ScreensPaths().getUserProfileScreenCssSheet());
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        setupParentPane();
+        setupUserImage();
+        setupThemesComboBox();
+        setUserNameLabel();
+        setupUserNameTF();
+        setupOldPasswordTF();
+        setupPasswordTF();
+        setupConfirmPasswordTF();
+        // setting up buttons
+        setDeleteAccBtn();
+        setSaveSettings();
+        setCancelButton();
+        setupChooseImageB();
     }
 
     @Override
     public Parent getParent() {
         return this.parentPane;
     }
-    private Boolean isBlankOrEmpty(String str){
-        return str.isBlank() || str.isEmpty();
-    }
+
 }

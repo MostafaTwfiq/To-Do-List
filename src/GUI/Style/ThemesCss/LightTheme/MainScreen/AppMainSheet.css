@@ -70,6 +70,13 @@
 
 }
 
+#userImageC {
+
+    -fx-stroke-width: 1.5;
+    -fx-stroke: #272c2e;
+
+}
+
 #userNameLbl {
 
 -fx-text-fill: black;
@@ -120,10 +127,8 @@
 
 }
 
-#optionsListView .jfx-rippler {
-
--fx-rippler-fill: black;
-
+#optionsListView .jfx-list-cell .jfx-rippler {
+    -jfx-rippler-fill: #95afc0;
 }
 
 #optionsListView:hover {

@@ -23,7 +23,7 @@ public class PurkTheme extends Style {
                         Color.rgb(0, 148, 50),
                         Color.rgb(255, 195, 18),
                         Color.rgb(238, 90, 36),
-                        Color.rgb(234, 32, 39)
+                        Color.rgb(239, 83, 80)
                 ),
                 new ProgressBarTheme(
                         Color.WHITE,
@@ -32,7 +32,7 @@ public class PurkTheme extends Style {
                 ),
                 Color.rgb(255, 255, 255),
                 new PrioritiesColors(
-                        Color.rgb(234, 32, 39),
+                        Color.rgb(239, 83, 80),
                         Color.rgb(238, 90, 36),
                         Color.rgb(255, 195, 18),
                         Color.rgb(0, 148, 50)

@@ -22,7 +22,7 @@ USE `todoListDB` ;
 CREATE TABLE IF NOT EXISTS `todoListDB`.`users` (
   `user_id` SMALLINT NOT NULL AUTO_INCREMENT,
   `user_name` VARCHAR(50) NOT NULL,
-  `password` VARCHAR(50) NOT NULL,
+  `password` VARCHAR(100) NOT NULL,
   `theme` ENUM('LightTheme', 'DarkTheme', 'PurkTheme') NOT NULL,
   PRIMARY KEY (`user_id`))
 ENGINE = InnoDB;
@@ -109,12 +109,22 @@ CREATE INDEX idx_user_name_password ON users(user_name, password);
 
 /* Start of filtering data functions*/
 
--- Deop and create procedure to return the id number of a user if found (this procedure will be useful while logging in).
+-- Drop and create procedure to return the id number of a user if found (this procedure will be useful while logging in).
 DROP PROCEDURE IF EXISTS get_user_id;
 DELIMITER $$
-CREATE PROCEDURE get_user_id ( user_name VARCHAR(50), password VARCHAR(50) )
+CREATE PROCEDURE get_user_id ( user_name VARCHAR(50), password VARCHAR(100) )
 BEGIN
 SELECT user_id FROM users WHERE BINARY users.user_name = user_name AND BINARY users.password = password; 
+END $$
+DELIMITER ;
+
+
+-- Drop and create procedure to return the id number of a user if found (this procedure will be useful while logging in).
+DROP PROCEDURE IF EXISTS get_user_id_by_user_name;
+DELIMITER $$
+CREATE PROCEDURE get_user_id_by_user_name ( user_name VARCHAR(50) )
+BEGIN
+SELECT user_id FROM users WHERE BINARY users.user_name = user_name;
 END $$
 DELIMITER ;
 
@@ -125,6 +135,16 @@ DELIMITER $$
 CREATE PROCEDURE get_user_name ( user_id SMALLINT )
 BEGIN
 SELECT user_name FROM users WHERE users.user_id = user_id; 
+END $$
+DELIMITER ;
+
+
+-- Drop and create procedure to return the user name with the passed id.
+DROP PROCEDURE IF EXISTS get_user_password;
+DELIMITER $$
+CREATE PROCEDURE get_user_password ( user_id SMALLINT )
+BEGIN
+SELECT users.password FROM users WHERE users.user_id = user_id; 
 END $$
 DELIMITER ;
 
@@ -383,7 +403,7 @@ DELIMITER ;
 -- This procedure will insert a new user in the users table.
 DROP PROCEDURE IF EXISTS add_new_user;
 DELIMITER $$
-CREATE PROCEDURE add_new_user(user_name VARCHAR(50), pass VARCHAR(50), theme VARCHAR(15))
+CREATE PROCEDURE add_new_user(user_name VARCHAR(50), pass VARCHAR(100), theme VARCHAR(15))
 BEGIN
 
 INSERT INTO users VALUES (DEFAULT, user_name, pass, theme);
@@ -521,7 +541,7 @@ DELIMITER ;
 -- This procedure will update the user password with the passed id.
 DROP PROCEDURE IF EXISTS update_user_password;
 DELIMITER $$
-CREATE PROCEDURE update_user_password(user_id SMALLINT, new_pass VARCHAR(50))
+CREATE PROCEDURE update_user_password(user_id SMALLINT, new_pass VARCHAR(100))
 BEGIN
 
 UPDATE users SET users.password = new_pass WHERE users.user_id = user_id;

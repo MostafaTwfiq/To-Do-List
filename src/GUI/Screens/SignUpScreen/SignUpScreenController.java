@@ -1,5 +1,6 @@
 package GUI.Screens.SignUpScreen;
 
+import BCrypt.BCrypt;
 import DataBase.DataAccess;
 import GUI.IControllers;
 import GUI.Style.ScreensPaths;
@@ -186,7 +187,7 @@ public class SignUpScreenController implements IControllers {
                 }  else {
 
                     Theme userTheme = Theme.valueOf(themesComboBox.getValue());
-                    dataAccess.addNewUser(userNameTF.getText(), passwordTF.getText(), userTheme);
+                    dataAccess.addNewUser(userNameTF.getText(), BCrypt.hashpw(passwordTF.getText(), BCrypt.gensalt()), userTheme);
 
                     if (userImagePath != null)
                         dataAccess.addNewUserImage(dataAccess.getLastInsertedID(), userImagePath);

@@ -1,4 +1,5 @@
 package GUI.Screens.userProfileScreen;
+import BCrypt.BCrypt;
 import DataBase.DataAccess;
 import GUI.IControllers;
 import GUI.Style.ScreensPaths;
@@ -244,7 +245,7 @@ public class UserProfileController implements IControllers  {
 
         int userID = Main.user.getUserID();
 
-        if (dataAccess.getUserID(Main.user.getUserName(), oldPasswordTF.getText()) != userID) {
+        if (!BCrypt.checkpw(oldPasswordTF.getText(), dataAccess.getUserPassword(userID))) {
             errorL.setText("The old password is incorrect.");
             return;
         }
@@ -269,7 +270,7 @@ public class UserProfileController implements IControllers  {
         if (!isBlankOrEmpty(passwordTF.getText())) {
 
             if (passwordTF.getText().equals(confirmPasswordTF.getText()))
-                dataAccess.updateUserPassword(userID, passwordTF.getText());
+                dataAccess.updateUserPassword(userID, BCrypt.hashpw(passwordTF.getText(), BCrypt.gensalt()));
             else {
                 errorL.setText("Passwords don't match.");
                 return;

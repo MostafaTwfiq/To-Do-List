@@ -1,5 +1,6 @@
 package GUI.Screens.LoginScreen;
 
+import BCrypt.BCrypt;
 import DataBase.DataAccess;
 import DataClasses.User;
 import GUI.IControllers;
@@ -76,53 +77,66 @@ public class LoginScreenController implements IControllers {
                 return;
             }
 
+            lockLoginScreen();
+
             try {
 
-                lockLoginScreen();
-                int userID = dataAccess.getUserID(userNameTF.getText(), passwordTF.getText());
-                unlockLoginScreen();
+                int userID = dataAccess.getUserID(userNameTF.getText());
 
                 if (userID < 0)
                     errorL.setText("Please enter a valid user name and password.");
                 else {
 
-                    String userImagePath = dataAccess.getUserImagePath(userID);
-                    Theme userTheme = dataAccess.getUserTheme(userID);
-                    Main.user = new User((short) userID, userNameTF.getText(), userTheme);
-                    if (userImagePath != null)
-                        Main.user.setUserImagePath(userImagePath);
+                    if (!BCrypt.checkpw(passwordTF.getText(), dataAccess.getUserPassword(userID)))
+                        errorL.setText("Please enter a valid user name and password.");
+                    else {
+                        String userImagePath = dataAccess.getUserImagePath(userID);
+                        Theme userTheme = dataAccess.getUserTheme(userID);
+                        Main.user = new User((short) userID, userNameTF.getText(), userTheme);
+                        if (userImagePath != null)
+                            Main.user.setUserImagePath(userImagePath);
 
-                    Main.theme = new StyleFactory().generateTheme(userTheme);
-                    Main.screenManager.updateScreensStyle();
+                        Main.theme = new StyleFactory().generateTheme(userTheme);
+                        Main.screenManager.updateScreensStyle();
 
-                    try {
-                        MainScreenController mainScreenController = new MainScreenController();
-                        Parent mainScreenParent = null;
-                        ScreensPaths paths = new ScreensPaths();
+                        errorL.setText("");
+                        userNameTF.clear();
+                        passwordTF.clear();
 
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource(paths.getMainScreenFxml()));
-                        loader.setController(mainScreenController);
-                        mainScreenParent = loader.load();
-                        mainScreenParent.getStylesheets().add(paths.getMainScreenCssSheet());
+                        try {
+                            MainScreenController mainScreenController = new MainScreenController();
+                            Parent mainScreenParent = null;
+                            ScreensPaths paths = new ScreensPaths();
 
-                        Main.screenManager.changeScreen(mainScreenController);
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource(paths.getMainScreenFxml()));
+                            loader.setController(mainScreenController);
+                            mainScreenParent = loader.load();
+                            mainScreenParent.getStylesheets().add(paths.getMainScreenCssSheet());
 
-                        TrayNotification trayNotification = new TrayNotification();
-                        trayNotification.setAnimationType(AnimationType.POPUP);
-                        trayNotification.setNotificationType(NotificationType.SUCCESS);
-                        trayNotification.setMessage("Welcome " + userNameTF.getText());
-                        trayNotification.setTitle("Logged in successfully");
-                        trayNotification.showAndDismiss(Duration.seconds(1));
+                            Main.screenManager.changeScreen(mainScreenController);
 
-                    } catch (Exception exception) {
-                        exception.printStackTrace();
+                            TrayNotification trayNotification = new TrayNotification();
+                            trayNotification.setAnimationType(AnimationType.POPUP);
+                            trayNotification.setNotificationType(NotificationType.SUCCESS);
+                            trayNotification.setMessage("Welcome " + userNameTF.getText());
+                            trayNotification.setTitle("Logged in successfully");
+                            trayNotification.showAndDismiss(Duration.seconds(1));
+
+                        } catch (Exception exception) {
+                            errorL.setText("Something went wrong please try again.");
+                            exception.printStackTrace();
+                        }
+
                     }
 
                 }
 
             } catch (SQLException sqlException) {
+                errorL.setText("Something went wrong please try again.");
                 sqlException.printStackTrace();
             }
+
+            unlockLoginScreen();
 
         });
 

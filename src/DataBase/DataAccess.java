@@ -53,6 +53,31 @@ public class DataAccess {
     }
 
 
+    /** This function will return the user id with the provided user name.
+     * @param userName user name
+     * @return it will return the user id
+     * @throws SQLException exception in case some thing went wrong while reading data
+     */
+
+    public int getUserID(String userName) throws SQLException {
+
+        ArrayList<String> parameters = new ArrayList<>();
+        parameters.add(addStringBetweenSingleQuote(userName));
+
+        ResultSet resultSet = statement.executeQuery(
+                "CALL get_user_id_by_user_name"
+                        + convertStringToParameters(parameters)
+                        + ";"
+        );
+
+        if (resultSet.next())
+            return resultSet.getInt(1);
+
+        return -1;
+
+    }
+
+
     /** This function will return the user name for the provided id.
      * @param userID the user id
      * @return it will return the user name for the provided id, and it will return null if the id wasn't found
@@ -66,6 +91,31 @@ public class DataAccess {
 
         ResultSet resultSet = statement.executeQuery(
                 "CALL get_user_name"
+                        + convertStringToParameters(parameters)
+                        + ";"
+        );
+
+        if (resultSet.next())
+            return resultSet.getString(1);
+
+        return null;
+
+    }
+
+
+    /** This function will return the user password for the provided id.
+     * @param userID the user id
+     * @return it will return the user password for the provided id, and it will return null if the id wasn't found
+     * @throws SQLException exception in case something went wrong while reading the data
+     */
+
+    public String getUserPassword(int userID) throws SQLException {
+
+        ArrayList<String> parameters = new ArrayList<>();
+        parameters.add(String.format("%d", userID));
+
+        ResultSet resultSet = statement.executeQuery(
+                "CALL get_user_password"
                         + convertStringToParameters(parameters)
                         + ";"
         );

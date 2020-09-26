@@ -237,10 +237,7 @@ public class UserProfileController implements IControllers  {
 
 
     private boolean checkIfValidUserName(String userName) {
-        if (userName.contains(" "))
-            return false;
-
-        return true;
+        return !userName.trim().equals("");
     }
 
     private void saveSettings() throws SQLException {

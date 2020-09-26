@@ -214,7 +214,7 @@ public class SearchBox extends HBox {
             if (e.getCode() == KeyCode.ENTER) {
 
                 if (searchIcon != null && onEnterEvent != null) {
-                    activateIconAnimation();
+                    //activateIconAnimation();
                     onEnterEvent.handle(null);
                 }
 

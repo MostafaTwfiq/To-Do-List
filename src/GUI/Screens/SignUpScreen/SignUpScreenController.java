@@ -169,7 +169,7 @@ public class SignUpScreenController implements IControllers {
 
         signUpB.setOnAction(e -> {
 
-            if (userNameTF.getText().equals("") || passwordTF.getText().equals("") || confirmPasswordTF.getText().equals("")) {
+            if (userNameTF.getText().trim().equals("") || passwordTF.getText().equals("")) {
                 errorL.setText("Please enter a valid user name and password.");
                 return;
             } else if (!passwordTF.getText().equals(confirmPasswordTF.getText())) {

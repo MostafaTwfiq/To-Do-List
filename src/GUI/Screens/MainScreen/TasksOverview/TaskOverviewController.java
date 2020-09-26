@@ -175,7 +175,7 @@ public class TaskOverviewController implements IControllersObserver {
 
         moreOptionsBtn.setGraphic(loadButtonImage(
                 Main.theme.getThemeResourcesPath() + "MainScreen/moreOptions.png",
-                30, 30)
+                20, 20)
         );
 
     }

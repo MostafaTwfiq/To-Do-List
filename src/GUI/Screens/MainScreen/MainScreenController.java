@@ -35,7 +35,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -276,8 +275,8 @@ public class MainScreenController implements IControllersObserver {
 
             Image buttonImage = new Image(imageStream);
             ImageView buttonImageView = new ImageView(buttonImage);
-            buttonImageView.setFitHeight(25);
-            buttonImageView.setFitWidth(25);
+            buttonImageView.setFitHeight(20);
+            buttonImageView.setFitWidth(20);
 
             userSettingsB.setGraphic(buttonImageView);
 
@@ -540,6 +539,7 @@ public class MainScreenController implements IControllersObserver {
     @Override
     public void updateStyle() {
         setupUserImage();
+        setupUserName();
         setUserSettingBImage();
         setupPopupUserOptions();
         tasksOverviewList.updateStyle();

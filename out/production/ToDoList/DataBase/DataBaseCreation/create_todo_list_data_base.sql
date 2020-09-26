@@ -685,7 +685,7 @@ READS SQL DATA
 BEGIN
 
 DECLARE found_flag BOOL DEFAULT FALSE;
-SELECT EXISTS (SELECT us.user_name FROM users us WHERE us.user_name = user_name) INTO found_flag;
+SELECT EXISTS (SELECT us.user_name FROM users us WHERE BINARY us.user_name = user_name) INTO found_flag;
 
 RETURN found_flag;
 

@@ -11,6 +11,7 @@ public class ScreensPaths {
     private final String taskOverviewCssSheet = "GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/MainScreen/TaskOverviewSheet.css";
     private final String taskOverviewAddTaskSheet = "GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/MainScreen/TaskOverviewAddTaskSheet.css";
     private final String userProfileScreenCssSheet = "GUI/Style/ThemesCss/"+Main.theme.getThemeName()+"/UserProfileScreen/UserProfileScreen.css";
+    private final  String editTaskScreenCssSheet = "GUI/Style/ThemesCss/"+Main.theme.getThemeName()+"/EditTaskScreen/EditTaskScreen.css";
 
     public String getStageFxml() {
         String stageFxml = "/GUI/ScreenManager/Stage/StageDesign.fxml";
@@ -63,7 +64,10 @@ public class ScreensPaths {
 
 
     public String getUserProfileScreenFxml(){return"/GUI/Screens/userProfileScreen/UserProfileDesign.fxml"; }
+
     public String getUserProfileScreenCssSheet(){return userProfileScreenCssSheet; }
 
-
+    public String getEditTaskScreenCssSheet() {
+        return editTaskScreenCssSheet;
+    }
 }

@@ -6,6 +6,7 @@ module ToDoList {
     requires java.sql;
     requires TrayTester;
     requires com.jfoenix;
+    requires org.jetbrains.annotations;
 
 
     opens Main;

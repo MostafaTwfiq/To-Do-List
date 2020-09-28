@@ -99,10 +99,6 @@ public class LoginScreenController implements IControllers {
                         Main.theme = new StyleFactory().generateTheme(userTheme);
                         Main.screenManager.updateScreensStyle();
 
-                        errorL.setText("");
-                        userNameTF.clear();
-                        passwordTF.clear();
-
                         try {
                             MainScreenController mainScreenController = new MainScreenController();
                             Parent mainScreenParent = null;
@@ -121,6 +117,10 @@ public class LoginScreenController implements IControllers {
                             trayNotification.setMessage("Welcome " + userNameTF.getText());
                             trayNotification.setTitle("Logged in successfully");
                             trayNotification.showAndDismiss(Duration.seconds(1));
+
+                            errorL.setText("");
+                            userNameTF.clear();
+                            passwordTF.clear();
 
                         } catch (Exception exception) {
                             errorL.setText("Something went wrong please try again.");

@@ -1,13 +1,15 @@
 package GUI.Screens.MainScreen.TasksOverview;
 
+import GUI.Screens.AddTaskScreen.AddTaskScreenController;
 import GUI.Screens.MainScreen.IControllersObserver;
+import GUI.Screens.userProfileScreen.UserProfileController;
 import GUI.Style.ScreensPaths;
 import Main.Main;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
 import java.io.FileInputStream;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -44,7 +46,21 @@ public class TaskOverviewAddTaskController implements IControllersObserver {
     private void setupAddTaskBtn() {
 
         addTaskBtn.setOnAction(e -> {
-            // open here the add new task screen.
+            try {
+                AddTaskScreenController addTaskScreenController = new AddTaskScreenController();
+                Parent mainScreenParent = null;
+                ScreensPaths paths = new ScreensPaths();
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(paths.getAddTaskScreenFxml()));
+                loader.setController(addTaskScreenController);
+                mainScreenParent = loader.load();
+                mainScreenParent.getStylesheets().add(paths.getAddTaskScreenCssSheet());
+
+                Main.screenManager.changeScreen(addTaskScreenController);
+
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         });
 
         addTaskBtn.setContentDisplay(ContentDisplay.CENTER);

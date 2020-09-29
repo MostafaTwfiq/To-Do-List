@@ -5,8 +5,10 @@
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTimePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -60,14 +62,7 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="361.0" layoutY="126.0" text="at">
-         <font>
-            <Font size="17.0" />
-         </font>
-      </Label>
-      <JFXComboBox fx:id="HourDropDwn" layoutX="404.0" layoutY="122.0" promptText="00" />
-      <JFXComboBox layoutX="511.0" layoutY="122.0" promptText="00" />
-      <Label layoutX="480.0" layoutY="126.0" text=":">
+      <Label layoutX="310.0" layoutY="120.0" text="at">
          <font>
             <Font size="17.0" />
          </font>
@@ -94,5 +89,14 @@
             <Font size="17.0" />
          </font>
       </Label>
+      <JFXButton fx:id="AddTagBtn" buttonType="RAISED" layoutX="914.0" layoutY="217.0" text="+">
+         <effect>
+            <Shadow />
+         </effect>
+      </JFXButton>
+      <JFXButton fx:id="StarBtn" layoutX="48.0" layoutY="23.0" prefHeight="39.0" prefWidth="52.0" text=" ">
+      </JFXButton>
+      <JFXTimePicker fx:id="timePicker" defaultColor="#4059a9" layoutX="340.0" layoutY="119.0" promptText="Time" />
+
    </children>
 </AnchorPane>

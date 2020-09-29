@@ -1,9 +1,10 @@
-package GUI.Screens.EditTaskScreen;
+package GUI.Screens.AddTaskScreen;
 
 import DataBase.DataAccess;
 import DataClasses.DateFormat;
 import DataClasses.Task;
 import DataClasses.TaskStatus.TaskPriority;
+import DataClasses.TaskStatus.TaskStatus;
 import GUI.IControllers;
 import GUI.Screens.PopUpWindw.PopUpWdwController;
 import GUI.Style.ScreensPaths;
@@ -24,6 +25,7 @@ import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
@@ -34,9 +36,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class EditTaskScreenController implements IControllers {
-
-    private Task task;
+public class AddTaskScreenController implements IControllers {
 
     @FXML
     private AnchorPane parentPane;
@@ -57,28 +57,29 @@ public class EditTaskScreenController implements IControllers {
     private Label MainTitle;
 
     @FXML
-    private JFXTimePicker timePicker;
-
-    @FXML
     private JFXButton DeleteBtn;
 
     @FXML
     private JFXButton CancelBtn;
 
     @FXML
-    private JFXButton StarBtn;
+    private JFXButton AddBtn;
 
     @FXML
-    private JFXButton AddBtn;
+    private JFXComboBox<String> PriorityComboBox;
 
     @FXML
     private JFXButton AddTagBtn;
 
-    private JFXComboBox<String> PriorityComboBox;
+    @FXML
+    private JFXButton StarBtn;
+
+    @FXML
+    private JFXTimePicker timePicker;
 
     private DataAccess dataAccess;
 
-    private Boolean isStarred;
+    private Boolean isStarred = false;
 
     private ArrayList<String> tags;
 
@@ -86,8 +87,7 @@ public class EditTaskScreenController implements IControllers {
     private final ObservableList<String> HrComboBoxItems  = FXCollections.observableArrayList();
     private final ObservableList<String> MinComboBoxItems  = FXCollections.observableArrayList();
 
-    public EditTaskScreenController(Task task) {
-        this.task = task;
+    public AddTaskScreenController() {
     }
 
 
@@ -105,16 +105,13 @@ public class EditTaskScreenController implements IControllers {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        setupMainTitle();
 
-        setupDeleteBtn();
         setupAddBtn();
         setupCancelBtn();
         setupStarButton();
         setupAddTagsbtn();
 
         setUpPriorityComboBox();
-        seUpChipBoxView();
     }
 
 
@@ -153,11 +150,12 @@ public class EditTaskScreenController implements IControllers {
     }
 
     private void setupAddBtn(){
-        if(this.task!=null){
             this.AddBtn.setText("Save");
 
             this.AddBtn.setOnAction(e->{
                 try {
+
+
                     String datetime  =  DateDropDwn.getValue()
                             .format(DateTimeFormatter
                                     .ofPattern(DateFormat.getDateFormat())) +
@@ -168,25 +166,24 @@ public class EditTaskScreenController implements IControllers {
                                             .ofPattern(last(DateFormat.getDateFormat()
                                                                         .split(" "))));
 
-                    dataAccess.updateTask(this.task.getTaskID(),
-                            this.TaskTitle.getText(),datetime,
-                            this.task.getTaskStatus(),
-                            this.task.getPriority());
+                    dataAccess.addNewTask(
+                            Main.user.getUserID(),
+                            this.TaskTitle.getText(),
+                            datetime,
+                            TaskStatus.NOT_DONE,
+                            newEnumInstance(PriorityComboBox.getValue(),TaskPriority.class));
 
-                    List<String> diffTags = this.tags.stream()
-                            .filter(tag -> !this.task.getTags().contains(tag))
-                            .collect(Collectors.toList());
+                    int insertedTaskID = this.dataAccess.getLastInsertedID();
 
                     for (String tag:
-                         diffTags) {
-                        dataAccess.addNewTag(this.task.getTaskID(),tag);
+                            this.tags) {
+                        dataAccess.addNewTag(insertedTaskID,tag);
                     }
 
                 } catch (SQLException sqlException) {
                     sqlException.printStackTrace();
                 }
             });
-        }
     }
 
     private void setupCancelBtn(){
@@ -195,36 +192,6 @@ public class EditTaskScreenController implements IControllers {
         });
     }
 
-    private void seUpChipBoxView(){
-        this.task.getTags()
-                .forEach( e -> {
-                    this.TagsChipView.getChips().add(e);
-                    this.tags.add(e);
-                });
-    }
-    
-    private void setupDeleteBtn(){
-            DeleteBtn.setOnAction(e->{
-                try {
-
-                    for (String note :
-                            this.task.getNotes()) {
-
-                        this.dataAccess.deleteNote(this.task.getTaskID(),note);
-                    }
-
-                    this.dataAccess.deleteTask(this.task.getTaskID());
-
-                }catch(SQLException sqlException){
-
-                    sqlException.printStackTrace();
-                }
-            });
-    }
-
-    private void setupMainTitle(){
-            this.MainTitle.setText("Edit Task");
-    }
 
     private void setupStarButton(){
 
@@ -232,14 +199,13 @@ public class EditTaskScreenController implements IControllers {
         this.StarBtn.setBackground(background);
 
         this.StarBtn.setOnMouseClicked(e->{
-            this.task.setStarred(!this.task.isStarred());
-
+            isStarred  = !isStarred;
             this.StarBtn.setBackground(new Background(prepareStaredImage()));
         });
     }
 
     private @NotNull BackgroundImage prepareStaredImage(){
-        if(this.task.isStarred())
+        if(this.isStarred)
             return new BackgroundImage(
                     new Image(Main.theme.getThemeResourcesPath() + "MainScreen/Starred.png"),
                     BackgroundRepeat.NO_REPEAT,
@@ -268,10 +234,13 @@ public class EditTaskScreenController implements IControllers {
     }
 
 
-
-
    // TODO : migrate this to utils
     private <T> T last(T[] array) {
         return array[array.length - 1];
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T extends Enum<T>> T newEnumInstance(String name, Type type) {
+        return Enum.valueOf((Class<T>) type, name);
     }
 }

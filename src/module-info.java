@@ -16,6 +16,8 @@ module ToDoList {
     opens GUI.Screens.MainScreen;
     opens GUI.Screens.MainScreen.TasksOverview;
     opens GUI.Screens.userProfileScreen;
+    opens GUI.Screens.AddTaskScreen;
+    opens GUI.Screens.EditTaskScreen;
     opens JFoenix;
 
 
@@ -25,6 +27,8 @@ module ToDoList {
     opens GUI.Style.ThemesCss.LightTheme.SignUpScreen;
     opens GUI.Style.ThemesCss.LightTheme.MainScreen;
     opens GUI.Style.ThemesCss.LightTheme.UserProfileScreen;
+    opens GUI.Style.ThemesCss.LightTheme.AddTaskScreen;
+    opens GUI.Style.ThemesCss.LightTheme.EditTaskScreen;
 
 
     //Dark mode theme:
@@ -33,14 +37,15 @@ module ToDoList {
     opens GUI.Style.ThemesCss.DarkTheme.SignUpScreen;
     opens GUI.Style.ThemesCss.DarkTheme.UserProfileScreen;
     opens GUI.Style.ThemesCss.DarkTheme.MainScreen;
-
+    opens GUI.Style.ThemesCss.DarkTheme.AddTaskScreen;
+    opens GUI.Style.ThemesCss.DarkTheme.EditTaskScreen;
 
     //Purk mode theme:
     opens GUI.Style.ThemesCss.PurkTheme.Stage;
     opens GUI.Style.ThemesCss.PurkTheme.LoginScreen;
     opens GUI.Style.ThemesCss.PurkTheme.SignUpScreen;
-    opens GUI.Style.ThemesCss.PurkTheme.UserProfileScreen;
-    opens GUI.Style.ThemesCss.PurkTheme.MainScreen;
+    opens GUI.Style.ThemesCss.PurkTheme.AddTaskScreen;
+    opens GUI.Style.ThemesCss.PurkTheme.EditTaskScreen;
 
 
 }

@@ -6,6 +6,7 @@ import DataClasses.Task;
 import DataClasses.TaskStatus.TaskPriority;
 import DataClasses.TaskStatus.TaskStatus;
 import GUI.IControllers;
+import GUI.Screens.MainScreen.IControllersObserver;
 import GUI.Screens.PopUpWindw.PopUpWdwController;
 import GUI.Style.ScreensPaths;
 import GUI.Style.StyleFactory;
@@ -19,11 +20,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.jetbrains.annotations.NotNull;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.URL;
@@ -36,7 +38,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class AddTaskScreenController implements IControllers {
+public class AddTaskScreenController implements IControllersObserver {
 
     @FXML
     private AnchorPane parentPane;
@@ -87,8 +89,7 @@ public class AddTaskScreenController implements IControllers {
     private final ObservableList<String> HrComboBoxItems  = FXCollections.observableArrayList();
     private final ObservableList<String> MinComboBoxItems  = FXCollections.observableArrayList();
 
-    public AddTaskScreenController() {
-    }
+    public AddTaskScreenController() {}
 
 
     @Override
@@ -112,6 +113,7 @@ public class AddTaskScreenController implements IControllers {
         setupAddTagsbtn();
 
         setUpPriorityComboBox();
+
     }
 
 
@@ -163,8 +165,7 @@ public class AddTaskScreenController implements IControllers {
                             +
                             timePicker.getValue()
                                     .format(DateTimeFormatter
-                                            .ofPattern(last(DateFormat.getDateFormat()
-                                                                        .split(" "))));
+                                            .ofPattern(last(DateFormat.getDateFormat().split(" "))));
 
                     dataAccess.addNewTask(
                             Main.user.getUserID(),
@@ -195,30 +196,37 @@ public class AddTaskScreenController implements IControllers {
 
     private void setupStarButton(){
 
-        Background background = new Background(prepareStaredImage());
-        this.StarBtn.setBackground(background);
+        StarBtn.setGraphic(prepareStaredImage());
 
         this.StarBtn.setOnMouseClicked(e->{
             isStarred  = !isStarred;
-            this.StarBtn.setBackground(new Background(prepareStaredImage()));
+            StarBtn.setGraphic(prepareStaredImage());
         });
+
     }
 
-    private @NotNull BackgroundImage prepareStaredImage(){
-        if(this.isStarred)
-            return new BackgroundImage(
-                    new Image(Main.theme.getThemeResourcesPath() + "MainScreen/Starred.png"),
-                    BackgroundRepeat.NO_REPEAT,
-                    BackgroundRepeat.NO_REPEAT,
-                    BackgroundPosition.DEFAULT,
-                    BackgroundSize.DEFAULT);
-        else
-            return new BackgroundImage(
-                    new Image(Main.theme.getThemeResourcesPath() + "MainScreen/NotStarred.png"),
-                    BackgroundRepeat.NO_REPEAT,
-                    BackgroundRepeat.NO_REPEAT,
-                    BackgroundPosition.DEFAULT,
-                    BackgroundSize.DEFAULT);
+    private ImageView prepareStaredImage(){
+
+        try {
+            if (this.isStarred) {
+                return new ImageView(
+                        new Image(
+                                new FileInputStream(Main.theme.getThemeResourcesPath() + "MainScreen/starred.png")
+                        )
+                );
+            } else {
+                return new ImageView(
+                        new Image(
+                                new FileInputStream(Main.theme.getThemeResourcesPath() + "MainScreen/notStarred.png")
+                        )
+                );
+            }
+        } catch (Exception e) {
+            System.out.println("Something went wrong while loading starred button image.");
+        }
+
+        return new ImageView();
+
     }
 
     private void setUpPriorityComboBox(){
@@ -243,4 +251,10 @@ public class AddTaskScreenController implements IControllers {
     private <T extends Enum<T>> T newEnumInstance(String name, Type type) {
         return Enum.valueOf((Class<T>) type, name);
     }
+
+    @Override
+    public void updateTasks() {
+
+    }
+
 }

@@ -10,9 +10,9 @@ public class ScreensPaths {
     private final String mainScreenCssSheet = "GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/MainScreen/AppMainSheet.css";
     private final String taskOverviewCssSheet = "GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/MainScreen/TaskOverviewSheet.css";
     private final String taskOverviewAddTaskSheet = "GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/MainScreen/TaskOverviewAddTaskSheet.css";
-    private final String userProfileScreenCssSheet = "GUI/Style/ThemesCss/"+Main.theme.getThemeName()+"/UserProfileScreen/UserProfileScreen.css";
-    private final  String editTaskScreenCssSheet = "GUI/Style/ThemesCss/"+Main.theme.getThemeName()+"/EditTaskScreen/EditTaskScreen.css";
-    private final String addTaskScreenCssSheet  = "GUI/Style/ThemesCss/"+Main.theme.getThemeName()+"/AddTaskScreen/AddTaskScreen.css";
+    private final String userProfileScreenCssSheet = "GUI/Style/ThemesCss/" + Main.theme.getThemeName()+ "/UserProfileScreen/UserProfileScreen.css";
+    private final String editTaskScreenCssSheet = "GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/EditTaskScreen/EditTaskScreen.css";
+    private final String addTaskScreenCssSheet  = "GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/AddTaskScreen/AddTaskScreen.css";
 
     public String getStageFxml() {
         String stageFxml = "/GUI/ScreenManager/Stage/StageDesign.fxml";
@@ -84,13 +84,12 @@ public class ScreensPaths {
     }
 
     public String getEditTaskScreenFxml(){
-        return "GUI/Screens/EditTaskScreen/EditTaskScreenDesign.fxml";
+        return "/GUI/Screens/EditTaskScreen/EditTaskScreenDesign.fxml";
     }
 
 
-
     public String getAddTaskScreenFxml() {
-        return "GUI/Screens/AddTaskScreen/AddTaskScreenDesign.fxml";
+        return "/GUI/Screens/AddTaskScreen/AddTaskScreenDesign.fxml";
     }
 
     public String getAddTaskScreenCssSheet() {

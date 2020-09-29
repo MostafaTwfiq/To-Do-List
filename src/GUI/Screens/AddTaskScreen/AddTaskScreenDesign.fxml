@@ -47,7 +47,7 @@
             <Font size="17.0" />
          </font>
       </Label>
-      <Label layoutX="61.0" layoutY="122.0" text="On">
+      <Label layoutX="56.0" layoutY="122.0" text="On">
          <font>
             <Font size="17.0" />
          </font>

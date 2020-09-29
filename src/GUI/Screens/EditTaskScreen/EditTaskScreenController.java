@@ -21,7 +21,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.net.URL;
@@ -238,7 +237,7 @@ public class EditTaskScreenController implements IControllers {
         });
     }
 
-    private @NotNull BackgroundImage prepareStaredImage(){
+    private BackgroundImage prepareStaredImage(){
         if(this.task.isStarred())
             return new BackgroundImage(
                     new Image(Main.theme.getThemeResourcesPath() + "MainScreen/Starred.png"),

@@ -48,13 +48,13 @@ public class TaskOverviewAddTaskController implements IControllersObserver {
         addTaskBtn.setOnAction(e -> {
             try {
                 AddTaskScreenController addTaskScreenController = new AddTaskScreenController();
-                Parent mainScreenParent = null;
+                Parent addTaskParent = null;
                 ScreensPaths paths = new ScreensPaths();
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(paths.getAddTaskScreenFxml()));
                 loader.setController(addTaskScreenController);
-                mainScreenParent = loader.load();
-                mainScreenParent.getStylesheets().add(paths.getAddTaskScreenCssSheet());
+                addTaskParent = loader.load();
+                addTaskParent.getStylesheets().add(paths.getAddTaskScreenCssSheet());
 
                 Main.screenManager.changeScreen(addTaskScreenController);
 

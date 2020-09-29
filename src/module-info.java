@@ -6,7 +6,6 @@ module ToDoList {
     requires java.sql;
     requires TrayTester;
     requires com.jfoenix;
-    requires org.jetbrains.annotations;
 
 
     opens Main;
@@ -44,6 +43,8 @@ module ToDoList {
     opens GUI.Style.ThemesCss.PurkTheme.Stage;
     opens GUI.Style.ThemesCss.PurkTheme.LoginScreen;
     opens GUI.Style.ThemesCss.PurkTheme.SignUpScreen;
+    opens GUI.Style.ThemesCss.PurkTheme.UserProfileScreen;
+    opens GUI.Style.ThemesCss.PurkTheme.MainScreen;
     opens GUI.Style.ThemesCss.PurkTheme.AddTaskScreen;
     opens GUI.Style.ThemesCss.PurkTheme.EditTaskScreen;
 

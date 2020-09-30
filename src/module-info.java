@@ -17,6 +17,7 @@ module ToDoList {
     opens GUI.Screens.userProfileScreen;
     opens GUI.Screens.AddTaskScreen;
     opens GUI.Screens.EditTaskScreen;
+    opens GUI.Screens.PopUpWindw;
     opens JFoenix;
 
 

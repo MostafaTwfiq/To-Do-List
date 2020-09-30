@@ -613,7 +613,7 @@ public class DataAccess {
      * @throws SQLException exception in case something went wrong
      */
 
-    public void addNewTask(int userID, String title, String dateTime, TaskStatus status, TaskPriority priority) throws SQLException {
+    public void addNewTask(int userID, String title, String dateTime, TaskStatus status, TaskPriority priority,boolean isStarred) throws SQLException {
 
         ArrayList<String> parameters = new ArrayList<>();
         parameters.add(String.format("%d", userID));
@@ -621,6 +621,7 @@ public class DataAccess {
         parameters.add(addStringBetweenSingleQuote(dateTime));
         parameters.add(addStringBetweenSingleQuote(status.toString()));
         parameters.add(addStringBetweenSingleQuote(priority.toString()));
+        parameters.add(isStarred?"true":"false");
 
         statement.executeQuery(
                 "CALL add_new_task"

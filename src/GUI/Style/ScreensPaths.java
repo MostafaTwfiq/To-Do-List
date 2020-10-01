@@ -96,6 +96,4 @@ public class ScreensPaths {
         return addTaskScreenCssSheet;
     }
 
-    public String getPopUpFxml(){return "/GUI/Screens/PopUpWindw/PopUpWdw.fxml";}
-    public String getPopUpCss(){return popUpCss;}
 }

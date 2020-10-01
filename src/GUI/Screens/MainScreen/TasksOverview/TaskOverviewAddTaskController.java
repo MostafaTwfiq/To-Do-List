@@ -2,7 +2,6 @@ package GUI.Screens.MainScreen.TasksOverview;
 
 import GUI.Screens.AddTaskScreen.AddTaskScreenController;
 import GUI.Screens.MainScreen.IControllersObserver;
-import GUI.Screens.userProfileScreen.UserProfileController;
 import GUI.Style.ScreensPaths;
 import Main.Main;
 import javafx.fxml.FXMLLoader;
@@ -53,7 +52,7 @@ public class TaskOverviewAddTaskController implements IControllersObserver {
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(paths.getAddTaskScreenFxml()));
                 loader.setController(addTaskScreenController);
-                addTaskScreenController.setObservers(this::updateTasks);
+                addTaskScreenController.setUpdateFunction(this::updateTasks);
                 addTaskParent = loader.load();
                 addTaskParent.getStylesheets().add(paths.getAddTaskScreenCssSheet());
 

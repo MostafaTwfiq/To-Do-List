@@ -2,41 +2,33 @@ package GUI.Screens.AddTaskScreen;
 
 import DataBase.DataAccess;
 import DataClasses.DateFormat;
-import DataClasses.Task;
 import DataClasses.TaskStatus.TaskPriority;
 import DataClasses.TaskStatus.TaskStatus;
 import GUI.IControllers;
-import GUI.Screens.MainScreen.IControllersObserver;
-import GUI.Screens.PopUpWindw.PopUpWdwController;
 import GUI.Style.ScreensPaths;
 import GUI.Style.StyleFactory;
 import Main.Main;
 import com.jfoenix.controls.*;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import javafx.util.StringConverter;
 import javafx.util.converter.LocalTimeStringConverter;
 import tray.animations.AnimationType;
+import tray.animations.FadeAnimation;
 import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.URL;
 import java.sql.SQLException;
@@ -63,6 +55,9 @@ public class AddTaskScreenController implements IControllers {
     private JFXTextField TaskTitle;
 
     @FXML
+    private Label errLabel;
+
+    @FXML
     private Label MainTitle;
 
     @FXML
@@ -72,13 +67,10 @@ public class AddTaskScreenController implements IControllers {
     private JFXButton CancelBtn;
 
     @FXML
-    private JFXButton AddBtn;
-
-    @FXML
     private JFXComboBox<String> PriorityComboBox;
 
     @FXML
-    private JFXButton AddTagBtn;
+    private JFXButton AddBtn;
 
     @FXML
     private JFXButton StarBtn;
@@ -97,7 +89,7 @@ public class AddTaskScreenController implements IControllers {
 
     public AddTaskScreenController() {}
 
-    public void setObservers(Runnable func){
+    public void setUpdateFunction(Runnable func){
         this.updateFuncRef = func;
     }
 
@@ -116,10 +108,9 @@ public class AddTaskScreenController implements IControllers {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        setupAddBtn();
         setupCancelBtn();
         setupStarButton();
-        setupAddTagsbtn();
+        setupAddBtn();
 
         setUpPriorityComboBox();
         setUpTagsChipView();
@@ -127,54 +118,16 @@ public class AddTaskScreenController implements IControllers {
         timePicker.setConverter(defaultConverter);
 
         try {
-            this.dataAccess = new DataAccess();
+             this.dataAccess = new DataAccess();
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
     }
 
-
-    private void setupAddTagsbtn(){
-        this.AddTagBtn.setOnMouseClicked(e->{
-            var res = showTagPopUpWindow();
-            if(res!=null){
-                this.TagsChipView.getChips().add(res);
-            }
-        });
-    }
-
-
-    private String showTagPopUpWindow(){
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource(new ScreensPaths().getPopUpFxml()));
-        // initializing the controller
-        PopUpWdwController popupController = new PopUpWdwController();
-        popupController.setInvoker(this);
-        loader.setController(popupController);
-        Parent layout;
-        try {
-            layout = loader.load();
-            Scene scene = new Scene(layout);
-            Stage popupStage = new Stage(StageStyle.UNDECORATED);
-
-            popupController.setStage(popupStage);
-            if(this.getParent().getScene().getWindow().getScene()!=null) {
-                popupStage.initOwner(this.getParent().getScene().getWindow());
-            }
-            popupStage.initModality(Modality.WINDOW_MODAL);
-            popupStage.setScene(scene);
-            popupStage.showAndWait();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return popupController.getResult();
-    }
-
     private void setupAddBtn(){
-            this.AddBtn.setText("Save");
-
-            this.AddBtn.setOnAction(this::handle);
+        this.AddBtn.setOnAction(e->{
+            handle(e);
+        });
     }
 
     private void setupCancelBtn(){
@@ -182,7 +135,6 @@ public class AddTaskScreenController implements IControllers {
             cancel();
         });
     }
-
 
     private void setupStarButton(){
 
@@ -249,45 +201,74 @@ public class AddTaskScreenController implements IControllers {
         return Enum.valueOf((Class<T>) type, name);
     }
 
+    private String checkFlds(){
+        StringJoiner errorsbldr  = new StringJoiner("\n");
+
+        if(DateDropDwn.getValue()==null){
+            errorsbldr.add("Task Date missing");
+        }
+
+        if(timePicker.getValue()==null){
+            errorsbldr.add("Task Completion Date is missing.");
+        }
+
+        if(TaskTitle.getText().isBlank()){
+            errorsbldr.add("Task Title is missing");
+        }
+        return errorsbldr.toString();
+    }
 
     private void handle(ActionEvent e) {
         try {
+            var res  =  checkFlds();
 
-            String datetime = DateDropDwn.getValue()
-                    .format(DateTimeFormatter
-                            .ofPattern(DateFormat.getDateFormat())) +
-                    " "
-                    +
-                    timePicker.getValue()
-                            .format(DateTimeFormatter
-                                    .ofPattern(last(DateFormat.getDateTimeFormat().split(" "))));
+            if(res.isBlank() || res.isEmpty()) {
+                String datetime = DateDropDwn.getValue()
+                        .format(DateTimeFormatter
+                                .ofPattern(DateFormat.getDateFormat())) +
+                        " "
+                        +
+                        timePicker.getValue()
+                                .format(DateTimeFormatter
+                                        .ofPattern(last(DateFormat.getDateTimeFormat().split(" "))));
 
-            dataAccess.addNewTask(
-                    Main.user.getUserID(),
-                    this.TaskTitle.getText(),
-                    datetime,
-                    TaskStatus.NOT_DONE,
-                    TaskPriority.valueOf(PriorityComboBox.getValue()),
-                    this.isStarred);
+                dataAccess.addNewTask(
+                        Main.user.getUserID(),
+                        this.TaskTitle.getText(),
+                        datetime,
+                        TaskStatus.NOT_DONE,
+                        TaskPriority.valueOf(PriorityComboBox.getValue()),
+                        this.isStarred);
 
-            int insertedTaskID = this.dataAccess.getLastInsertedID();
+                int insertedTaskID = this.dataAccess.getLastInsertedID();
 
-            for (String tag :
-                    this.TagsChipView.getChips()) {
-                dataAccess.addNewTag(insertedTaskID, tag);
+                for (String tag :
+                        this.TagsChipView.getChips()) {
+                    dataAccess.addNewTag(insertedTaskID, tag);
+                }
+
+                TrayNotification trayNotification = new TrayNotification();
+                trayNotification.setAnimationType(AnimationType.SLIDE);
+                trayNotification.setNotificationType(NotificationType.SUCCESS);
+                trayNotification.setMessage("Successfully created a reminder!");
+                trayNotification.setTitle("Success");
+                trayNotification.showAndDismiss(Duration.seconds(30));
+
+                this.updateFuncRef.run();
+
+                cancel();
+            }else{
+                this.errLabel.setText(res);
+                FadeTransition  fadetrans = new FadeTransition(Duration.millis(1000));
+                fadetrans.setNode(this.errLabel);
+
+                fadetrans.setFromValue(0.0);
+                fadetrans.setToValue(1.0);
+                fadetrans.setCycleCount(2);
+
+                fadetrans.setAutoReverse(true);
+                fadetrans.playFromStart();
             }
-
-            TrayNotification trayNotification = new TrayNotification();
-            trayNotification.setAnimationType(AnimationType.SLIDE);
-            trayNotification.setNotificationType(NotificationType.SUCCESS);
-            trayNotification.setMessage("Successfully created a reminder!");
-            trayNotification.setTitle("Success");
-            trayNotification.showAndDismiss(Duration.seconds(30));
-
-            this.updateFuncRef.run();
-
-            cancel();
-
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }

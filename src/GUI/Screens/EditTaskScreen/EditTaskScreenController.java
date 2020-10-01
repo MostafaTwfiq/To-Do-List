@@ -5,7 +5,6 @@ import DataClasses.DateFormat;
 import DataClasses.Task;
 import DataClasses.TaskStatus.TaskPriority;
 import GUI.IControllers;
-import GUI.Screens.PopUpWindw.PopUpWdwController;
 import GUI.Style.ScreensPaths;
 import GUI.Style.StyleFactory;
 import Main.Main;
@@ -110,46 +109,11 @@ public class EditTaskScreenController implements IControllers {
         setupAddBtn();
         setupCancelBtn();
         setupStarButton();
-        setupAddTagsbtn();
 
         setUpPriorityComboBox();
         seUpChipBoxView();
     }
 
-
-    private void setupAddTagsbtn(){
-        this.AddTagBtn.setOnMouseClicked(e->{
-            var res = showTagPopUpWindow();
-            if(res!=null){
-                this.TagsChipView.getChips().add(res);
-            }
-        });
-    }
-
-
-    private String showTagPopUpWindow(){
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("Popup.fxml"));
-        // initializing the controller
-        PopUpWdwController popupController = new PopUpWdwController();
-        loader.setController(popupController);
-        Parent layout;
-        try {
-            layout = loader.load();
-            Scene scene = new Scene(layout);
-            Stage popupStage = new Stage();
-            popupController.setStage(popupStage);
-            if(this.getParent().getScene().getWindow().getScene()!=null) {
-                popupStage.initOwner(this.getParent().getScene().getWindow());
-            }
-            popupStage.initModality(Modality.WINDOW_MODAL);
-            popupStage.setScene(scene);
-            popupStage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return popupController.getResult();
-    }
 
     private void setupAddBtn(){
         if(this.task!=null){

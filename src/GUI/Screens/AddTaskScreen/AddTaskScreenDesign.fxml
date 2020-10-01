@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXChipView?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTimePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="parentPane" prefHeight="770.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -17,19 +23,7 @@
       <JFXChipView fx:id="TagsChipView" layoutX="162.0" layoutY="206.0" maxHeight="-Infinity" maxWidth="793.0" minHeight="-Infinity" minWidth="793.0" prefHeight="62.0" prefWidth="793.0" />
       <ScrollPane hbarPolicy="NEVER" layoutX="47.0" layoutY="331.0" prefHeight="255.0" prefWidth="922.0">
          <content>
-            <GridPane fx:id="NotesGridView" prefHeight="368.0" prefWidth="914.0">
-              <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-            </GridPane>
+            <VBox fx:id="NotesVBox" prefHeight="249.0" prefWidth="922.0" />
          </content>
       </ScrollPane>
       <JFXTextField fx:id="TaskTitle" layoutX="134.0" layoutY="76.0" prefHeight="26.0" prefWidth="807.0" />
@@ -80,14 +74,14 @@
             <Font size="17.0" />
          </font>
       </Label>
-      <JFXButton fx:id="AddTagBtn" buttonType="RAISED" layoutX="914.0" layoutY="217.0" text="+">
-         <effect>
-            <Shadow />
-         </effect>
-      </JFXButton>
       <JFXButton fx:id="StarBtn" layoutX="58.0" layoutY="22.0" prefHeight="32.0" prefWidth="32.0" text=" ">
       </JFXButton>
       <JFXTimePicker fx:id="timePicker" defaultColor="#4059a9" layoutX="340.0" layoutY="119.0" promptText="Time" />
+      <Label fx:id="errLabel" alignment="CENTER" layoutX="172.0" layoutY="599.0" prefHeight="49.0" prefWidth="551.0" textFill="#f22525">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </Label>
 
    </children>
 </AnchorPane>

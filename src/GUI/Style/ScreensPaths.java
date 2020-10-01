@@ -92,6 +92,7 @@ public class ScreensPaths {
     public String getAddTaskScreenFxml() {
         return "/GUI/Screens/AddTaskScreen/AddTaskScreenDesign.fxml";
     }
+
     public String getAddTaskScreenCssSheet() {
         return addTaskScreenCssSheet;
     }

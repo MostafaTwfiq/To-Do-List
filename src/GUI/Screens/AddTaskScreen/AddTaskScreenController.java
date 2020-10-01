@@ -5,14 +5,12 @@ import DataClasses.DateFormat;
 import DataClasses.TaskStatus.TaskPriority;
 import DataClasses.TaskStatus.TaskStatus;
 import GUI.IControllers;
+import GUI.noteWrapper.NoteVBox;
 import GUI.Style.ScreensPaths;
 import GUI.Style.StyleFactory;
 import Main.Main;
 import com.jfoenix.controls.*;
 import javafx.animation.FadeTransition;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -24,7 +22,6 @@ import javafx.util.Duration;
 import javafx.util.StringConverter;
 import javafx.util.converter.LocalTimeStringConverter;
 import tray.animations.AnimationType;
-import tray.animations.FadeAnimation;
 import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
 
@@ -46,6 +43,9 @@ public class AddTaskScreenController implements IControllers {
     private JFXDatePicker DateDropDwn;
 
     @FXML
+    private JFXButton addNoteBtn;
+
+    @FXML
     private JFXChipView<String> TagsChipView;
 
     @FXML
@@ -65,6 +65,9 @@ public class AddTaskScreenController implements IControllers {
 
     @FXML
     private JFXButton CancelBtn;
+
+    @FXML
+    private NoteVBox notesVBox;
 
     @FXML
     private JFXComboBox<String> PriorityComboBox;
@@ -111,6 +114,7 @@ public class AddTaskScreenController implements IControllers {
         setupCancelBtn();
         setupStarButton();
         setupAddBtn();
+        setAddNoteBtn();
 
         setUpPriorityComboBox();
         setUpTagsChipView();
@@ -127,6 +131,12 @@ public class AddTaskScreenController implements IControllers {
     private void setupAddBtn(){
         this.AddBtn.setOnAction(e->{
             handle(e);
+        });
+    }
+
+    private void setAddNoteBtn(){
+        this.addNoteBtn.setOnAction(e->{
+            this.notesVBox.addNote();
         });
     }
 

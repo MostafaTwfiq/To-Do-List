@@ -12,32 +12,34 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<!--?import GUI.noteWrapper.NoteVBox?-->
+
 <AnchorPane fx:id="parentPane" prefHeight="770.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="56.0" layoutY="82.0" text="Title">
+      <Label layoutX="56.0" layoutY="82.0" text="Title" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="115.0">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <JFXDatePicker fx:id="DateDropDwn" defaultColor="#4059a9" layoutX="135.0" layoutY="119.0" promptText="Date" />
-      <JFXChipView fx:id="TagsChipView" layoutX="162.0" layoutY="206.0" maxHeight="-Infinity" maxWidth="793.0" minHeight="-Infinity" minWidth="793.0" prefHeight="62.0" prefWidth="793.0" />
-      <ScrollPane hbarPolicy="NEVER" layoutX="47.0" layoutY="331.0" prefHeight="255.0" prefWidth="922.0">
+      <JFXDatePicker fx:id="DateDropDwn" defaultColor="#4059a9" layoutX="135.0" layoutY="119.0" promptText="Date" AnchorPane.topAnchor="170.0" />
+      <JFXChipView fx:id="TagsChipView" layoutX="162.0" layoutY="206.0" maxHeight="-Infinity" maxWidth="793.0" minHeight="255.0" minWidth="276.0" prefHeight="255.0" prefWidth="276.0" AnchorPane.leftAnchor="510.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="330.0" />
+      <ScrollPane hbarPolicy="NEVER" layoutX="47.0" layoutY="331.0" prefHeight="255.0" prefWidth="922.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="505.0" AnchorPane.topAnchor="330.0">
          <content>
-            <VBox fx:id="NotesVBox" prefHeight="249.0" prefWidth="922.0" />
+            <VBox fx:id="notesVBox" maxHeight="250.0" maxWidth="922.0" minHeight="249.0" minWidth="442.0" prefHeight="250.0" prefWidth="442.0" />
          </content>
       </ScrollPane>
-      <JFXTextField fx:id="TaskTitle" layoutX="134.0" layoutY="76.0" prefHeight="26.0" prefWidth="807.0" />
-      <Label layoutX="55.0" layoutY="205.0" text="Tags">
+      <JFXTextField fx:id="TaskTitle" layoutX="134.0" layoutY="76.0" prefHeight="26.0" prefWidth="807.0" AnchorPane.topAnchor="115.0" />
+      <Label layoutX="510.0" layoutY="289.0" text="Tags" AnchorPane.leftAnchor="510.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="290.0">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <Label layoutX="56.0" layoutY="122.0" text="On">
+      <Label layoutX="56.0" layoutY="122.0" text="On" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="170.0">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <Label layoutX="52.0" layoutY="289.0" text="Notes">
+      <Label layoutX="52.0" layoutY="289.0" text="Notes" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="290.0">
          <font>
             <Font size="17.0" />
          </font>
@@ -47,7 +49,7 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="310.0" layoutY="120.0" text="at">
+      <Label layoutX="310.0" layoutY="120.0" text="at" AnchorPane.topAnchor="170.0">
          <font>
             <Font size="17.0" />
          </font>
@@ -57,31 +59,35 @@
             <Font size="18.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="CancelBtn" cancelButton="true" layoutX="738.0" layoutY="603.0" prefHeight="32.0" prefWidth="103.0" style="-fx-border-color: #bdc3c7;-fx-border-radius: 10; -fx-background-radius: 10;" text="Cancel">
+      <JFXButton fx:id="CancelBtn" cancelButton="true" layoutX="738.0" layoutY="603.0" prefHeight="32.0" prefWidth="103.0" style="-fx-border-color: #bdc3c7;-fx-border-radius: 10; -fx-background-radius: 10;" text="Cancel" AnchorPane.rightAnchor="170.0">
          <font>
             <Font size="18.0" />
          </font>
       </JFXButton>
 
-      <JFXButton fx:id="AddBtn" defaultButton="true" layoutX="866.0" layoutY="604.0" prefHeight="32.0" prefWidth="103.0" style="-fx-background-color: #2ecc71; -fx-border-radius: 10; -fx-background-radius: 10;" text="Add" textFill="WHITE">
+      <JFXButton fx:id="AddBtn" defaultButton="true" layoutX="866.0" layoutY="604.0" prefHeight="32.0" prefWidth="103.0" style="-fx-background-color: #2ecc71; -fx-border-radius: 10; -fx-background-radius: 10;" text="Add" textFill="WHITE" AnchorPane.rightAnchor="50.0">
          <font>
             <Font size="18.0" />
          </font>
       </JFXButton>
-      <JFXComboBox fx:id="PriorityComboBox" layoutX="134.0" layoutY="162.0" prefHeight="26.0" prefWidth="141.0" />
-      <Label layoutX="55.0" layoutY="163.0" text="Priority">
+      <JFXComboBox fx:id="PriorityComboBox" layoutX="134.0" layoutY="162.0" prefHeight="26.0" prefWidth="141.0" AnchorPane.topAnchor="230.0" />
+      <Label layoutX="55.0" layoutY="163.0" text="Priority" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="230.0">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <JFXButton fx:id="StarBtn" layoutX="58.0" layoutY="22.0" prefHeight="32.0" prefWidth="32.0" text=" ">
+      <JFXButton fx:id="StarBtn" layoutX="58.0" layoutY="22.0" prefHeight="32.0" prefWidth="32.0" text=" " AnchorPane.leftAnchor="50.0">
       </JFXButton>
-      <JFXTimePicker fx:id="timePicker" defaultColor="#4059a9" layoutX="340.0" layoutY="119.0" promptText="Time" />
+      <JFXTimePicker fx:id="timePicker" defaultColor="#4059a9" layoutX="340.0" layoutY="119.0" promptText="Time" AnchorPane.topAnchor="170.0" />
       <Label fx:id="errLabel" alignment="CENTER" layoutX="172.0" layoutY="599.0" prefHeight="49.0" prefWidth="551.0" textFill="#f22525">
          <font>
             <Font name="Arial Bold" size="12.0" />
          </font>
       </Label>
+      <JFXButton fx:id="addNoteBtn" layoutX="120.0" layoutY="289.0" prefHeight="30.0" prefWidth="30.0" text="+" AnchorPane.leftAnchor="115.0" AnchorPane.topAnchor="290.0">
+         <font>
+            <Font name="Arial" size="14.0" />
+         </font></JFXButton>
 
    </children>
 </AnchorPane>

@@ -97,4 +97,6 @@ public class ScreensPaths {
         return addTaskScreenCssSheet;
     }
 
+
+    public String getNoteFxml(){return "/GUI/noteWrapper/NoteComponent.fxml";}
 }

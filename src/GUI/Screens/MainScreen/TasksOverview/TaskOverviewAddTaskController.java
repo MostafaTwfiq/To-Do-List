@@ -53,6 +53,7 @@ public class TaskOverviewAddTaskController implements IControllersObserver {
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(paths.getAddTaskScreenFxml()));
                 loader.setController(addTaskScreenController);
+                addTaskScreenController.setObservers(this::updateTasks);
                 addTaskParent = loader.load();
                 addTaskParent.getStylesheets().add(paths.getAddTaskScreenCssSheet());
 

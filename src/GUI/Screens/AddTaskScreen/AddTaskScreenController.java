@@ -27,6 +27,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import javafx.util.StringConverter;
 import javafx.util.converter.LocalTimeStringConverter;
@@ -43,10 +44,8 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-public class AddTaskScreenController implements IControllersObserver {
+public class AddTaskScreenController implements IControllers {
 
     @FXML
     private AnchorPane parentPane;
@@ -93,9 +92,14 @@ public class AddTaskScreenController implements IControllersObserver {
 
     private StringConverter<LocalTime> defaultConverter = new LocalTimeStringConverter(FormatStyle.SHORT, Locale.UK);
 
+    private Runnable updateFuncRef;
+
 
     public AddTaskScreenController() {}
 
+    public void setObservers(Runnable func){
+        this.updateFuncRef = func;
+    }
 
     @Override
     public void updateStyle() {
@@ -151,7 +155,8 @@ public class AddTaskScreenController implements IControllersObserver {
         try {
             layout = loader.load();
             Scene scene = new Scene(layout);
-            Stage popupStage = new Stage();
+            Stage popupStage = new Stage(StageStyle.UNDECORATED);
+
             popupController.setStage(popupStage);
             if(this.getParent().getScene().getWindow().getScene()!=null) {
                 popupStage.initOwner(this.getParent().getScene().getWindow());
@@ -244,10 +249,6 @@ public class AddTaskScreenController implements IControllersObserver {
         return Enum.valueOf((Class<T>) type, name);
     }
 
-    @Override
-    public void updateTasks() {
-
-    }
 
     private void handle(ActionEvent e) {
         try {
@@ -277,13 +278,16 @@ public class AddTaskScreenController implements IControllersObserver {
             }
 
             TrayNotification trayNotification = new TrayNotification();
-            trayNotification.setAnimationType(AnimationType.POPUP);
+            trayNotification.setAnimationType(AnimationType.SLIDE);
             trayNotification.setNotificationType(NotificationType.SUCCESS);
             trayNotification.setMessage("Successfully created a reminder!");
             trayNotification.setTitle("Success");
             trayNotification.showAndDismiss(Duration.seconds(30));
 
+            this.updateFuncRef.run();
+
             cancel();
+
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }

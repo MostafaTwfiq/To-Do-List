@@ -54,6 +54,7 @@ public class TaskOverviewAddTaskController implements IControllersObserver {
                 loader.setController(addTaskScreenController);
                 addTaskScreenController.setUpdateFunction(this::updateTasks);
                 addTaskParent = loader.load();
+                addTaskParent.getStylesheets().clear();
                 addTaskParent.getStylesheets().add(paths.getAddTaskScreenCssSheet());
 
                 Main.screenManager.changeScreen(addTaskScreenController);

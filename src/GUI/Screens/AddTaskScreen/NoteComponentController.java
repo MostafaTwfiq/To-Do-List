@@ -1,9 +1,12 @@
-package GUI.noteWrapper;
+package GUI.Screens.AddTaskScreen;
 
 import GUI.IControllers;
+import GUI.Style.ScreensPaths;
 import Main.Main;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.ContentDisplay;
@@ -38,25 +41,18 @@ public class NoteComponentController implements IControllers {
     @FXML
     private Label maxLengthLbl;
 
-    private NoteVBox noteVBox;
+    private NoteComponentList noteComponentList;
 
     private final int maxLength = 50;
 
-    private boolean isNew = true;
 
-
-    private UnaryOperator<TextFormatter.Change> modifyChange;
-
-
-    public NoteComponentController(NoteVBox noteVBox) {
-        this.noteVBox = noteVBox;
+    public NoteComponentController(NoteComponentList noteComponentList) {
+        this.noteComponentList = noteComponentList;
     }
 
     private void setupNoteTxtField() {
-        noteTxtFld.setOnKeyPressed(e -> {
 
-           /* if(!updated)
-                updated = true;*/
+        noteTxtFld.setOnKeyPressed(e -> {
 
             noteTxtFld.setDisable(true);
 
@@ -72,14 +68,25 @@ public class NoteComponentController implements IControllers {
             noteTxtFld.setDisable(false);
 
             noteTxtFld.positionCaret(maxLength);
+
         });
+
+        noteTxtFld.focusedProperty().addListener(new ChangeListener<Boolean>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
+
+                if (oldPropertyValue && !isValidNote())
+                    deleteBtn.fire();
+
+            }
+        });
+
     }
 
     private void setUpDeleteBtn() {
 
-        deleteBtn.setOnAction(e -> {
-            this.noteVBox.notifyOfDeletion(this);
-        });
+        deleteBtn.setOnAction(e -> this.noteComponentList.notifyOfDeletion(this));
 
         deleteBtn.setContentDisplay(ContentDisplay.CENTER);
         setDeleteBtnImage();
@@ -90,14 +97,17 @@ public class NoteComponentController implements IControllers {
 
         try {
 
-            deleteBtn.setGraphic(
-                    new ImageView(
-                            new Image(
-                                    new FileInputStream(
-                                            Main.theme.getThemeResourcesPath() + "")
-                            )
+            ImageView buttonImage =  new ImageView(
+                    new Image(
+                            new FileInputStream(
+                                    Main.theme.getThemeResourcesPath() + "AddTaskScreen/deleteB.png")
                     )
             );
+
+            buttonImage.setFitWidth(15);
+            buttonImage.setFitHeight(15);
+
+            deleteBtn.setGraphic(buttonImage);
 
         } catch (Exception e) {
             System.out.println("Something went wrong while loading delete note button.");
@@ -117,13 +127,22 @@ public class NoteComponentController implements IControllers {
         return noteTxtFld.getText();
     }
 
-    public boolean isNewNotes(){
-        return this.isNew;
+    public void requestFocus() {
+        noteTxtFld.requestFocus();
+    }
+
+    public boolean isValidNote() {
+        return !noteTxtFld.getText().isEmpty() && !noteTxtFld.getText().equals("");
     }
 
     @Override
     public void updateStyle() {
+
         setDeleteBtnImage();
+
+        parentLayout.getStylesheets().clear();
+        parentLayout.getStylesheets().add(new ScreensPaths().getAddTaskScreenCssSheet());
+
     }
 
     @Override

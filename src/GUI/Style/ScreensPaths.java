@@ -13,7 +13,7 @@ public class ScreensPaths {
     private final String userProfileScreenCssSheet = "GUI/Style/ThemesCss/" + Main.theme.getThemeName()+ "/UserProfileScreen/UserProfileScreen.css";
     private final String editTaskScreenCssSheet = "GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/EditTaskScreen/EditTaskScreen.css";
     private final String addTaskScreenCssSheet  = "GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/AddTaskScreen/AddTaskScreen.css";
-    private final String popUpCss  = "GUI/Style/ThemesCss/"+ Main.theme.getThemeName() +"/PopUpWdw/PopUpWdw.css";
+    private final String noteComponentCssSheet  = "GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/AddTaskScreen/NoteComponent.css";
 
     public String getStageFxml() {
         String stageFxml = "/GUI/ScreenManager/Stage/StageDesign.fxml";
@@ -98,5 +98,10 @@ public class ScreensPaths {
     }
 
 
-    public String getNoteFxml(){return "/GUI/noteWrapper/NoteComponent.fxml";}
+    public String getNoteComponentFxml(){return "/GUI/Screens/AddTaskScreen/NoteComponent.fxml";}
+
+    public String getNoteComponentCssSheet() {
+        return noteComponentCssSheet;
+    }
+
 }

@@ -1,0 +1,40 @@
+
+#parentPane {
+
+-fx-background-color: #FAFAFA;
+
+}
+
+#noteTxtFld {
+
+-fx-text-fill: black;
+-fx-prompt-text-fill: #4f5254;
+-jfx-focus-color: black;
+-jfx-unfocus-color: #4f5254;
+
+}
+
+#deleteBtn {
+
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+
+}
+
+#charCounterLbl {
+
+-fx-text-fill: black;
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+-fx-alignment: center;
+
+}
+
+#maxLengthLbl {
+
+-fx-text-fill: black;
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+-fx-alignment: center;
+
+}

@@ -5,7 +5,6 @@ import DataClasses.DateFormat;
 import DataClasses.TaskStatus.TaskPriority;
 import DataClasses.TaskStatus.TaskStatus;
 import GUI.IControllers;
-import GUI.noteWrapper.NoteVBox;
 import GUI.Style.ScreensPaths;
 import GUI.Style.StyleFactory;
 import Main.Main;
@@ -14,7 +13,9 @@ import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -40,46 +41,42 @@ public class AddTaskScreenController implements IControllers {
     private AnchorPane parentPane;
 
     @FXML
-    private JFXDatePicker DateDropDwn;
+    private JFXDatePicker dateDropDwn;
 
     @FXML
-    private JFXButton addNoteBtn;
+    private JFXChipView<String> tagsChipView;
 
     @FXML
-    private JFXChipView<String> TagsChipView;
+    private ScrollPane notesScrollPane;
 
     @FXML
-    private GridPane NotesGridView;
+    private JFXTextField taskTitle;
 
     @FXML
-    private JFXTextField TaskTitle;
+    private Label mainTitle;
+
+    @FXML
+    private JFXButton cancelBtn;
+
+    @FXML
+    private JFXButton addBtn;
+
+    @FXML
+    private JFXComboBox<String> priorityComboBox;
+
+    @FXML
+    private JFXButton starBtn;
+
+    @FXML
+    private JFXTimePicker timePicker;
 
     @FXML
     private Label errLabel;
 
     @FXML
-    private Label MainTitle;
+    private JFXButton addNoteBtn;
 
-    @FXML
-    private JFXButton DeleteBtn;
-
-    @FXML
-    private JFXButton CancelBtn;
-
-    @FXML
-    private NoteVBox notesVBox;
-
-    @FXML
-    private JFXComboBox<String> PriorityComboBox;
-
-    @FXML
-    private JFXButton AddBtn;
-
-    @FXML
-    private JFXButton StarBtn;
-
-    @FXML
-    private JFXTimePicker timePicker;
+    private NoteComponentList noteComponentList;
 
     private DataAccess dataAccess;
 
@@ -90,7 +87,9 @@ public class AddTaskScreenController implements IControllers {
     private Runnable updateFuncRef;
 
 
-    public AddTaskScreenController() {}
+    public AddTaskScreenController() {
+        noteComponentList = new NoteComponentList();
+    }
 
     public void setUpdateFunction(Runnable func){
         this.updateFuncRef = func;
@@ -116,8 +115,8 @@ public class AddTaskScreenController implements IControllers {
         setupAddBtn();
         setAddNoteBtn();
 
+        notesScrollPane.setContent(noteComponentList);
         setUpPriorityComboBox();
-        setUpTagsChipView();
         timePicker.set24HourView(true);
         timePicker.setConverter(defaultConverter);
 
@@ -129,30 +128,31 @@ public class AddTaskScreenController implements IControllers {
     }
 
     private void setupAddBtn(){
-        this.AddBtn.setOnAction(e->{
+        this.addBtn.setOnAction(e->{
             handle(e);
         });
     }
 
     private void setAddNoteBtn(){
         this.addNoteBtn.setOnAction(e->{
-            this.notesVBox.addNote();
+            this.noteComponentList.addNote();
         });
     }
 
     private void setupCancelBtn(){
-        CancelBtn.setOnAction(e->{
+        cancelBtn.setOnAction(e->{
             cancel();
         });
     }
 
     private void setupStarButton(){
 
-        StarBtn.setGraphic(prepareStarredImage(32));
+        starBtn.setContentDisplay(ContentDisplay.CENTER);
+        starBtn.setGraphic(prepareStarredImage(30));
 
-        this.StarBtn.setOnMouseClicked(e->{
+        this.starBtn.setOnMouseClicked(e->{
             isStarred  = !isStarred;
-            StarBtn.setGraphic(prepareStarredImage(32));
+            starBtn.setGraphic(prepareStarredImage(30));
         });
 
     }
@@ -180,16 +180,9 @@ public class AddTaskScreenController implements IControllers {
         return imgV;
 
     }
-
-    private void setUpTagsChipView(){
-        this.TagsChipView.setMaxWidth(300);
-        this.TagsChipView.setPrefWidth(300);
-        this.TagsChipView.setMaxWidth(300);
-
-    }
             
     private void setUpPriorityComboBox(){
-        this.PriorityComboBox.getItems().addAll(Arrays
+        this.priorityComboBox.getItems().addAll(Arrays
                 .stream(TaskPriority.class.getEnumConstants())
                 .map(Enum::toString).toArray(String[]::new));
     }
@@ -214,7 +207,7 @@ public class AddTaskScreenController implements IControllers {
     private String checkFlds(){
         StringJoiner errorsbldr  = new StringJoiner("\n");
 
-        if(DateDropDwn.getValue()==null){
+        if(dateDropDwn.getValue()==null){
             errorsbldr.add("Task Date missing");
         }
 
@@ -222,7 +215,7 @@ public class AddTaskScreenController implements IControllers {
             errorsbldr.add("Task Completion Date is missing.");
         }
 
-        if(TaskTitle.getText().isBlank()){
+        if(taskTitle.getText().isBlank()){
             errorsbldr.add("Task Title is missing");
         }
         return errorsbldr.toString();
@@ -233,7 +226,7 @@ public class AddTaskScreenController implements IControllers {
             var res  =  checkFlds();
 
             if(res.isBlank() || res.isEmpty()) {
-                String datetime = DateDropDwn.getValue()
+                String datetime = dateDropDwn.getValue()
                         .format(DateTimeFormatter
                                 .ofPattern(DateFormat.getDateFormat())) +
                         " "
@@ -244,16 +237,16 @@ public class AddTaskScreenController implements IControllers {
 
                 dataAccess.addNewTask(
                         Main.user.getUserID(),
-                        this.TaskTitle.getText(),
+                        this.taskTitle.getText(),
                         datetime,
                         TaskStatus.NOT_DONE,
-                        TaskPriority.valueOf(PriorityComboBox.getValue()),
+                        TaskPriority.valueOf(priorityComboBox.getValue()),
                         this.isStarred);
 
                 int insertedTaskID = this.dataAccess.getLastInsertedID();
 
                 for (String tag :
-                        this.TagsChipView.getChips()) {
+                        this.tagsChipView.getChips()) {
                     dataAccess.addNewTag(insertedTaskID, tag);
                 }
 

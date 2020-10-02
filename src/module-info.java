@@ -17,7 +17,6 @@ module ToDoList {
     opens GUI.Screens.userProfileScreen;
     opens GUI.Screens.AddTaskScreen;
     opens GUI.Screens.EditTaskScreen;
-    opens GUI.noteWrapper;
     opens JFoenix;
 
 
@@ -48,6 +47,5 @@ module ToDoList {
     opens GUI.Style.ThemesCss.PurkTheme.MainScreen;
     opens GUI.Style.ThemesCss.PurkTheme.AddTaskScreen;
     opens GUI.Style.ThemesCss.PurkTheme.EditTaskScreen;
-
 
 }

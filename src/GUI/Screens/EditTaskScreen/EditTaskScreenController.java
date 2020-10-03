@@ -4,7 +4,6 @@ import DataBase.DataAccess;
 import DataClasses.DateFormat;
 import DataClasses.Task;
 import DataClasses.TaskStatus.TaskPriority;
-import DataClasses.TaskStatus.TaskStatus;
 import GUI.IControllers;
 import GUI.Style.ScreensPaths;
 import Main.Main;
@@ -20,6 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
+import javafx.util.Pair;
 import javafx.util.StringConverter;
 import javafx.util.converter.LocalTimeStringConverter;
 import tray.animations.AnimationType;
@@ -27,7 +27,6 @@ import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
 
 import java.io.FileInputStream;
-import java.lang.reflect.Type;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -100,6 +99,9 @@ public class EditTaskScreenController implements IControllers {
     @FXML
     private Label titleCounterLbl;
 
+    @FXML
+    private JFXButton deleteBtn;
+
     private NoteComponentList noteComponentList;
 
     private DataAccess dataAccess;
@@ -117,7 +119,14 @@ public class EditTaskScreenController implements IControllers {
 
     public EditTaskScreenController(Task toEdit) {
         noteComponentList = new NoteComponentList();
+        try {
+            this.dataAccess = new DataAccess();
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+
         taskBeingEdited = toEdit;
+        prepareTask();
     }
 
     public void setUpdateFunction(Runnable func){
@@ -143,6 +152,12 @@ public class EditTaskScreenController implements IControllers {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        notesScrollPane.setContent(noteComponentList);
+        setUpPriorityComboBox();
+        timePicker.set24HourView(true);
+        timePicker.setConverter(defaultConverter);
+
+
         setupTaskTitleTxtField();
         setUpNoteComponentList();
         setupCancelBtn();
@@ -151,23 +166,19 @@ public class EditTaskScreenController implements IControllers {
         setAddNoteBtn();
         setUpTimePicker();
         setUpDatePicker();
-
-        notesScrollPane.setContent(noteComponentList);
-        setUpPriorityComboBox();
-        timePicker.set24HourView(true);
-        timePicker.setConverter(defaultConverter);
-
-        try {
-             this.dataAccess = new DataAccess();
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
+        setupTagsChipContainer();
+        setupDeleteButton();
 
     }
 
     private void setupTaskTitleTxtField() {
 
         taskTitleTxtFld.setText(taskBeingEdited.getTitle());
+
+        titleCounterLbl.setText(
+                taskTitleTxtFld.getText().length() + " / " + titleMaxLength
+        );
+
 
         taskTitleTxtFld.setOnKeyPressed(e -> {
 
@@ -203,6 +214,36 @@ public class EditTaskScreenController implements IControllers {
     }
 
 
+    private void setupDeleteButton(){
+        deleteBtn.setOnAction(e->{
+            try {
+                for (String note:
+                     taskBeingEdited.getNotes()) {
+                    dataAccess.deleteNote(taskBeingEdited.getTaskID(),note);
+                }
+
+                for (String tag:
+                     taskBeingEdited.getTags()) {
+                    dataAccess.deleteTag(taskBeingEdited.getTaskID(),tag);
+                }
+
+                dataAccess.deleteTask(taskBeingEdited.getTaskID());
+            } catch (SQLException sqlException) {
+                sqlException.printStackTrace();
+            }
+
+            updateFuncRef.run();
+
+            cancel();
+        });
+    }
+
+    private void setupTagsChipContainer(){
+        for (String tag:
+             taskBeingEdited.getTags()) {
+            tagsChipView.getChips().add(tag);
+        }
+    }
 
     private void setUpNoteComponentList(){
         List<String> notes = this.taskBeingEdited.getNotes();
@@ -280,11 +321,6 @@ public class EditTaskScreenController implements IControllers {
         return array[array.length - 1];
     }
 
-    @SuppressWarnings("unchecked")
-    private <T extends Enum<T>> T newEnumInstance(String name, Type type) {
-        return Enum.valueOf((Class<T>) type, name);
-    }
-
     private String checkFields(){
         StringJoiner errorsBuilder  = new StringJoiner("\n");
 
@@ -332,21 +368,42 @@ public class EditTaskScreenController implements IControllers {
                 return;
             }
 
-            dataAccess.addNewTask(
-                    Main.user.getUserID(),
+            dataAccess.updateTask(
+                    taskBeingEdited.getTaskID(),
                     taskTitleTxtFld.getText(),
                     dateTime,
-                    TaskStatus.NOT_DONE,
+                    taskBeingEdited.getTaskStatus(),
                     TaskPriority.valueOf(priorityComboBox.getValue()),
-                    isStarred);
+                    isStarred
+                    );
 
-            int insertedTaskID = dataAccess.getLastInsertedID();
 
-            for (String tag : tagsChipView.getChips())
-                dataAccess.addNewTag(insertedTaskID, tag);
+            tagsChipView.getChips()
+                        .stream()
+                        .filter(tag -> !taskBeingEdited.getTags()
+                                                       .contains(tag))
+                        .forEach(this::addNewTagsToDB);
+
+
+            taskBeingEdited.getTags()
+                           .stream()
+                           .filter(tag -> !tagsChipView.getChips()
+                                                       .contains(tag))
+                           .forEach(this::deleteTagsFromDB);
+
 
             for (String note : noteComponentList.getNewNotes())
-                dataAccess.addNewNote(insertedTaskID, note);
+                dataAccess.addNewNote(taskBeingEdited.getTaskID(), note);
+
+            for(Pair<String,String> updated: noteComponentList.getUpdatedNotes() )
+                dataAccess.updateTaskNote(taskBeingEdited.getTaskID(),
+                                          updated.getKey(),
+                                          updated.getValue());
+
+            for (String note:
+                 noteComponentList.getDeletedNotes()) {
+                dataAccess.deleteNote(taskBeingEdited.getTaskID(),note);
+            }
 
             popupSuccessNotification();
 
@@ -382,4 +439,28 @@ public class EditTaskScreenController implements IControllers {
         fadeTrans.playFromStart();
     }
 
+
+    private void prepareTask(){
+        try {
+            taskBeingEdited = dataAccess.getTaskFullInfo(taskBeingEdited.getTaskID());
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+    }
+
+    private void addNewTagsToDB(String tag) {
+        try {
+            dataAccess.addNewTag(taskBeingEdited.getTaskID(), tag);
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+    }
+
+    private void deleteTagsFromDB(String o) {
+        try {
+            dataAccess.deleteTag(taskBeingEdited.getTaskID(), o);
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+    }
 }

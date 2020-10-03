@@ -42,7 +42,7 @@ public class NoteComponentController implements IControllers {
 
     private boolean isUpdated = false;
 
-    private String initialNote;
+    private String initialNote = null;
 
     public NoteComponentController(NoteComponentList noteComponentList, String initialString) {
         this.noteComponentList = noteComponentList;
@@ -98,7 +98,10 @@ public class NoteComponentController implements IControllers {
     }
 
     private void setupCharCounterLbl() {
-        charCounterLbl.setText("0");
+
+        charCounterLbl.setText(String.valueOf(noteTxtFld.getText()
+                                                        .chars()
+                                                        .count()));
     }
 
     public String getNote() {
@@ -112,11 +115,14 @@ public class NoteComponentController implements IControllers {
     }
 
     public boolean isValidNote() {
-        return !noteTxtFld.getText().isEmpty() && !noteTxtFld.getText().equals("");
+        return !noteTxtFld.getText().isEmpty() &&
+               !noteTxtFld.getText().equals("");
     }
 
     public boolean isNewNote(){
-        return this.initialNote == null;
+        return initialNote == null   ||
+               initialNote.isBlank() ||
+               initialNote.isEmpty();
     }
 
     @Override

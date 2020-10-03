@@ -4,17 +4,21 @@ import DataBase.DataAccess;
 import DataClasses.Task;
 import DataClasses.TaskStatus.TaskPriority;
 import DataClasses.TaskStatus.TaskStatus;
+import GUI.Screens.EditTaskScreen.EditTaskScreenController;
 import GUI.Screens.MainScreen.IControllersObserver;
+import GUI.Screens.userProfileScreen.UserProfileController;
 import GUI.Style.ColorTransformer;
 import GUI.Style.ScreensPaths;
 import GUI.Style.Style.ExtraComponents.PopUpOptionsTheme;
 import GUI.Style.Style.ExtraComponents.PrioritiesColorGetter;
 import Main.Main;
 import com.jfoenix.controls.JFXPopup;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
@@ -147,7 +151,25 @@ public class TaskOverviewController implements IControllersObserver {
         );
         viewBtn.setPrefWidth(90);
         viewBtn.setOnAction(e -> {
-            //open here the view task screen
+            //TODO open here the view task screen
+            try {
+                EditTaskScreenController editTaskScreenController = new EditTaskScreenController(this.task);
+                Parent mainScreenParent = null;
+                ScreensPaths paths = new ScreensPaths();
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(paths.getEditTaskScreenFxml()));
+                loader.setController(editTaskScreenController);
+
+                editTaskScreenController.setUpdateFunction(this::updateTasks);
+
+                mainScreenParent = loader.load();
+                mainScreenParent.getStylesheets().add(paths.getEditTaskScreenCssSheet());
+
+                Main.screenManager.changeScreen(editTaskScreenController);
+                popupOptions.hide();
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
         });
 
 

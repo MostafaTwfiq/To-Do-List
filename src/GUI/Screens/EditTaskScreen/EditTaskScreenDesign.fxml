@@ -63,7 +63,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton fx:id="addBtn" defaultButton="true" layoutX="866.0" layoutY="604.0" prefHeight="32.0" prefWidth="103.0" text="Add" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="600.0">
+      <JFXButton fx:id="addBtn" defaultButton="true" layoutX="866.0" layoutY="604.0" prefHeight="32.0" prefWidth="103.0" text="Update" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="600.0">
          <font>
             <Font size="18.0" />
          </font>
@@ -99,7 +99,7 @@
          </cursor></JFXButton>
       <ScrollPane fx:id="notesScrollPane" layoutX="148.0" layoutY="499.0" prefHeight="255.0" prefWidth="200.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="505.0" AnchorPane.topAnchor="330.0" />
       <Label fx:id="titleCounterLbl" layoutX="940.0" layoutY="135.0" text="0 / 50" AnchorPane.leftAnchor="940.0" />
-      <JFXButton id="deleteBtn" fx:id="cancelBtn1" cancelButton="true" layoutX="54.0" layoutY="601.0" prefHeight="32.0" prefWidth="103.0" text="Delete">
+      <JFXButton id="deleteBtn" fx:id="deleteBtn" cancelButton="true" layoutX="54.0" layoutY="601.0" prefHeight="32.0" prefWidth="103.0" text="Delete">
          <font>
             <Font size="18.0" />
          </font>

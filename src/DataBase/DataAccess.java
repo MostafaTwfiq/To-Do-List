@@ -867,7 +867,7 @@ public class DataAccess {
      * @throws SQLException exception in case something went wrong
      */
 
-    public void updateTask(int taskID, String title, String dateTime, TaskStatus status, TaskPriority priority) throws SQLException {
+    public void updateTask(int taskID, String title, String dateTime, TaskStatus status, TaskPriority priority, boolean isStarred) throws SQLException {
 
         ArrayList<String> parameters = new ArrayList<>();
         parameters.add(String.format("%d", taskID));
@@ -875,6 +875,7 @@ public class DataAccess {
         parameters.add(addStringBetweenSingleQuote(dateTime));
         parameters.add(addStringBetweenSingleQuote(status.toString()));
         parameters.add(addStringBetweenSingleQuote(priority.toString()));
+        parameters.add(isStarred? "true": "false");
 
         statement.executeQuery(
                 "CALL update_task"

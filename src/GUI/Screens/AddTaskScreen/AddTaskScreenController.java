@@ -136,6 +136,7 @@ public class AddTaskScreenController implements IControllers {
     public void initialize(URL location, ResourceBundle resources) {
 
         setupTaskTitleTxtField();
+        setUpTitleCounterLabel();
 
         setupCancelBtn();
         setupStarButton();
@@ -157,7 +158,7 @@ public class AddTaskScreenController implements IControllers {
 
     private void setupTaskTitleTxtField() {
 
-        taskTitleTxtFld.setOnKeyPressed(e -> {
+        taskTitleTxtFld.textProperty().addListener((ob,ol,nV) -> {
 
             taskTitleTxtFld.setDisable(true);
 
@@ -177,10 +178,13 @@ public class AddTaskScreenController implements IControllers {
 
     }
 
+
+    private  void setUpTitleCounterLabel(){
+        titleCounterLbl.setText("0 / "+ titleMaxLength);
+    }
+
     private void setupAddBtn(){
-        this.addBtn.setOnAction(e->{
-            handle(e);
-        });
+        this.addBtn.setOnAction(this::handle);
     }
 
     private void setAddNoteBtn(){

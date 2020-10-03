@@ -1,60 +1,114 @@
-/*
-Date Time Picker
-*/
 
-.root {
-    -fx-base: #1F1F1F;
-    -fx-background: #1F1F1F;
+#parentPane {
 
-    -fx-color: derive(-fx-base, 10%);
+-fx-background-color: #1f1f1f;
 
-    -fx-control-inner-background: rgb(54, 54, 54);
-
-    -fx-control-inner-background-alt: derive(-fx-control-inner-background, 2.5%);
-
-    -fx-light-text-color: rgb(220, 220, 220);
-    -fx-mid-text-color: rgb(100, 100, 100);
-
-    -fx-dark-text-color: rgb(20, 20, 20);
-
-    -fx-font-family: "Roboto";
-    -fx-font-size: 1em;
 }
 
+#mainTitle {
 
-.data-picker-list-cell {
-    -fx-text-fill: rgb(20, 20, 20);
+    -fx-text-fill: #c3c3c3;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+
+}
+
+#titleLbl {
+
+    -fx-text-fill: #c3c3c3;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-alignment: center-left;
+
+}
+
+#titleCounterLbl {
+
+    -fx-text-fill: #c3c3c3;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-alignment: center;
+}
+
+#onLbl {
+
+    -fx-text-fill: #c3c3c3;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-alignment: center-left;
+
+}
+
+#atLbl {
+
+    -fx-text-fill: #c3c3c3;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-alignment: center-left;
+
+}
+
+#priorityLbl {
+
+    -fx-text-fill: #c3c3c3;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-alignment: center-left;
+
+}
+
+#notesLbl {
+
+    -fx-text-fill: #c3c3c3;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-alignment: center-left;
+
+}
+
+#tagsLbl {
+
+    -fx-text-fill: #c3c3c3;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-alignment: center-left;
+
+}
+
+#errorLbl {
+
+    -fx-text-fill: #D1453B;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
     -fx-font-weight: bold;
+    -fx-alignment: center;
+
+}
+
+#addNoteBtn {
+
+-fx-background-color:transparent;
+-fx-border-color: transparent;
+
 }
 
 
-.day-name-cell.date-cell, .week-number-cell.date-cell {
-    -fx-text-fill: rgb(100, 100, 100);
-}
+#taskTitleTxtFld {
 
-.date-cell {
-    -fx-text-fill: rgb(220, 220, 220);
-}
+    -fx-text-fill: #c3c3c3;
+    -fx-prompt-text-fill: #c3c3c3;
+    -jfx-focus-color: white;
+    -jfx-unfocus-color: #c3c3c3;
 
-.date-cell:selected, .date-cell:focused, .date-cell:hover {
-    -fx-text-fill: rgb(20, 20, 20);
-    -fx-font-weight: bold;
-}
-
-.spinner-label {
-    -fx-text-fill: rgb(100, 100, 100);
 }
 
 
-/*
-The tags Chip View
-*/
 #tagsChipView {
-    -fx-background-color : #424242;
-    -fx-border-color: #2A2A2A;
+
+    -fx-background-color: transparent;
+    -fx-border-color: #717171;
     -fx-border-width: 0.3;
-    -fx-border-radius:10;
-    -fx-background-radius:10;
+
 }
 
 
@@ -111,66 +165,128 @@ The tags Chip View
 }
 
 
-/*
-Notes Scroll Pane
-*/
+#notesScrollPane {
 
-#NotesScrollPane {
-    -fx-background : derive(-fx-control-inner-background, 10%);
+    -fx-background-color: transparent;
+    -fx-border-color: #717171;
+    -fx-border-width: 0.3;
+
+}
+
+
+#notesScrollPane > .scroll-bar:horizontal, #tasksScrollPane > .scroll-bar:vertical{
+    -fx-background-color: #7e7e7e;
+}
+
+#notesScrollPane > .increment-button, #tasksScrollPane > .decrement-button {
+    -fx-background-color: #7e7e7e;
+    -fx-border-color: #7e7e7e;
+}
+
+#notesScrollPane > .scroll-bar:horizontal .track,
+#notesScrollPane > .scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}
+
+#notesScrollPane > .scroll-bar:horizontal .thumb,
+#notesScrollPane > .scroll-bar:vertical .thumb {
+    -fx-background-color: #bebebe;
+    -fx-background-radius: 0em;
+}
+
+#notesScrollPane > .corner {
+    -fx-background-color: #7e7e7e;
+}
+
+
+#notesScrollPane .viewport {
+
+    -fx-background-color: transparent;
+
+}
+
+#dateDropDwn {
+
+    -fx-background-color: transparent;
+    -jfx-default-color: #c53e51;
+    -fx-font-weight: bold;
+
+}
+
+#dateDropDwn .text-field {
+    -fx-prompt-text-fill: #cfcfcf;
+    -fx-text-fill: #cfcfcf;
+    -jfx-unfocus-color: #717171;
+}
+
+#timePicker {
+
+    -fx-background-color: transparent;
+    -jfx-default-color: #c53e51;
+    -fx-font-weight: bold;
+
+}
+
+#timePicker .text-field {
+    -fx-prompt-text-fill: #cfcfcf;
+    -fx-text-fill: #cfcfcf;
+    -jfx-unfocus-color: #717171;
+}
+
+#priorityComboBox {
+
+    -fx-prompt-text-fill: #c3c3c3;
+    -jfx-focus-color: white;
+    -jfx-unfocus-color: #c3c3c3;
+
+}
+
+#priorityComboBox > .cell {
+    -fx-text-fill: white;
+}
+
+#priorityComboBox .list-view {
+    -fx-background-color: #272c2e;
+}
+
+#priorityComboBox .list-view .jfx-list-cell .jfx-rippler {
+    -jfx-rippler-fill: black;
+}
+
+#priorityComboBox .prompt-container .text {
+    -fx-fill: #272c2e;
+}
+
+#priorityComboBox .list-cell:selected:filled {
+    -fx-text-fill: white;
+    -fx-background-color: #36b0e2;
+}
+
+#priorityComboBox .list-cell {
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+}
+
+#addNoteBtn {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: #c3c3c3;
+}
+
+#addBtn {
+    -fx-background-color:  #2ecc71;
+    -fx-background-radius: 10;
+    -fx-border-color: transparent;
     -fx-border-radius: 10;
-    -fx-background-radius:10;
-    -fx-effect: null;
-
-    -fx-focus-color: transparent;
-    -fx-faint-focus-color: transparent;
-    -fx-accent: transparent;
+    -fx-text-fill: black;
 }
 
-#NotesScrollPane > .viewport {
-      -fx-border-radius: 10;
-      -fx-background-radius:10;
-      -fx-focus-color: transparent;
-      -fx-effect: null;
-
-     -fx-faint-focus-color: transparent;
-     -fx-accent: transparent;
-     -fx-border-color:transparent;
-}
-
-#NotesScrollPane .headers-region {
-    -fx-effect: null;
-}
-
-#NotesVbox {
-  -fx-border-radius: 10;
-  -fx-background-radius:10;
-  -fx-effect: null;
-
-  -fx-focus-color: transparent;
-  -fx-faint-focus-color: transparent;
-  -fx-accent: transparent;
-  -fx-border-color:transparent;
-}
-
-.scroll-pane {
-    -fx-background-insets: 0;
-    -fx-padding: 0;
-}
-
-.scroll-pane:focused {
-    -fx-background-insets: 0;
-}
-
-.scroll-pane .corner {
-    -fx-background-insets: 0;
-}
-
-
-.jfx-text-field, .jfx-password-field {
-    -fx-prompt-text-fill: WHITE;
-    -jfx-focus-color: #2BA8D9;
-}
-
-.jfx-combo-box {
-    -jfx-focus-color: #2BA8D9;
+#cancelBtn {
+    -fx-background-color:  #bdc3c7;
+    -fx-background-radius: 10;
+    -fx-border-color: transparent;
+    -fx-border-radius: 10;
+    -fx-text-fill: black;
 }

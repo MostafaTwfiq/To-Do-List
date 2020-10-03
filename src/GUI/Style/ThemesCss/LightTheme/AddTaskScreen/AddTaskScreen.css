@@ -13,12 +13,75 @@
 
 }
 
-.label {
+#titleLbl {
 
 -fx-text-fill: black;
 -fx-background-color: transparent;
 -fx-border-color: transparent;
--fx-alignment: center;
+    -fx-alignment: center-left;
+
+}
+
+#titleCounterLbl {
+
+    -fx-text-fill: black;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-alignment: center;
+}
+
+#onLbl {
+
+    -fx-text-fill: black;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-alignment: center-left;
+
+}
+
+#atLbl {
+
+    -fx-text-fill: black;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-alignment: center-left;
+
+}
+
+#priorityLbl {
+
+    -fx-text-fill: black;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-alignment: center-left;
+
+}
+
+#notesLbl {
+
+    -fx-text-fill: black;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-alignment: center-left;
+
+}
+
+#tagsLbl {
+
+    -fx-text-fill: black;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-alignment: center-left;
+
+}
+
+#errorLbl {
+
+    -fx-text-fill: #D1453B;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
 
 }
 
@@ -30,7 +93,7 @@
 }
 
 
-#taskTitle {
+#taskTitleTxtFld {
 
 -fx-text-fill: black;
 -fx-prompt-text-fill: #4f5254;
@@ -85,9 +148,9 @@
 
 
 #notesScrollPane {
-
--fx-background-color: transparent;
--fx-border-color: #C5C5C5;
+    -fx-background-color: transparent;
+    -fx-border-color: #C5C5C5;
+    -fx-border-width: 0.3;
 
 }
 
@@ -146,4 +209,26 @@
 -jfx-focus-color: black;
 -jfx-unfocus-color: #4f5254;
 
+}
+
+#addNoteBtn {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: black;
+}
+
+#addBtn {
+    -fx-background-color:  #2ecc71;
+    -fx-background-radius: 10;
+    -fx-border-color: white;
+    -fx-border-radius: 10;
+    -fx-text-fill: white;
+}
+
+#cancelBtn {
+    -fx-background-color:  #bdc3c7;
+    -fx-background-radius: 10;
+    -fx-border-color: white;
+    -fx-border-radius: 10;
+    -fx-text-fill: white;
 }

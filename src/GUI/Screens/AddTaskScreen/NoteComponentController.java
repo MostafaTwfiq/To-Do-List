@@ -2,7 +2,6 @@ package GUI.Screens.AddTaskScreen;
 
 import GUI.IControllers;
 import GUI.Style.ScreensPaths;
-import Main.Main;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.beans.value.ChangeListener;
@@ -11,15 +10,9 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextFormatter;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-
-import java.io.FileInputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.function.UnaryOperator;
 
 public class NoteComponentController implements IControllers {
 
@@ -41,7 +34,7 @@ public class NoteComponentController implements IControllers {
     @FXML
     private Label maxLengthLbl;
 
-    private NoteComponentList noteComponentList;
+    private final NoteComponentList noteComponentList;
 
     private final int maxLength = 50;
 
@@ -59,9 +52,7 @@ public class NoteComponentController implements IControllers {
             if (noteTxtFld.getText().length() > maxLength)
                 noteTxtFld.setText(noteTxtFld.getText().substring(0, maxLength));
 
-            long charCount  = this.noteTxtFld.getText()
-                                             .chars()
-                                             .count();
+            int charCount  = noteTxtFld.getText().length();
 
             charCounterLbl.setText(String.valueOf(charCount));
 
@@ -89,29 +80,6 @@ public class NoteComponentController implements IControllers {
         deleteBtn.setOnAction(e -> this.noteComponentList.notifyOfDeletion(this));
 
         deleteBtn.setContentDisplay(ContentDisplay.CENTER);
-        setDeleteBtnImage();
-
-    }
-
-    private void setDeleteBtnImage() {
-
-        try {
-
-            ImageView buttonImage =  new ImageView(
-                    new Image(
-                            new FileInputStream(
-                                    Main.theme.getThemeResourcesPath() + "AddTaskScreen/deleteB.png")
-                    )
-            );
-
-            buttonImage.setFitWidth(15);
-            buttonImage.setFitHeight(15);
-
-            deleteBtn.setGraphic(buttonImage);
-
-        } catch (Exception e) {
-            System.out.println("Something went wrong while loading delete note button.");
-        }
 
     }
 
@@ -137,8 +105,6 @@ public class NoteComponentController implements IControllers {
 
     @Override
     public void updateStyle() {
-
-        setDeleteBtnImage();
 
         parentLayout.getStylesheets().clear();
         parentLayout.getStylesheets().add(new ScreensPaths().getAddTaskScreenCssSheet());

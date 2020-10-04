@@ -143,6 +143,7 @@ public class MainScreenController implements IControllersObserver {
 
                 if (todayDate.isBefore(LocalDate.now())) {
                     todayDate = LocalDate.now();
+                    updateTasks();
                     loadTodayTasks();
                 }
 

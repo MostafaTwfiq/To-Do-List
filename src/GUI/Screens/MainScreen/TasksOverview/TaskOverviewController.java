@@ -6,7 +6,6 @@ import DataClasses.TaskStatus.TaskPriority;
 import DataClasses.TaskStatus.TaskStatus;
 import GUI.Screens.EditTaskScreen.EditTaskScreenController;
 import GUI.Screens.MainScreen.IControllersObserver;
-import GUI.Screens.userProfileScreen.UserProfileController;
 import GUI.Style.ColorTransformer;
 import GUI.Style.ScreensPaths;
 import GUI.Style.Style.ExtraComponents.PopUpOptionsTheme;
@@ -21,6 +20,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
@@ -60,6 +60,8 @@ public class TaskOverviewController implements IControllersObserver {
     @FXML
     private Button moreOptionsBtn;
 
+    private boolean taskEditingIsDisabled;
+
     private JFXPopup popupOptions;
 
     private DataAccess dataAccess;
@@ -71,13 +73,14 @@ public class TaskOverviewController implements IControllersObserver {
     public TaskOverviewController(Task task, IControllersObserver observer) throws SQLException {
         this.task = task;
         this.observer = observer;
+        taskEditingIsDisabled = task.getDateTime().toLocalDate().isBefore(LocalDate.now());
         dataAccess = new DataAccess();
     }
 
     public TaskOverviewController(Task task) throws SQLException {
         this.task = task;
         this.observer = null;
-
+        taskEditingIsDisabled = task.getDateTime().toLocalDate().isBefore(LocalDate.now());
         dataAccess = new DataAccess();
     }
 
@@ -189,6 +192,8 @@ public class TaskOverviewController implements IControllersObserver {
                 System.out.println("Something went wrong while trying to delete a task from the database.");
             }
         });
+        if (taskEditingIsDisabled)
+            removeBtn.setDisable(true);
 
     }
 
@@ -298,7 +303,11 @@ public class TaskOverviewController implements IControllersObserver {
         taskPriorityRec.setFill(new PrioritiesColorGetter().getPriorityColor(Main.theme, task.getPriority()));
     }
 
-
+    private void disableTaskEditing() {
+        tskDoneStatusC.setDisable(true);
+        taskPriorityRec.setDisable(true);
+        starredBtn.setDisable(true);
+    }
 
     @Override
     public void updateStyle() {
@@ -325,6 +334,10 @@ public class TaskOverviewController implements IControllersObserver {
         setTaskTimeLbl();
         setTaskPriorityRec();
         setupPopupOptions();
+
+        if (taskEditingIsDisabled)
+            disableTaskEditing();
+
     }
 
     @Override

@@ -9,12 +9,8 @@ import GUI.Style.Style.Style;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import GUI.Style.*;
-import java.awt.Toolkit;
-
-import java.awt.*;
 
 public class Main extends Application {
 

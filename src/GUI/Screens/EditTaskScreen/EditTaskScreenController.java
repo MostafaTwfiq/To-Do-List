@@ -219,26 +219,22 @@ public class EditTaskScreenController implements IControllers {
 
 
     private void setupDeleteButton(){
-        deleteBtn.setOnAction(e->{
+        deleteBtn.setOnAction(e-> {
+
+            if (taskBeingEdited.getDateTime().toLocalDate().isBefore(LocalDate.now())) {
+                popupErrorText("You can't Delete a task older than today.");
+                return;
+            }
+
             try {
-                for (String note:
-                     taskBeingEdited.getNotes()) {
-                    dataAccess.deleteNote(taskBeingEdited.getTaskID(),note);
-                }
-
-                for (String tag:
-                     taskBeingEdited.getTags()) {
-                    dataAccess.deleteTag(taskBeingEdited.getTaskID(),tag);
-                }
-
                 dataAccess.deleteTask(taskBeingEdited.getTaskID());
             } catch (SQLException sqlException) {
                 sqlException.printStackTrace();
             }
 
             updateFuncRef.run();
-
             cancel();
+
         });
     }
 
@@ -377,8 +373,11 @@ public class EditTaskScreenController implements IControllers {
                             .format(DateTimeFormatter
                                     .ofPattern(last(DateFormat.getDateTimeFormat().split(" "))));
 
-            if (dateDropDwn.getValue().isBefore(LocalDate.now())) {
+            if (taskBeingEdited.getDateTime().toLocalDate().isBefore(LocalDate.now())) {
                 popupErrorText("You can't update a task older than today.");
+                return;
+            } else if (dateDropDwn.getValue().isBefore(LocalDate.now())) {
+                popupErrorText("You can't update the task date to a date older than today.");
                 return;
             }
 

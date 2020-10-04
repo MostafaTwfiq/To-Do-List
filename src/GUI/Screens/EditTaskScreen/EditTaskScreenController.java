@@ -4,6 +4,7 @@ import DataBase.DataAccess;
 import DataClasses.DateFormat;
 import DataClasses.Task;
 import DataClasses.TaskStatus.TaskPriority;
+import DataClasses.TaskStatus.TaskStatus;
 import GUI.IControllers;
 import GUI.Style.ScreensPaths;
 import Main.Main;
@@ -19,7 +20,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
-import javafx.util.Pair;
 import javafx.util.StringConverter;
 import javafx.util.converter.LocalTimeStringConverter;
 import tray.animations.AnimationType;
@@ -30,11 +30,9 @@ import java.io.FileInputStream;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class EditTaskScreenController implements IControllers {
@@ -73,7 +71,7 @@ public class EditTaskScreenController implements IControllers {
     private JFXButton cancelBtn;
 
     @FXML
-    private JFXButton addBtn;
+    private JFXButton updateBtn;
 
     @FXML
     private JFXComboBox<String> priorityComboBox;
@@ -102,7 +100,13 @@ public class EditTaskScreenController implements IControllers {
     @FXML
     private JFXButton deleteBtn;
 
-    private NoteComponentList noteComponentList;
+    @FXML
+    private JFXComboBox<String> taskStatusCB;
+
+    @FXML
+    private Label statusLbl;
+
+    private final NoteComponentList noteComponentList;
 
     private DataAccess dataAccess;
 
@@ -114,7 +118,7 @@ public class EditTaskScreenController implements IControllers {
 
     private final int titleMaxLength = 50;
 
-    private Task taskBeingEdited;
+    private final Task taskBeingEdited;
 
 
     public EditTaskScreenController(Task toEdit) {
@@ -133,10 +137,6 @@ public class EditTaskScreenController implements IControllers {
         this.updateFuncRef = func;
     }
 
-
-
-
-
     @Override
     public void updateStyle() {
         parentPane.getStylesheets().clear();
@@ -154,11 +154,13 @@ public class EditTaskScreenController implements IControllers {
 
         notesScrollPane.setContent(noteComponentList);
         setUpPriorityComboBox();
+        setupTaskStatusComboBox();
         timePicker.set24HourView(true);
         timePicker.setConverter(defaultConverter);
 
 
         setupTaskTitleTxtField();
+        setupTitleCounterLbl();
         setUpNoteComponentList();
         setupCancelBtn();
         setupStarButton();
@@ -200,10 +202,12 @@ public class EditTaskScreenController implements IControllers {
 
     }
 
+    private void setupTitleCounterLbl() {
+        titleCounterLbl.setText("0 / " + titleMaxLength);
+    }
+
     private void setupAddBtn(){
-        this.addBtn.setOnAction(e->{
-            handle(e);
-        });
+        this.updateBtn.setOnAction(this::handle);
     }
 
     private void setAddNoteBtn(){
@@ -295,12 +299,23 @@ public class EditTaskScreenController implements IControllers {
 
     }
             
-    private void setUpPriorityComboBox(){
-        this.priorityComboBox.setValue(this.taskBeingEdited.getPriority().toString());
+    private void setUpPriorityComboBox() {
 
-        this.priorityComboBox.getItems().addAll(Arrays
+        priorityComboBox.getItems().addAll(Arrays
                 .stream(TaskPriority.class.getEnumConstants())
                 .map(Enum::toString).toArray(String[]::new));
+
+        priorityComboBox.setValue(taskBeingEdited.getPriority().toString());
+
+    }
+
+    private void setupTaskStatusComboBox() {
+        taskStatusCB.getItems().addAll(Arrays
+                .stream(TaskStatus.class.getEnumConstants())
+                .map(Enum::toString).toArray(String[]::new));
+
+        taskStatusCB.setValue(taskBeingEdited.getTaskStatus().toString());
+
     }
 
     private void cancel(){
@@ -325,15 +340,15 @@ public class EditTaskScreenController implements IControllers {
         StringJoiner errorsBuilder  = new StringJoiner("\n");
 
         if(dateDropDwn.getValue() == null){
-            errorsBuilder.add("Task Date missing.");
+            errorsBuilder.add("Task date missing.");
         }
 
         if(timePicker.getValue() == null){
-            errorsBuilder.add("Task Completion Date is missing.");
+            errorsBuilder.add("Task reminding time is missing.");
         }
 
         if(taskTitleTxtFld.getText().isBlank()){
-            errorsBuilder.add("Task Title is missing.");
+            errorsBuilder.add("Task title is missing.");
         }
 
         if (priorityComboBox.getValue() == null) {
@@ -362,9 +377,9 @@ public class EditTaskScreenController implements IControllers {
                             .format(DateTimeFormatter
                                     .ofPattern(last(DateFormat.getDateTimeFormat().split(" "))));
 
-            LocalDateTime localDateTime = LocalDateTime.parse(dateTime, DateTimeFormatter.ofPattern(DateFormat.getDateTimeFormat()));
-            if (localDateTime.isBefore(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES))) {
-                popupErrorText("You can't add a task in the past.");
+            //LocalDate localDate = LocalDate.parse(dateTime, DateTimeFormatter.ofPattern(DateFormat.getDateFormat()));
+            if (dateDropDwn.getValue().isBefore(LocalDate.now())) {
+                popupErrorText("You can't update a task older than today.");
                 return;
             }
 
@@ -372,7 +387,7 @@ public class EditTaskScreenController implements IControllers {
                     taskBeingEdited.getTaskID(),
                     taskTitleTxtFld.getText(),
                     dateTime,
-                    taskBeingEdited.getTaskStatus(),
+                    TaskStatus.valueOf(taskStatusCB.getValue()),
                     TaskPriority.valueOf(priorityComboBox.getValue()),
                     isStarred
                     );
@@ -392,18 +407,8 @@ public class EditTaskScreenController implements IControllers {
                            .forEach(this::deleteTagsFromDB);
 
 
-            for (String note : noteComponentList.getNewNotes())
-                dataAccess.addNewNote(taskBeingEdited.getTaskID(), note);
-
-            for(Pair<String,String> updated: noteComponentList.getUpdatedNotes() )
-                dataAccess.updateTaskNote(taskBeingEdited.getTaskID(),
-                                          updated.getKey(),
-                                          updated.getValue());
-
-            for (String note:
-                 noteComponentList.getDeletedNotes()) {
-                dataAccess.deleteNote(taskBeingEdited.getTaskID(),note);
-            }
+            for (NoteComponentController noteComponent: noteComponentList.getNotesComponents())
+                executeNoteStatus(noteComponent);
 
             popupSuccessNotification();
 
@@ -417,18 +422,37 @@ public class EditTaskScreenController implements IControllers {
 
     }
 
+    private void executeNoteStatus(NoteComponentController noteComponent) {
+
+        try {
+
+            switch (noteComponent.getNoteStatus()) {
+                case ADD_NOTE:
+                    dataAccess.addNewNote(taskBeingEdited.getTaskID(), noteComponent.getNote());
+                case UPDATE_NOTE:
+                    dataAccess.updateTaskNote(taskBeingEdited.getTaskID(), noteComponent.getInitialNote(), noteComponent.getNote());
+                case DELETE_NOTE:
+                    dataAccess.deleteNote(taskBeingEdited.getTaskID(), noteComponent.getInitialNote());
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     private void popupSuccessNotification() {
         TrayNotification trayNotification = new TrayNotification();
         trayNotification.setAnimationType(AnimationType.FADE);
         trayNotification.setNotificationType(NotificationType.SUCCESS);
-        trayNotification.setMessage("Successfully created the new task.");
+        trayNotification.setMessage("Successfully updated the task.");
         trayNotification.setTitle("Success");
         trayNotification.showAndDismiss(Duration.seconds(1));
     }
 
     private void popupErrorText(String errorTxt) {
         errorLbl.setText(errorTxt);
-        FadeTransition  fadeTrans = new FadeTransition(Duration.millis(1000));
+        FadeTransition fadeTrans = new FadeTransition(Duration.seconds(2));
         fadeTrans.setNode(errorLbl);
 
         fadeTrans.setFromValue(0.0);
@@ -442,7 +466,8 @@ public class EditTaskScreenController implements IControllers {
 
     private void prepareTask(){
         try {
-            taskBeingEdited = dataAccess.getTaskFullInfo(taskBeingEdited.getTaskID());
+            taskBeingEdited.setNotes(dataAccess.getTaskNotes(taskBeingEdited.getTaskID()));
+            taskBeingEdited.setTags(dataAccess.getTaskTags(taskBeingEdited.getTaskID()));
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }

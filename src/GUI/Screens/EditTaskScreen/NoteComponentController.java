@@ -39,23 +39,20 @@ public class NoteComponentController implements IControllers {
 
     private final int maxLength = 50;
 
+    private NoteStatus noteStatus;
 
-    private boolean isUpdated = false;
-
-    private String initialNote = null;
+    private final String initialNote;
 
     public NoteComponentController(NoteComponentList noteComponentList, String initialString) {
         this.noteComponentList = noteComponentList;
         this.initialNote = initialString;
+        noteStatus = NoteStatus.NONE;
     }
 
     private void setupNoteTxtField() {
-        this.noteTxtFld.setText(this.initialNote);
+        noteTxtFld.setText(initialNote);
 
-        noteTxtFld.textProperty().addListener((ob,ol,n) -> {
-            if(!this.isUpdated &&
-                    !this.initialNote.equals(noteTxtFld.getText()))
-                this.isUpdated = true;
+        noteTxtFld.textProperty().addListener( (ob, ol, n) -> {
 
             noteTxtFld.setDisable(true);
 
@@ -79,17 +76,32 @@ public class NoteComponentController implements IControllers {
 
                 if (oldPropertyValue && !isValidNote())
                     deleteBtn.fire();
+                else if (oldPropertyValue && !(initialNote.isEmpty() || initialNote.isBlank())) {
+
+                    if(!initialNote.equals(noteTxtFld.getText()))
+                        noteStatus = NoteStatus.UPDATE_NOTE;
+
+                } else if (oldPropertyValue)
+                    noteStatus = NoteStatus.ADD_NOTE;
 
             }
+
         });
 
     }
 
     private void setUpDeleteBtn() {
 
-        deleteBtn.setOnAction(e -> this.noteComponentList.notifyOfDeletion(this));
+        deleteBtn.setOnAction(e -> {
 
-        deleteBtn.setContentDisplay(ContentDisplay.CENTER);
+            if (initialNote.isEmpty() || initialNote.isBlank())
+                noteStatus = NoteStatus.NONE;
+            else
+                noteStatus = NoteStatus.DELETE_NOTE;
+
+            noteComponentList.notifyOfDeletion(this);
+
+        });
 
     }
 
@@ -98,10 +110,7 @@ public class NoteComponentController implements IControllers {
     }
 
     private void setupCharCounterLbl() {
-
-        charCounterLbl.setText(String.valueOf(noteTxtFld.getText()
-                                                        .chars()
-                                                        .count()));
+        charCounterLbl.setText(String.valueOf(noteTxtFld.getLength()));
     }
 
     public String getNote() {
@@ -146,12 +155,11 @@ public class NoteComponentController implements IControllers {
         setupCharCounterLbl();
     }
 
-    public boolean isUpdated(){
-        return isUpdated;
-    }
-
     public String getInitialNote(){
         return this.initialNote;
     }
 
+    public NoteStatus getNoteStatus() {
+        return noteStatus;
+    }
 }

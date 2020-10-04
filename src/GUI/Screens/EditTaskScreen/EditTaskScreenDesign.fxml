@@ -50,7 +50,7 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Label fx:id="atLbl" layoutX="310.0" layoutY="120.0" text="at" AnchorPane.leftAnchor="335.0" AnchorPane.topAnchor="170.0">
+      <Label fx:id="atLbl" contentDisplay="CENTER" layoutX="350.0" layoutY="170.0" text="at" AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="170.0">
          <font>
             <Font size="17.0" />
          </font>
@@ -63,7 +63,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton fx:id="addBtn" defaultButton="true" layoutX="866.0" layoutY="604.0" prefHeight="32.0" prefWidth="103.0" text="Update" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="600.0">
+      <JFXButton fx:id="updateBtn" defaultButton="true" layoutX="866.0" layoutY="604.0" prefHeight="32.0" prefWidth="103.0" text="Update" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="600.0">
          <font>
             <Font size="18.0" />
          </font>
@@ -81,7 +81,7 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></JFXButton>
-      <JFXTimePicker fx:id="timePicker" defaultColor="#2ba8d9" layoutX="340.0" layoutY="119.0" prefWidth="170.0" promptText="Time" AnchorPane.leftAnchor="360.0" AnchorPane.topAnchor="170.0">
+      <JFXTimePicker fx:id="timePicker" defaultColor="#2ba8d9" layoutX="340.0" layoutY="119.0" prefWidth="170.0" promptText="Time" AnchorPane.leftAnchor="435.0" AnchorPane.topAnchor="170.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></JFXTimePicker>
@@ -107,6 +107,12 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
+      <JFXComboBox fx:id="taskStatusCB" layoutX="332.0" layoutY="230.0" prefHeight="26.0" prefWidth="141.0" AnchorPane.leftAnchor="435.0" AnchorPane.topAnchor="230.0" />
+      <Label fx:id="statusLbl" layoutX="329.0" layoutY="248.0" text="Status" AnchorPane.leftAnchor="335.0" AnchorPane.topAnchor="230.0">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
 
    </children>
 </AnchorPane>

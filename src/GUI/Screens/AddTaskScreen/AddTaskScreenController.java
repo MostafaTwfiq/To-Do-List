@@ -178,7 +178,6 @@ public class AddTaskScreenController implements IControllers {
 
     }
 
-
     private  void setUpTitleCounterLabel(){
         titleCounterLbl.setText("0 / "+ titleMaxLength);
     }
@@ -260,15 +259,15 @@ public class AddTaskScreenController implements IControllers {
         StringJoiner errorsBuilder  = new StringJoiner("\n");
 
         if(dateDropDwn.getValue() == null){
-            errorsBuilder.add("Task Date missing.");
+            errorsBuilder.add("Task date missing.");
         }
 
         if(timePicker.getValue() == null){
-            errorsBuilder.add("Task Completion Date is missing.");
+            errorsBuilder.add("Task reminding time is missing.");
         }
 
         if(taskTitleTxtFld.getText().isBlank()){
-            errorsBuilder.add("Task Title is missing.");
+            errorsBuilder.add("Task title is missing.");
         }
 
         if (priorityComboBox.getValue() == null) {
@@ -337,7 +336,7 @@ public class AddTaskScreenController implements IControllers {
         trayNotification.setNotificationType(NotificationType.SUCCESS);
         trayNotification.setMessage("Successfully created the new task.");
         trayNotification.setTitle("Success");
-        trayNotification.showAndDismiss(Duration.seconds(1));
+        trayNotification.showAndDismiss(Duration.seconds(2));
     }
 
     private void popupErrorText(String errorTxt) {

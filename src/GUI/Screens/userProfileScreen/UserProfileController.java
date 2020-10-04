@@ -82,8 +82,11 @@ public class UserProfileController implements IControllers  {
 
     private final String imageExtensionsRegex = "^\\.(jpe?g|png|gif|bmp)$";
 
+    private final Runnable stopReminderChecker; // this function will be useful if the user deleted it's account.
 
-    public UserProfileController() throws Exception{
+
+    public UserProfileController(Runnable stopReminderChecker) throws Exception {
+        this.stopReminderChecker = stopReminderChecker;
         this.dataAccess = new DataAccess();
     }
 
@@ -327,6 +330,8 @@ public class UserProfileController implements IControllers  {
         notification.setNotificationType(NotificationType.SUCCESS);
         notification.showAndDismiss(Duration.seconds(1.0));
 
+        stopReminderChecker.run();
+        
         Main.screenManager.returnNumOfScreens(2);
 
     }

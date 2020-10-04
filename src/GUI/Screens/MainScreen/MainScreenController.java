@@ -183,6 +183,10 @@ public class MainScreenController implements IControllersObserver {
         }
     }
 
+    private void stopReminderChecks() {
+        reminderChecker.stop();
+    }
+
     private Image loadReminderImage() {
         try {
             return new Image(new FileInputStream(Main.theme.getThemeResourcesPath() + "MainScreen/reminder.png"));
@@ -309,7 +313,7 @@ public class MainScreenController implements IControllersObserver {
 
         settingsBtn.setOnAction(e -> {
             try {
-                UserProfileController userProfileController = new UserProfileController();
+                UserProfileController userProfileController = new UserProfileController(this::stopReminderChecks);
                 Parent mainScreenParent = null;
                 ScreensPaths paths = new ScreensPaths();
 
@@ -337,6 +341,7 @@ public class MainScreenController implements IControllersObserver {
         logOutBtn.setPrefWidth(90);
         logOutBtn.setOnAction(e -> {
             popupUserOptions.hide();
+            stopReminderChecks();
             Main.screenManager.changeToLastScreen();
         });
 

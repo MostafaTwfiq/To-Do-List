@@ -6,6 +6,8 @@ module ToDoList {
     requires java.sql;
     requires TrayTester;
     requires com.jfoenix;
+    requires java.desktop;
+    requires javafx.swing;
 
 
     opens Main;

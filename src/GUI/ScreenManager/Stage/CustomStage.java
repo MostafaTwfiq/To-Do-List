@@ -7,6 +7,7 @@ import GUI.Style.ScreensPaths;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -19,14 +20,19 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import Main.Main;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.io.FileInputStream;
+
 public class CustomStage implements IObserver {
 
-    private Stage stage;
+    private JFrame stage;
     private Scene scene;
-    private StageRootController rootController;
+    private final StageRootController rootController;
     private AnchorPane stageRoot;
-    private ScreenManager screenManager;
-    private int height, width;
+    private final ScreenManager screenManager;
+    private final int height, width;
 
     public CustomStage(int height, int width, IControllers mainLayoutController) {
 
@@ -34,7 +40,7 @@ public class CustomStage implements IObserver {
         this.width = width;
 
         screenManager = Main.screenManager;
-        screenManager.addObserver(this);
+        Main.screenManager.addObserver(this);
 
         setupStage();
         rootController = new StageRootController(stage, "TODO", e -> System.exit(0));
@@ -51,18 +57,19 @@ public class CustomStage implements IObserver {
 
 
         setupScene();
-        stage.setScene(scene);
+        JFXPanel jfxPanel = new JFXPanel();
+        jfxPanel.setScene(scene);
+        SwingUtilities.invokeLater(() -> {
+            stage.add(jfxPanel);
+            stage.pack();
+        });
 
         screenManager.changeScreen(mainLayoutController);
 
     }
 
-    public void showStage() {
-        stage.show();
-    }
-
-    public void showStageAndWait() {
-        stage.showAndWait();
+    public void makeStageVisible() {
+        stage.setVisible(true);
     }
 
     private void setupScene() {
@@ -74,12 +81,16 @@ public class CustomStage implements IObserver {
     }
 
     private void setupStage() {
+        stage = new JFrame();
+        stage.setUndecorated(true);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        stage.setLocation(dim.width/2 - width/2, dim.height/2 - height/2);
 
-        stage = new Stage();
-
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.initStyle(StageStyle.TRANSPARENT);
-
+        try {
+            stage.setIconImage(ImageIO.read(new FileInputStream("resources/TodoAppIcon.png")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -120,7 +131,7 @@ public class CustomStage implements IObserver {
 
         Timeline changingLayoutTimeLine = new Timeline(
                 new KeyFrame(
-                        Duration.millis(200),
+                        Duration.millis(300),
                         currentLayoutFadingKV,
                         newLayoutAppearanceKV));
 

@@ -9,11 +9,12 @@ import GUI.Style.Style.Style;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import GUI.Style.*;
+import java.awt.Toolkit;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
+import java.awt.*;
 
 public class Main extends Application {
 
@@ -41,7 +42,7 @@ public class Main extends Application {
 
         CustomStage customStage = new CustomStage(700, 1000, loginScreenController);
 
-        customStage.showStageAndWait();
+        customStage.makeStageVisible();
 
     }
 

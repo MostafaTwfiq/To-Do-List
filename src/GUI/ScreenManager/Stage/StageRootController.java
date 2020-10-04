@@ -15,7 +15,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBuffer;
+import java.awt.image.Raster;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -40,7 +48,7 @@ public class StageRootController implements IControllers {
     @FXML
     private AnchorPane parentRoot;
 
-    private Stage stage;
+    private final JFrame stage;
 
     private String title;
 
@@ -54,13 +62,13 @@ public class StageRootController implements IControllers {
         parentRoot.setOnDragDetected(e -> parentRoot.startFullDrag());
     }
 
-    public StageRootController(Stage stage, EventHandler<ActionEvent> onClosingEvent) {
+    public StageRootController(JFrame stage, EventHandler<ActionEvent> onClosingEvent) {
         this.stage = stage;
         this.onClosingEvent = onClosingEvent;
         title = "";
     }
 
-    public StageRootController(Stage stage, String title, EventHandler<ActionEvent> onClosingEvent) {
+    public StageRootController(JFrame stage, String title, EventHandler<ActionEvent> onClosingEvent) {
         this.stage = stage;
         this.onClosingEvent = onClosingEvent;
         this.title = title;
@@ -76,8 +84,10 @@ public class StageRootController implements IControllers {
         });
 
         stageBar.setOnMouseDragged(event -> {
-            stage.setX(event.getScreenX() - currentClickX);
-            stage.setY(event.getScreenY() - currentClickY);
+            stage.setLocation(
+                    (int) (event.getScreenX() - currentClickX),
+                    (int) (event.getScreenY() - currentClickY)
+            );
             stage.setOpacity(0.7f);
         });
 
@@ -90,7 +100,62 @@ public class StageRootController implements IControllers {
 
         setMinimizeBStyle();
 
-        minimizeB.setOnAction(e -> stage.setIconified(true));
+        minimizeB.setOnAction(e -> addAppToTray());
+
+    }
+
+    private void addAppToTray() {
+
+        try {
+            // ensure awt toolkit is initialized.
+            java.awt.Toolkit.getDefaultToolkit();
+
+            if (!java.awt.SystemTray.isSupported()) {
+                stage.setState(Frame.ICONIFIED);
+                return;
+            }
+
+            java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
+
+            BufferedImage image = ImageIO.read(new FileInputStream("resources/TodoAppTrayIcon.png"));
+            int trayIconWidth = new TrayIcon(image).getSize().width;
+            java.awt.TrayIcon trayIcon = new java.awt.TrayIcon(
+                    image.getScaledInstance(trayIconWidth, -1, java.awt.Image.SCALE_SMOOTH),
+                    "Todo List"
+            );
+
+            trayIcon.addActionListener(event -> {
+                SwingUtilities.invokeLater(()->{stage.setVisible(true);});
+                tray.remove(trayIcon);
+            });
+
+            PopupMenu popupMenu = new PopupMenu();
+            MenuItem exitItem = new MenuItem("Exit");
+            exitItem.addActionListener(e -> closeB.fire());
+            MenuItem minimizeItem = new MenuItem("Minimize");
+            minimizeItem.addActionListener(e  -> {
+                stage.setState(Frame.ICONIFIED);
+                trayIcon.getActionListeners()[0].actionPerformed(e);
+            });
+            MenuItem maximizeItem = new MenuItem("Maximize");
+            maximizeItem.addActionListener(e -> {
+                trayIcon.getActionListeners()[0].actionPerformed(e);
+            });
+
+            popupMenu.add(maximizeItem);
+            popupMenu.add(minimizeItem);
+            popupMenu.add(exitItem);
+            trayIcon.setPopupMenu(popupMenu);
+
+            stage.setVisible(false);
+            tray.add(trayIcon);
+
+        } catch (AWTException | MalformedURLException e) {
+            System.out.println("Unable to init system tray");
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

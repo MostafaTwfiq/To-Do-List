@@ -13,18 +13,14 @@ public class ScreensPaths {
     private final String userProfileScreenCssSheet = "GUI/Style/ThemesCss/" + Main.theme.getThemeName()+ "/UserProfileScreen/UserProfileScreen.css";
     private final String editTaskScreenCssSheet = "GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/EditTaskScreen/EditTaskScreen.css";
     private final String addTaskScreenCssSheet  = "GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/AddTaskScreen/AddTaskScreen.css";
-    private final String noteComponentCssSheet  = "GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/AddTaskScreen/NoteComponent.css";
+    private final String addTaskNoteComponentCssSheet = "GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/AddTaskScreen/NoteComponent.css";
+    private final String editTaskNoteComponentCssSheet = "GUI/Style/ThemesCss/" + Main.theme.getThemeName() + "/EditTaskScreen/NoteComponent.css";
 
-    public String getStageFxml() {
-        String stageFxml = "/GUI/ScreenManager/Stage/StageDesign.fxml";
-        return stageFxml;
-    }
+    public String getStageFxml() {return "/GUI/ScreenManager/Stage/StageDesign.fxml"; }
 
     public String getStageCssSheet() {
         return stageCssSheet;
     }
-
-
 
     public String getLoginScreenFxml() {
         return "/GUI/Screens/LoginScreen/LoginScreenStyle.fxml";
@@ -34,8 +30,6 @@ public class ScreensPaths {
         return loginScreenCssSheet;
     }
 
-
-
     public String getSignUpScreenFxml() {
         return "/GUI/Screens/SignUpScreen/SignUpScreenDesign.fxml";
     }
@@ -43,7 +37,6 @@ public class ScreensPaths {
     public String getSignUpScreenCssSheet() {
         return signUpScreenCssSheet;
     }
-
 
     public String getMainScreenFxml() {
         return "/GUI/Screens/MainScreen/MainScreenDesign.fxml";
@@ -53,8 +46,6 @@ public class ScreensPaths {
         return mainScreenCssSheet;
     }
 
-
-
     public String getTaskOverviewFxml() {
         return "/GUI/Screens/MainScreen/TasksOverview/TaskOverviewDesign.fxml";
     }
@@ -63,22 +54,15 @@ public class ScreensPaths {
         return taskOverviewCssSheet;
     }
 
+    public String getTaskOverviewAddTaskFxml() { return "/GUI/Screens/MainScreen/TasksOverview/TaskOverviewAddTaskDesign.fxml";}
 
-
-    public String getTaskOverviewAddTaskFxml() {
-        return "/GUI/Screens/MainScreen/TasksOverview/TaskOverviewAddTaskDesign.fxml";
-    }
     public String getTaskOverviewAddTaskSheet() {
         return taskOverviewAddTaskSheet;
     }
 
-
-
     public String getUserProfileScreenFxml(){return"/GUI/Screens/userProfileScreen/UserProfileDesign.fxml"; }
 
     public String getUserProfileScreenCssSheet(){return userProfileScreenCssSheet; }
-
-
 
     public String getEditTaskScreenCssSheet() {
         return editTaskScreenCssSheet;
@@ -88,7 +72,6 @@ public class ScreensPaths {
         return "/GUI/Screens/EditTaskScreen/EditTaskScreenDesign.fxml";
     }
 
-
     public String getAddTaskScreenFxml() {
         return "/GUI/Screens/AddTaskScreen/AddTaskScreenDesign.fxml";
     }
@@ -97,11 +80,14 @@ public class ScreensPaths {
         return addTaskScreenCssSheet;
     }
 
+    public String getAddTaskNoteComponentFxml(){return "/GUI/Screens/AddTaskScreen/NoteComponent.fxml";}
 
-    public String getNoteComponentFxml(){return "/GUI/Screens/AddTaskScreen/NoteComponent.fxml";}
-
-    public String getNoteComponentCssSheet() {
-        return noteComponentCssSheet;
+    public String getAddTaskNoteComponentCssSheet() {
+        return addTaskNoteComponentCssSheet;
     }
+
+    public String getEditTaskNoteComponentFxml() {return "/GUI/Screens/EditTaskScreen/NoteComponent.fxml";}
+
+    public String getEditTaskNoteComponentCssSheet() {return editTaskNoteComponentCssSheet;}
 
 }

@@ -25,12 +25,12 @@ public class NoteComponentList extends VBox {
             Parent noteParent = null;
             ScreensPaths paths = new ScreensPaths();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(paths.getNoteComponentFxml()));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(paths.getAddTaskNoteComponentFxml()));
             loader.setController(ncm);
             noteParent = loader.load();
 
             noteParent.getStylesheets().clear();
-            noteParent.getStylesheets().add(paths.getNoteComponentCssSheet());
+            noteParent.getStylesheets().add(paths.getAddTaskNoteComponentCssSheet());
 
             this.noteComponents.add(ncm);
             this.getChildren().add(noteParent);

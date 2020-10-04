@@ -151,7 +151,6 @@ public class TaskOverviewController implements IControllersObserver {
         );
         viewBtn.setPrefWidth(90);
         viewBtn.setOnAction(e -> {
-            //TODO open here the view task screen
             try {
                 EditTaskScreenController editTaskScreenController = new EditTaskScreenController(this.task);
                 Parent mainScreenParent = null;

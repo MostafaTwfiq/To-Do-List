@@ -377,7 +377,6 @@ public class EditTaskScreenController implements IControllers {
                             .format(DateTimeFormatter
                                     .ofPattern(last(DateFormat.getDateTimeFormat().split(" "))));
 
-            //LocalDate localDate = LocalDate.parse(dateTime, DateTimeFormatter.ofPattern(DateFormat.getDateFormat()));
             if (dateDropDwn.getValue().isBefore(LocalDate.now())) {
                 popupErrorText("You can't update a task older than today.");
                 return;
@@ -390,20 +389,18 @@ public class EditTaskScreenController implements IControllers {
                     TaskStatus.valueOf(taskStatusCB.getValue()),
                     TaskPriority.valueOf(priorityComboBox.getValue()),
                     isStarred
-                    );
+            );
 
 
             tagsChipView.getChips()
                         .stream()
-                        .filter(tag -> !taskBeingEdited.getTags()
-                                                       .contains(tag))
+                        .filter(tag -> !taskBeingEdited.getTags().contains(tag))
                         .forEach(this::addNewTagsToDB);
 
 
             taskBeingEdited.getTags()
                            .stream()
-                           .filter(tag -> !tagsChipView.getChips()
-                                                       .contains(tag))
+                           .filter(tag -> !tagsChipView.getChips().contains(tag))
                            .forEach(this::deleteTagsFromDB);
 
 

@@ -19,18 +19,18 @@ public class NoteComponentList extends VBox {
     public void addNote(String initialNote) {
 
         try {
-            NoteComponentController ncm  = new NoteComponentController(this,initialNote);
+            NoteComponentController ncm  = new NoteComponentController(this, initialNote);
             Parent noteParent = null;
             ScreensPaths paths = new ScreensPaths();
 
             FXMLLoader loader = new FXMLLoader(getClass()
-                    .getResource(paths.getNoteComponentFxml()));
+                    .getResource(paths.getEditTaskNoteComponentFxml()));
 
             loader.setController(ncm);
             noteParent = loader.load();
 
             noteParent.getStylesheets().clear();
-            noteParent.getStylesheets().add(paths.getNoteComponentCssSheet());
+            noteParent.getStylesheets().add(paths.getEditTaskNoteComponentCssSheet());
 
             noteComponents.add(ncm);
             getChildren().add(noteParent);

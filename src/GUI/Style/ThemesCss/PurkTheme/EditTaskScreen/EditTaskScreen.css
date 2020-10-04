@@ -1,0 +1,328 @@
+
+#parentPane {
+
+-fx-background-color: #8e2663;
+
+}
+
+#mainTitle {
+
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+
+}
+
+#titleLbl {
+
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-alignment: center-left;
+
+}
+
+#titleCounterLbl {
+
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-alignment: center;
+}
+
+#onLbl {
+
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-alignment: center-left;
+
+}
+
+#atLbl {
+
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-alignment: center-left;
+
+}
+
+#priorityLbl {
+
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-alignment: center-left;
+
+}
+
+#statusLbl {
+
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-alignment: center-left;
+
+}
+
+#notesLbl {
+
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-alignment: center-left;
+
+}
+
+#tagsLbl {
+
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-alignment: center-left;
+
+}
+
+#errorLbl {
+
+    -fx-text-fill: #ef5350;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+
+}
+
+
+#taskTitleTxtFld {
+
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: white;
+    -jfx-focus-color: white;
+    -jfx-unfocus-color: #c3c3c3;
+
+}
+
+#tagsChipView {
+
+    -fx-background-color: transparent;
+    -fx-border-color: white;
+    -fx-border-width: 0.3;
+
+}
+
+
+#tagsChipView .chips-pane > .text-area {
+    -fx-padding: 0.333333em 0 0.333333em 0;
+    -fx-min-width: 100px;
+    -fx-pref-height: 42;
+    -fx-text-fill: white;
+}
+
+
+#tagsChipView .jfx-chip > HBox {
+    -fx-font-family: "Roboto Medium";
+    -fx-font-size: 14.0;
+    -fx-text-fill: white;
+    -fx-background-color: #ababab;
+    -fx-background-radius: 40px;
+    -fx-padding: 5px 8px 5px 12px;
+    -fx-pref-height: 32px;
+    -fx-alignment: center-left;
+    -fx-spacing: 8;
+}
+
+
+#tagsChipView .jfx-chip .close-button {
+    -fx-background-color: #3D3D3D;
+    -fx-pref-width: 20;
+    -fx-min-width: -fx-pref-width;
+    -fx-max-width: -fx-pref-width;
+    -fx-pref-height: 20;
+    -fx-min-height: -fx-pref-height;
+    -fx-max-height: -fx-pref-height;
+    -fx-background-radius: 20;
+}
+
+
+#tagsChipView .jfx-chip .close-button .jfx-rippler {
+    -jfx-rippler-fill: black;
+}
+
+#tagsChipView .jfx-chip .close-button .jfx-svg-glyph {
+    -fx-shape: "M443.6,387.1L312.4,255.4l131.5-130c5.4-5.4,5.4-14.2,0-19.6l-37.4-37.6c-2.6-2.6-6.1-4-9.8-4c-3.7,0-7.2,1.5-9.8,4  L256,197.8L124.9,68.3c-2.6-2.6-6.1-4-9.8-4c-3.7,0-7.2,1.5-9.8,4L68,105.9c-5.4,5.4-5.4,14.2,0,19.6l131.5,130L68.4,387.1  c-2.6,2.6-4.1,6.1-4.1,9.8c0,3.7,1.4,7.2,4.1,9.8l37.4,37.6c2.7,2.7,6.2,4.1,9.8,4.1c3.5,0,7.1-1.3,9.8-4.1L256,313.1l130.7,131.1  c2.7,2.7,6.2,4.1,9.8,4.1c3.5,0,7.1-1.3,9.8-4.1l37.4-37.6c2.6-2.6,4.1-6.1,4.1-9.8C447.7,393.2,446.2,389.7,443.6,387.1z";
+    -fx-background-color: white;
+    -jfx-size: 8;
+}
+
+
+#notesScrollPane {
+
+    -fx-background-color: transparent;
+    -fx-border-color: white;
+    -fx-border-width: 0.3;
+
+}
+
+
+#notesScrollPane > .scroll-bar:horizontal, #tasksScrollPane > .scroll-bar:vertical{
+    -fx-background-color: #2d2d2d;
+}
+
+#notesScrollPane > .increment-button, #tasksScrollPane > .decrement-button {
+    -fx-background-color: #2d2d2d;
+    -fx-border-color: #2d2d2d;
+}
+
+#notesScrollPane > .scroll-bar:horizontal .track,
+#notesScrollPane > .scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}
+
+#notesScrollPane > .scroll-bar:horizontal .thumb,
+#notesScrollPane > .scroll-bar:vertical .thumb {
+    -fx-background-color: white;
+    -fx-background-radius: 0em;
+}
+
+#notesScrollPane > .corner {
+    -fx-background-color: #2d2d2d;
+}
+
+
+#notesScrollPane .viewport {
+
+    -fx-background-color: transparent;
+
+}
+
+#dateDropDwn {
+
+    -fx-background-color: transparent;
+    -jfx-default-color: #ED4C67;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+
+}
+
+#dateDropDwn .text-field {
+    -fx-prompt-text-fill: white;
+    -fx-text-fill: white;
+    -jfx-unfocus-color: #c3c3c3;
+}
+
+#timePicker {
+
+    -fx-background-color: transparent;
+    -jfx-default-color: #ED4C67;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+
+}
+
+#timePicker .text-field {
+    -fx-prompt-text-fill: white;
+    -fx-text-fill: white;
+    -jfx-unfocus-color: #c3c3c3;
+}
+
+#priorityComboBox {
+
+    -fx-prompt-text-fill: white;
+    -jfx-focus-color: white;
+    -jfx-unfocus-color: #c3c3c3;
+
+}
+
+#priorityComboBox > .cell {
+    -fx-text-fill: white;
+}
+
+#priorityComboBox .list-view {
+    -fx-background-color: #2d2d2d;
+}
+
+#priorityComboBox .list-view .jfx-list-cell .jfx-rippler {
+    -jfx-rippler-fill: #2d2d2d;
+}
+
+#priorityComboBox .prompt-container .text {
+    -fx-fill: #8e2663;
+}
+
+#priorityComboBox .list-cell:selected:filled {
+    -fx-text-fill: black;
+    -fx-background-color: #ababab;
+}
+
+#priorityComboBox .list-cell {
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+}
+
+#taskStatusCB {
+
+    -fx-prompt-text-fill: white;
+    -jfx-focus-color: white;
+    -jfx-unfocus-color: #c3c3c3;
+
+}
+
+#taskStatusCB > .cell {
+    -fx-text-fill: white;
+}
+
+#taskStatusCB .list-view {
+    -fx-background-color: #2d2d2d;
+}
+
+#taskStatusCB .list-view .jfx-list-cell .jfx-rippler {
+    -jfx-rippler-fill: #2d2d2d;
+}
+
+#taskStatusCB .prompt-container .text {
+    -fx-fill: #8e2663;
+}
+
+#taskStatusCB .list-cell:selected:filled {
+    -fx-text-fill: black;
+    -fx-background-color: #ababab;
+}
+
+#taskStatusCB .list-cell {
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+}
+
+#addNoteBtn {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+}
+
+#updateBtn {
+    -fx-background-color:  #2ecc71;
+    -fx-background-radius: 10;
+    -fx-border-color: transparent;
+    -fx-border-radius: 10;
+    -fx-text-fill: #2d2d2d;
+}
+
+#cancelBtn {
+    -fx-background-color:  #bdc3c7;
+    -fx-background-radius: 10;
+    -fx-border-color: transparent;
+    -fx-border-radius: 10;
+    -fx-text-fill: #2d2d2d;
+}
+
+#deleteBtn {
+    -fx-background-color: #eb4d4b;
+    -fx-background-radius: 10;
+    -fx-border-color: transparent;
+    -fx-border-radius: 10;
+    -fx-text-fill: #2d2d2d;
+}

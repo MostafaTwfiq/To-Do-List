@@ -1,3 +1,4 @@
+
 #parentPane {
 
 -fx-background-color: #FAFAFA;
@@ -48,6 +49,15 @@
 }
 
 #priorityLbl {
+
+    -fx-text-fill: black;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-alignment: center-left;
+
+}
+
+#statusLbl {
 
     -fx-text-fill: black;
     -fx-background-color: transparent;
@@ -210,14 +220,22 @@
 
 }
 
+#taskStatusCB {
+
+    -fx-prompt-text-fill: black;
+    -jfx-focus-color: black;
+    -jfx-unfocus-color: #4f5254;
+
+}
+
 #addNoteBtn {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-text-fill: black;
 }
 
-#addBtn {
-    -fx-background-color:  #F1C40F;
+#updateBtn {
+    -fx-background-color: #2ecc71;
     -fx-background-radius: 10;
     -fx-border-color: white;
     -fx-border-radius: 10;
@@ -225,17 +243,17 @@
 }
 
 #cancelBtn {
-    -fx-background-color:  #bdc3c7;
+    -fx-background-color: #bdc3c7;
     -fx-background-radius: 10;
     -fx-border-color: white;
     -fx-border-radius: 10;
     -fx-text-fill: white;
 }
 
-#deleteBtn{
-    -fx-background-color: #E74C3C;
-        -fx-background-radius: 10;
-        -fx-border-color: white;
-        -fx-border-radius: 10;
-        -fx-text-fill: white;
+#deleteBtn {
+    -fx-background-color: #eb4d4b;
+    -fx-background-radius: 10;
+    -fx-border-color: white;
+    -fx-border-radius: 10;
+    -fx-text-fill: white;
 }

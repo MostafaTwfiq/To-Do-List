@@ -3,7 +3,7 @@ package Main;
 import DataClasses.User;
 import GUI.ScreenManager.Stage.CustomStage;
 import GUI.ScreenManager.ScreenManager;
-import GUI.Screens.LoginScreen.LoginScreenController;
+import GUI.Screens.SplashScreen.SplashScreenController;
 import GUI.Style.Style.LightTheme;
 import GUI.Style.Style.Style;
 import javafx.application.Application;
@@ -21,24 +21,23 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        LoginScreenController loginScreenController = new LoginScreenController();
-        Parent loginScreenParent = null;
+        SplashScreenController splashScreenController = new SplashScreenController();
+        Parent splashScreenParent = null;
 
         try {
 
             ScreensPaths paths = new ScreensPaths();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(paths.getLoginScreenFxml()));
-            loader.setController(loginScreenController);
-            loginScreenParent = loader.load();
-            loginScreenParent.getStylesheets().add(paths.getLoginScreenCssSheet());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(paths.getSplashScreenFxml()));
+            loader.setController(splashScreenController);
+            splashScreenParent = loader.load();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        CustomStage customStage = new CustomStage(700, 1000, loginScreenController);
-
+        CustomStage customStage = new CustomStage(700, 1000, splashScreenController);
         customStage.makeStageVisible();
+        splashScreenController.startSplashScreen();
 
     }
 

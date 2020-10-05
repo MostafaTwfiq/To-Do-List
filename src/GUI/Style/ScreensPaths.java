@@ -22,6 +22,8 @@ public class ScreensPaths {
         return stageCssSheet;
     }
 
+    public String getSplashScreenFxml() {return "/GUI/Screens/SplashScreen/SplashScreenDesign.fxml"; }
+
     public String getLoginScreenFxml() {
         return "/GUI/Screens/LoginScreen/LoginScreenStyle.fxml";
     }

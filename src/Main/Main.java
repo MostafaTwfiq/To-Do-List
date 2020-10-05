@@ -22,14 +22,13 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
 
         SplashScreenController splashScreenController = new SplashScreenController();
-        Parent splashScreenParent = null;
 
         try {
 
             ScreensPaths paths = new ScreensPaths();
             FXMLLoader loader = new FXMLLoader(getClass().getResource(paths.getSplashScreenFxml()));
             loader.setController(splashScreenController);
-            splashScreenParent = loader.load();
+            loader.load();
 
         } catch (Exception e) {
             e.printStackTrace();

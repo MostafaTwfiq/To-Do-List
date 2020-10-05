@@ -158,9 +158,7 @@ public class EditTaskScreenController implements IControllers {
         timePicker.set24HourView(true);
         timePicker.setConverter(defaultConverter);
 
-
         setupTaskTitleTxtField();
-        setupTitleCounterLbl();
         setUpNoteComponentList();
         setupCancelBtn();
         setupStarButton();
@@ -182,28 +180,23 @@ public class EditTaskScreenController implements IControllers {
         );
 
 
-        taskTitleTxtFld.setOnKeyPressed(e -> {
+        taskTitleTxtFld.textProperty().addListener( (ob, ol, n) -> {
 
             taskTitleTxtFld.setDisable(true);
 
             if (taskTitleTxtFld.getText().length() > titleMaxLength)
                 taskTitleTxtFld.setText(taskTitleTxtFld.getText().substring(0, titleMaxLength));
 
-            int charCount  = taskTitleTxtFld.getText().length();
-
             titleCounterLbl.setText(
-                    charCount + " / " + titleMaxLength
+                    taskTitleTxtFld.getText().length() + " / " + titleMaxLength
             );
 
             taskTitleTxtFld.setDisable(false);
 
             taskTitleTxtFld.positionCaret(titleMaxLength);
+
         });
 
-    }
-
-    private void setupTitleCounterLbl() {
-        titleCounterLbl.setText("0 / " + titleMaxLength);
     }
 
     private void setupAddBtn(){

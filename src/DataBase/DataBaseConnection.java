@@ -8,7 +8,7 @@ public abstract class DataBaseConnection {
 
     private static Connection connection = null;
 
-    private static final String dataBaseName = "todolistdb";
+    private static final String dataBaseName = "todoListDB";
     private static final String dataBaseUserName = "todoListApp";
     private static final String dataBaseUserPass = "pass";
 
@@ -17,7 +17,7 @@ public abstract class DataBaseConnection {
         if (connection == null) {
 
             connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/" + dataBaseName,
+                    "jdbc:mysql://0.0.0.0:1212/" + dataBaseName,
                     dataBaseUserName,
                     dataBaseUserPass
             );

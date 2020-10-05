@@ -99,7 +99,7 @@ SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
-USE todolistdb;
+USE todoListDB;
 
 -- Create users table search index
 -- DROP INDEX IF EXISTS idx_user_name_password ON users;
@@ -805,4 +805,12 @@ RETURN exists_bool;
 END $$
 DELIMITER ;
 
+
 /** Start check if exists functions*/
+CREATE USER IF NOT EXISTS 'todoListApp'@'localhost' IDENTIFIED BY 'pass';
+GRANT ALL PRIVILEGES ON *.* TO 'todoListApp'@'localhost' WITH GRANT OPTION;
+
+CREATE USER IF NOT EXISTS 'todoListApp'@'%' IDENTIFIED BY 'pass';
+GRANT ALL PRIVILEGES ON *.* TO 'todoListApp'@'%' WITH GRANT OPTION;
+
+FLUSH PRIVILEGES;

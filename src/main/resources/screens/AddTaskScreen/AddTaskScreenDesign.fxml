@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--?import GUI.noteWrapper.NoteVBox?-->
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<AnchorPane fx:id="parentPane" prefHeight="770.0" prefWidth="1000.0" stylesheets="@../../Style/ThemesCss/LightTheme/AddTaskScreen/AddTaskScreen.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="titleLbl" layoutX="56.0" layoutY="82.0" text="Title" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="115.0">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <JFXDatePicker fx:id="dateDropDwn" defaultColor="#2ba8d9" layoutX="135.0" layoutY="119.0" prefWidth="170.0" promptText="Date" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="170.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></JFXDatePicker>
+      <JFXChipView id="tagsChipView" fx:id="tagsChipView" layoutX="162.0" layoutY="206.0" maxHeight="-Infinity" maxWidth="793.0" minHeight="255.0" minWidth="276.0" prefHeight="255.0" prefWidth="276.0" AnchorPane.leftAnchor="510.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="330.0" />
+      <JFXTextField fx:id="taskTitleTxtFld" layoutX="134.0" layoutY="76.0" prefHeight="26.0" prefWidth="780.0" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="115.0">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font></JFXTextField>
+      <Label fx:id="tagsLbl" layoutX="510.0" layoutY="289.0" text="Tags" AnchorPane.leftAnchor="510.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="290.0">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="onLbl" layoutX="56.0" layoutY="122.0" text="On" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="170.0">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="notesLbl" layoutX="52.0" layoutY="289.0" text="Notes" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="290.0">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="mainTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="353.0" layoutY="22.0" prefHeight="42.0" prefWidth="247.0" text="Add New Task" textAlignment="JUSTIFY">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="atLbl" layoutX="310.0" layoutY="120.0" text="at" AnchorPane.leftAnchor="335.0" AnchorPane.topAnchor="170.0">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="cancelBtn" cancelButton="true" layoutX="738.0" layoutY="603.0" prefHeight="32.0" prefWidth="103.0" text="Cancel" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="600.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="addBtn" defaultButton="true" layoutX="866.0" layoutY="604.0" prefHeight="32.0" prefWidth="103.0" text="Add" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="600.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXComboBox fx:id="priorityComboBox" layoutX="134.0" layoutY="162.0" prefHeight="26.0" prefWidth="141.0" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="230.0" />
+      <Label fx:id="priorityLbl" layoutX="55.0" layoutY="163.0" text="Priority" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="230.0">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="starBtn" layoutX="58.0" layoutY="22.0" maxHeight="30.0" maxWidth="30.0" prefHeight="30.0" prefWidth="30.0" text=" " AnchorPane.leftAnchor="40.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></JFXButton>
+      <JFXTimePicker fx:id="timePicker" defaultColor="#2ba8d9" layoutX="340.0" layoutY="119.0" prefWidth="170.0" promptText="Time" AnchorPane.leftAnchor="360.0" AnchorPane.topAnchor="170.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></JFXTimePicker>
+      <Label fx:id="errorLbl" alignment="CENTER" layoutX="172.0" layoutY="599.0" prefWidth="657.0" textFill="#f22525" AnchorPane.topAnchor="600.0">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="addNoteBtn" layoutX="120.0" layoutY="289.0" prefHeight="30.0" prefWidth="30.0" text="+" AnchorPane.leftAnchor="115.0" AnchorPane.topAnchor="290.0">
+         <font>
+            <Font name="Arial" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></JFXButton>
+      <ScrollPane fx:id="notesScrollPane" layoutX="148.0" layoutY="499.0" prefHeight="255.0" prefWidth="200.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="505.0" AnchorPane.topAnchor="330.0" />
+      <Label fx:id="titleCounterLbl" layoutX="940.0" layoutY="135.0" text="0 / 50" AnchorPane.leftAnchor="940.0" />
+
+   </children>
+</AnchorPane>

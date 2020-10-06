@@ -117,7 +117,7 @@ public class StageRootController implements IControllers {
 
             java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
 
-            BufferedImage image = ImageIO.read(new FileInputStream("resources/TodoAppTrayIcon.png"));
+            BufferedImage image = ImageIO.read(getClass().getResource("/TodoAppTrayIcon.png"));
             int trayIconWidth = new TrayIcon(image).getSize().width;
             java.awt.TrayIcon trayIcon = new java.awt.TrayIcon(
                     image.getScaledInstance(trayIconWidth, -1, java.awt.Image.SCALE_SMOOTH),

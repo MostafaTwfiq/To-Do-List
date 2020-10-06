@@ -1,0 +1,44 @@
+#closeB {
+
+-fx-background-color: transparent;
+-fx-background-radius: 0;
+-fx-border-color: transparent;
+-fx-border-radius: 0;
+
+}
+
+
+#minimizeB {
+
+-fx-background-color: transparent;
+-fx-background-radius: 0;
+-fx-border-color: transparent;
+-fx-border-radius: 0;
+
+}
+
+#titleL {
+
+-fx-text-fill: white;
+
+}
+
+#stageRoot {
+
+-fx-background-color: #8e2663;
+-fx-border-color: black;
+
+}
+
+#stageBar {
+
+-fx-background-color: #2d2d2d;
+
+}
+
+
+#parentRoot {
+
+-fx-background-color: #8e2663;
+
+}

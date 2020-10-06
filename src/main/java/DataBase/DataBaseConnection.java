@@ -17,7 +17,7 @@ public abstract class DataBaseConnection {
         if (connection == null) {
 
             connection = DriverManager.getConnection(
-                    "jdbc:mysql://0.0.0.0:1212/" + dataBaseName,
+                    "jdbc:mysql://localhost:3306/" + dataBaseName,
                     dataBaseUserName,
                     dataBaseUserPass
             );

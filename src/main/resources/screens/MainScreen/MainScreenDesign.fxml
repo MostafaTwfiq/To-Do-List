@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXChipView?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<AnchorPane fx:id="parentLayout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1000.0" stylesheets="@../../Style/ThemesCss/LightTheme/MainScreen/AppMainSheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane fx:id="toolsLayout" layoutX="47.0" layoutY="94.0" maxWidth="300.0" prefHeight="200.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="700.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane fx:id="searchBoxLayout" layoutX="50.0" layoutY="33.0" prefHeight="20.0" prefWidth="200.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="75.0" />
+            <JFXDatePicker fx:id="datePicker" defaultColor="BLACK" editable="false" layoutX="55.0" layoutY="72.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="30.0" promptText="Date" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="135.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXDatePicker>
+            <AnchorPane fx:id="filtersLayout" layoutX="50.0" layoutY="427.0" maxWidth="300.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="335.0">
+               <children>
+                  <Label fx:id="filtersLbl" alignment="CENTER" layoutX="177.0" layoutY="6.0" prefHeight="20.0" text="Filters" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font>
+                  </Label>
+                  <JFXChipView fx:id="filtersChipView" layoutX="72.0" layoutY="123.0" maxHeight="-Infinity" maxWidth="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0" />
+               </children>
+            </AnchorPane>
+            <VBox fx:id="progressBarsLayout" alignment="CENTER" layoutX="62.0" layoutY="636.0" prefHeight="60.0" prefWidth="300.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding></VBox>
+            <HBox fx:id="userOverviewLayout" alignment="CENTER_LEFT" layoutX="38.0" layoutY="-31.0" prefHeight="40.0" prefWidth="300.0" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Circle fx:id="userImageC" fill="DODGERBLUE" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Label fx:id="userNameLbl" prefHeight="50.0" prefWidth="180.0" text="Name">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="userSettingsB" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </HBox>
+            <JFXListView fx:id="optionsListView" layoutX="38.0" layoutY="-132.0" prefHeight="150.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="175.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="tasksViewLayout" layoutX="501.0" layoutY="228.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ScrollPane fx:id="tasksScrollPane" layoutX="198.0" layoutY="245.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

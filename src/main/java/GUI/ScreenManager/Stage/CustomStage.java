@@ -41,6 +41,8 @@ public class CustomStage implements IObserver {
 
         screenManager = Main.screenManager;
         Main.screenManager.addObserver(this);
+//yasta el error by2olak el path mesh mazboot
+        // 3aref
 
         setupStage();
         rootController = new StageRootController(stage, "TODO", e -> System.exit(0));
@@ -87,7 +89,7 @@ public class CustomStage implements IObserver {
         stage.setLocation(dim.width/2 - width/2, dim.height/2 - height/2);
 
         try {
-            stage.setIconImage(ImageIO.read(new FileInputStream("resources/TodoAppIcon.png")));
+            stage.setIconImage(ImageIO.read(getClass().getResource("/TodoAppIcon.png")));
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -9,7 +9,7 @@ public class PurkTheme extends Style {
 
         super(
 
-                "resources/Themes/PurkTheme/",
+                "=/Themes/PurkTheme/",
                 new StageTheme(
                         Color.rgb(209, 69, 59), //#D1453B
                         Color.rgb(79, 82, 84) //#4f5254

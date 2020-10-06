@@ -23,7 +23,7 @@ public class Main extends Application {
         SplashScreenController splashScreenController = new SplashScreenController();
 
         try {
-
+            // shoof keda
             ScreensPaths paths = new ScreensPaths();
             FXMLLoader loader = new FXMLLoader(getClass().getResource(paths.getSplashScreenFxml()));
             loader.setController(splashScreenController);

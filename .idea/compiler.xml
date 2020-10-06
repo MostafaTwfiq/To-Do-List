@@ -20,7 +20,12 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="ToDoList" target="1.5" />
+      <module name="ToDoList" target="13" />
     </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="ToDoList" options="" />
+    </option>
   </component>
 </project>

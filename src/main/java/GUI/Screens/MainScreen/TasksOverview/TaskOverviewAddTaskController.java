@@ -6,8 +6,6 @@ import GUI.Style.ScreensPaths;
 import Main.Main;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-
-import java.io.FileInputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -73,11 +71,7 @@ public class TaskOverviewAddTaskController implements IControllersObserver {
 
         try {
 
-            FileInputStream imageStream = new FileInputStream(
-                    Main.theme.getThemeResourcesPath() + "MainScreen/addTask.png"
-            );
-
-            Image buttonImage = new Image(imageStream);
+            Image buttonImage = new Image(Main.theme.getThemeResourcesPath() + "MainScreen/addTask.png");
             ImageView buttonImageView = new ImageView(buttonImage);
             buttonImageView.setFitHeight(30);
             buttonImageView.setFitWidth(30);

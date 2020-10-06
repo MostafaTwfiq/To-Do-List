@@ -15,8 +15,6 @@ import com.jfoenix.controls.JFXPopup;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
-
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -244,9 +242,7 @@ public class TaskOverviewController implements IControllersObserver {
 
         try {
 
-            FileInputStream imageStream = new FileInputStream(path);
-
-            Image buttonImage = new Image(imageStream);
+            Image buttonImage = new Image(path);
             ImageView buttonImageView = new ImageView(buttonImage);
             buttonImageView.setFitHeight(h);
             buttonImageView.setFitWidth(w);

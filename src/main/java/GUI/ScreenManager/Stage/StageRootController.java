@@ -13,15 +13,10 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBuffer;
-import java.awt.image.Raster;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -117,7 +112,7 @@ public class StageRootController implements IControllers {
 
             java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
 
-            BufferedImage image = ImageIO.read(new FileInputStream("resources/TodoAppTrayIcon.png"));
+            BufferedImage image = ImageIO.read(getClass().getResource("/TodoAppTrayIcon.png"));
             int trayIconWidth = new TrayIcon(image).getSize().width;
             java.awt.TrayIcon trayIcon = new java.awt.TrayIcon(
                     image.getScaledInstance(trayIconWidth, -1, java.awt.Image.SCALE_SMOOTH),
@@ -219,9 +214,8 @@ public class StageRootController implements IControllers {
     private ImageView loadButtonImage(String imagePath, double h, double w) {
 
         try {
-            FileInputStream imageStream = new FileInputStream(imagePath);
 
-            Image buttonImage = new Image(imageStream);
+            Image buttonImage = new Image(imagePath);
             ImageView buttonImageView = new ImageView(buttonImage);
             buttonImageView.setFitHeight(h);
             buttonImageView.setFitWidth(w);

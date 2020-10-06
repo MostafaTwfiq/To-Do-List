@@ -29,7 +29,7 @@ public class SearchBox extends HBox {
     private Color searchBoxColor;
     private Color textColor;
     private Color promptTextColor;
-    private final String defaultSearchIconPath = "resources/SearchBox/searchBoxIcon.png";
+    private final String defaultSearchIconPath = "/SearchBox/searchBoxIcon.png";
     private boolean animationLocker;
     private EventHandler<ActionEvent> onEnterEvent;
 
@@ -184,8 +184,7 @@ public class SearchBox extends HBox {
 
         try {
 
-            FileInputStream inputStream = new FileInputStream(iconPath);
-            Image image = new Image(inputStream);
+            Image image = new Image(iconPath);
             searchIcon = new ImageView(image);
 
             searchIcon.setFitHeight(getPrefHeight() - getInsets().getTop() - getInsets().getBottom());

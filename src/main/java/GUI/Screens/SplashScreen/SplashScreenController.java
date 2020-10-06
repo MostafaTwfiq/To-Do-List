@@ -15,8 +15,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
-
-import java.io.FileInputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -38,7 +36,7 @@ public class SplashScreenController implements IControllers {
 
     private void setupAppLogo() {
         try {
-            appLogo.setImage(new Image(new FileInputStream("resources/TodoAppIcon.png")));
+            appLogo.setImage(new Image("/TodoAppIcon.png"));
         } catch (Exception e) {
             System.out.println("Something went wrong while loading app logo in opening screen.");
         }

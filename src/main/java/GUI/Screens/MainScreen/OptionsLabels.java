@@ -7,8 +7,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.io.FileInputStream;
-
 public class OptionsLabels {
 
     private Label todayLbl;
@@ -59,8 +57,7 @@ public class OptionsLabels {
     private ImageView loadImage(String path) {
         try {
 
-            FileInputStream fileInputStream = new FileInputStream(path);
-            Image image = new Image(fileInputStream);
+            Image image = new Image(path);
             ImageView imageView = new ImageView(image);
             imageView.setFitHeight(22);
             imageView.setFitWidth(22);

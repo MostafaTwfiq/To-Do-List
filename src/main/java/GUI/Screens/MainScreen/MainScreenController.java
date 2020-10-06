@@ -27,6 +27,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+
+import java.io.File;
 import java.io.FileInputStream;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -190,7 +192,7 @@ public class MainScreenController implements IControllersObserver {
 
     private Image loadReminderImage() {
         try {
-            return new Image(new FileInputStream(Main.theme.getThemeResourcesPath() + "MainScreen/reminder.png"));
+            return new Image(Main.theme.getThemeResourcesPath() + "MainScreen/reminder.png");
         } catch (Exception e) {
             System.out.println("Can't load the reminder image.");
         }
@@ -234,8 +236,7 @@ public class MainScreenController implements IControllersObserver {
 
         try {
 
-            FileInputStream fileInputStream = new FileInputStream(imagePath);
-            Image image = new Image(fileInputStream);
+            Image image = new Image(new FileInputStream(imagePath));
             ImagePattern pattern = new ImagePattern(image);
             userImageC.setFill(pattern);
 
@@ -243,8 +244,7 @@ public class MainScreenController implements IControllersObserver {
 
             try {
                 imagePath = Main.user.getDefaultUserImagePath();
-                FileInputStream fileInputStream = new FileInputStream(imagePath);
-                Image image = new Image(fileInputStream);
+                Image image = new Image(imagePath);
                 ImagePattern pattern = new ImagePattern(image);
                 userImageC.setFill(pattern);
             } catch (Exception e1) {
@@ -274,11 +274,7 @@ public class MainScreenController implements IControllersObserver {
 
         try {
 
-            FileInputStream imageStream = new FileInputStream(
-                    Main.theme.getThemeResourcesPath() + "MainScreen/settings.png"
-            );
-
-            Image buttonImage = new Image(imageStream);
+            Image buttonImage = new Image(Main.theme.getThemeResourcesPath() + "MainScreen/settings.png");
             ImageView buttonImageView = new ImageView(buttonImage);
             buttonImageView.setFitHeight(20);
             buttonImageView.setFitWidth(20);

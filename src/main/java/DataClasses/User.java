@@ -8,7 +8,7 @@ public class User {
     private short userID;
     private String userName;
     private String userImagePath;
-    private final String defaultUserImagePath = "resources/Users/defaultUserProfileImage.png";
+    private final String defaultUserImagePath = "/Users/defaultUserProfileImage.png";
     private Theme theme;
 
     public User(short userID, String userName, Theme theme) {

@@ -87,7 +87,7 @@ public class CustomStage implements IObserver {
         stage.setLocation(dim.width/2 - width/2, dim.height/2 - height/2);
 
         try {
-            stage.setIconImage(ImageIO.read(new FileInputStream("resources/TodoAppIcon.png")));
+            stage.setIconImage(ImageIO.read(getClass().getResource("/TodoAppIcon.png")));
         } catch (Exception e) {
             e.printStackTrace();
         }

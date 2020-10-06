@@ -90,10 +90,7 @@ public class SignUpScreenController implements IControllers {
 
         try {
 
-            FileInputStream fileInputStream = new FileInputStream(Main.theme.getThemeResourcesPath()
-                    + "/SignUpScreen/defaultUserProfileImage.png");
-
-            Image image = new Image(fileInputStream);
+            Image image = new Image(Main.theme.getThemeResourcesPath() + "/SignUpScreen/defaultUserProfileImage.png");
             setUserImageCImage(image);
 
         } catch (Exception e) {
@@ -156,8 +153,7 @@ public class SignUpScreenController implements IControllers {
             userImagePath = filePath;
 
             try {
-                FileInputStream fileInputStream = new FileInputStream(userImagePath);
-                Image image = new Image(fileInputStream);
+                Image image = new Image(new FileInputStream(userImagePath));
                 setUserImageCImage(image);
             } catch (Exception exception) {
                 userImagePath = null;
@@ -233,9 +229,7 @@ public class SignUpScreenController implements IControllers {
 
         try {
 
-            FileInputStream imageStream = new FileInputStream(path);
-
-            Image buttonImage = new Image(imageStream);
+            Image buttonImage = new Image(path);
             ImageView buttonImageView = new ImageView(buttonImage);
             buttonImageView.setFitHeight(h);
             buttonImageView.setFitWidth(w);

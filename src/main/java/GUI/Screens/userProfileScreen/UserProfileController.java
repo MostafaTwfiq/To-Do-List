@@ -30,7 +30,6 @@ import javafx.util.Duration;
 import tray.animations.AnimationType;
 import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.net.URL;
@@ -119,7 +118,7 @@ public class UserProfileController implements IControllers  {
 
             try {
                 imagePath = Main.user.getDefaultUserImagePath();
-                Image image = new Image(new FileInputStream(imagePath));
+                Image image = new Image(imagePath);
                 ImagePattern pattern = new ImagePattern(image);
                 userImageC.setFill(pattern);
             } catch (Exception e1) {
@@ -199,8 +198,7 @@ public class UserProfileController implements IControllers  {
             imagePath = filePath;
 
             try {
-                FileInputStream fileInputStream = new FileInputStream(imagePath);
-                Image image = new Image(fileInputStream);
+                Image image = new Image(new FileInputStream(imagePath));
                 ImagePattern pattern = new ImagePattern(image);
                 userImageC.setFill(pattern);
             } catch (Exception exception) {
@@ -222,9 +220,7 @@ public class UserProfileController implements IControllers  {
 
         try {
 
-            FileInputStream imageStream = new FileInputStream(path);
-
-            Image buttonImage = new Image(imageStream);
+            Image buttonImage = new Image(path);
             ImageView buttonImageView = new ImageView(buttonImage);
             buttonImageView.setFitHeight(h);
             buttonImageView.setFitWidth(w);

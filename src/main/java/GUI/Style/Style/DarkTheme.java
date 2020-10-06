@@ -9,7 +9,7 @@ public class DarkTheme extends Style {
 
         super(
 
-                "resources/Themes/DarkTheme/",
+                "/Themes/DarkTheme/",
                 new StageTheme(
                         Color.rgb(209, 69, 59), //#D1453B
                         Color.rgb(79, 82, 84) //#4f5254

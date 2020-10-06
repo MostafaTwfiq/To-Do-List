@@ -1,0 +1,61 @@
+
+#parentLayout {
+
+-fx-background-color: transparent;
+-fx-border-color: transparent transparent white transparent;
+-fx-border-width: 1;
+
+}
+
+
+#tskDoneStatusC {
+
+    -fx-stroke-width: 1;
+    -fx-stroke: white;
+
+}
+
+
+#taskNameLbl {
+
+-fx-text-fill: white;
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+-fx-font-size: 20px;
+-fx-font-weight: bold;
+
+}
+
+
+#taskTimeLbl {
+
+-fx-text-fill: white;
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+-fx-font-size: 20px;
+-fx-font-weight: bold;
+
+}
+
+
+#taskPriorityRec {
+
+-fx-stroke-width: 1;
+-fx-stroke: white;
+
+}
+
+#starredBtn {
+
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+
+}
+
+
+#moreOptionsBtn {
+
+-fx-background-color: transparent;
+-fx-border-color: transparent;
+
+}

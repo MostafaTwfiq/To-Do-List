@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<HBox fx:id="parentLayout" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="420.0" spacing="5.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <JFXTextField fx:id="noteTxtFld" prefHeight="30.0" prefWidth="360.0" />
+      <VBox alignment="TOP_RIGHT" minHeight="40.0" prefHeight="41.0" prefWidth="50.0" spacing="5.0">
+         <children>
+            <JFXButton fx:id="deleteBtn" maxHeight="10.0" maxWidth="10.0" minHeight="10.0" minWidth="10.0" prefHeight="10.0" prefWidth="10.0" text=" ">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXButton>
+            <HBox fx:id="lblsLayout" alignment="CENTER_RIGHT" prefHeight="16.0" prefWidth="82.0">
+               <children>
+                  <Label fx:id="charCounterLbl" alignment="CENTER_RIGHT" text="0">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="maxLengthLbl" text=" / 50">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+      </VBox>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</HBox>

@@ -24,8 +24,6 @@ import javafx.util.converter.LocalTimeStringConverter;
 import tray.animations.AnimationType;
 import tray.notification.NotificationType;
 import tray.notification.TrayNotification;
-
-import java.io.FileInputStream;
 import java.lang.reflect.Type;
 import java.net.URL;
 import java.sql.SQLException;
@@ -216,12 +214,12 @@ public class AddTaskScreenController implements IControllers {
             if (this.isStarred) {
                 imgV = new ImageView(
                         new Image(
-                                new FileInputStream(Main.theme.getThemeResourcesPath() + "AddTaskScreen/starred.png")
+                                Main.theme.getThemeResourcesPath() + "AddTaskScreen/starred.png"
                         )
                 );
             } else {
                 imgV = new ImageView(new Image(
-                        new FileInputStream(Main.theme.getThemeResourcesPath() + "AddTaskScreen/notStarred.png")
+                       Main.theme.getThemeResourcesPath() + "AddTaskScreen/notStarred.png"
                 ));
             }
             imgV.setFitHeight(dim);

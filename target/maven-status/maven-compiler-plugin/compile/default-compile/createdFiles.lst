@@ -28,6 +28,7 @@ TasksListHandling\TasksListHandling$1.class
 GUI\Style\Style\Style.class
 GUI\Style\StyleFactory.class
 GUI\Style\Style\ExtraComponents\PopUpOptionsTheme.class
+Launcher.class
 GUI\Screens\MainScreen\TasksOverview\TaskOverviewAddTaskController.class
 DataClasses\User.class
 TasksListHandling\TasksListHandling$2.class

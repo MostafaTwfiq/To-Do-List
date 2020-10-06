@@ -8,6 +8,9 @@ import DataClasses.TaskStatus.TaskStatus;
 import GUI.IControllers;
 import GUI.Style.ScreensPaths;
 import Main.Main;
+import com.github.plushaze.traynotification.animations.Animations;
+import com.github.plushaze.traynotification.notification.Notifications;
+import com.github.plushaze.traynotification.notification.TrayNotification;
 import com.jfoenix.controls.*;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
@@ -22,9 +25,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 import javafx.util.StringConverter;
 import javafx.util.converter.LocalTimeStringConverter;
-import tray.animations.AnimationType;
-import tray.notification.NotificationType;
-import tray.notification.TrayNotification;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -430,8 +430,8 @@ public class EditTaskScreenController implements IControllers {
 
     private void popupSuccessNotification() {
         TrayNotification trayNotification = new TrayNotification();
-        trayNotification.setAnimationType(AnimationType.FADE);
-        trayNotification.setNotificationType(NotificationType.SUCCESS);
+        trayNotification.setAnimation(Animations.FADE);
+        trayNotification.setNotification(Notifications.SUCCESS);
         trayNotification.setMessage("Successfully updated the task.");
         trayNotification.setTitle("Success");
         trayNotification.showAndDismiss(Duration.seconds(1));

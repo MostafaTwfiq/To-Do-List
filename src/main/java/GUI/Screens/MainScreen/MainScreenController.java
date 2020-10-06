@@ -19,6 +19,9 @@ import GUI.Style.Style.ExtraComponents.ProgressBarTheme;
 import GUI.Style.Style.ExtraComponents.SearchBoxTheme;
 import Main.Main;
 import TasksListHandling.TasksListHandling;
+import com.github.plushaze.traynotification.animations.Animations;
+import com.github.plushaze.traynotification.notification.Notifications;
+import com.github.plushaze.traynotification.notification.TrayNotification;
 import com.jfoenix.controls.*;
 import javafx.animation.AnimationTimer;
 import javafx.beans.InvalidationListener;
@@ -50,9 +53,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
-import tray.animations.AnimationType;
-import tray.notification.NotificationType;
-import tray.notification.TrayNotification;
+
 
 public class MainScreenController implements IControllersObserver {
 
@@ -174,8 +175,8 @@ public class MainScreenController implements IControllersObserver {
             ) {
                 alertedTasks.add(todayTasks.get(currentIndex));
                 TrayNotification trayNotification = new TrayNotification();
-                trayNotification.setAnimationType(AnimationType.POPUP);
-                trayNotification.setNotificationType(NotificationType.NOTICE);
+                trayNotification.setAnimation(Animations.POPUP);
+                trayNotification.setNotification(Notifications.NOTICE);
                 trayNotification.setMessage("Don't forget to " + todayTasks.get(currentIndex).getTitle());
                 trayNotification.setTitle("Reminder");
                 trayNotification.setImage(loadReminderImage());

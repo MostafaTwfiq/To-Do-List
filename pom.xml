@@ -66,26 +66,6 @@
         </dependency>
     </dependencies>
 
-<!--    <properties>-->
-<!--LEAVE IT COMMENTED-->
-<!--            <jvm.options>-->
-<!--                &#45;&#45;add-opens-->
-<!--                java.base/java.lang.reflect=com.jfoenix-->
-<!--                &#45;&#45;add-opens-->
-<!--                javafx.base/com.sun.javafx.runtime=com.jfoenix-->
-<!--                &#45;&#45;add-opens-->
-<!--                javafx.controls/com.sun.javafx.scene.control.behavior=com.jfoenix-->
-<!--                &#45;&#45;add-opens-->
-<!--                javafx.controls/com.sun.javafx.scene.control=com.jfoenix-->
-<!--                &#45;&#45;add-opens-->
-<!--                javafx.base/com.sun.javafx.binding=com.jfoenix-->
-<!--                &#45;&#45;add-opens-->
-<!--                javafx.base/com.sun.javafx.event=com.jfoenix-->
-<!--                &#45;&#45;add-opens-->
-<!--                javafx.graphics/com.sun.javafx.stage=com.jfoenix-->
-<!--            </jvm.options>-->
-<!--    </properties>-->
-
     <build>
         <plugins>
             <plugin>
@@ -102,9 +82,22 @@
                 <configuration>
                     <source>13</source>
                     <target>13</target>
-<!--                    <compilerArgs>-->
-<!--                        <arg>${jvm.options}</arg>-->
-<!--                    </compilerArgs>-->
+                    <compilerArgs>
+                        <arg>--add-opens</arg>
+                        <arg>java.base/java.lang.reflect=com.jfoenix</arg>
+                        <arg>--add-opens</arg>
+                        <arg>javafx.base/com.sun.javafx.runtime=com.jfoenix</arg>
+                        <arg>--add-opens</arg>
+                        <arg>javafx.controls/com.sun.javafx.scene.control.behavior=com.jfoenix</arg>
+                        <arg>--add-opens</arg>
+                        <arg>javafx.controls/com.sun.javafx.scene.control=com.jfoenix</arg>
+                        <arg>--add-opens</arg>
+                        <arg>javafx.base/com.sun.javafx.binding=com.jfoenix</arg>
+                        <arg>--add-opens</arg>
+                        <arg>javafx.base/com.sun.javafx.event=com.jfoenix</arg>
+                        <arg>--add-opens</arg>
+                        <arg>javafx.graphics/com.sun.javafx.stage=com.jfoenix</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
         </plugins>

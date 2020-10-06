@@ -244,7 +244,10 @@ public class UserProfileController implements IControllers  {
 
         int userID = Main.user.getUserID();
 
-        if (!BCrypt.checkpw(oldPasswordTF.getText(), dataAccess.getUserPassword(userID))) {
+        if (oldPasswordTF.getText().isBlank() || oldPasswordTF.getText().isBlank()) {
+            errorL.setText("Please enter the old password.");
+            return;
+        } else if (!BCrypt.checkpw(oldPasswordTF.getText(), dataAccess.getUserPassword(userID))) {
             errorL.setText("The old password is incorrect.");
             return;
         }
@@ -306,29 +309,43 @@ public class UserProfileController implements IControllers  {
 
     private void deleteAccount(){
 
-        lockUserProfileScreen();
-        // Deletes the user and goes to the main sign up screen
         try {
-            dataAccess.deleteUser(Main.user.getUserID());
-        } catch (SQLException throwables) {
-            System.out.println("Failed to delete the user.");
+
+            if (oldPasswordTF.getText().isBlank() || oldPasswordTF.getText().isBlank()) {
+                errorL.setText("Please enter the old password.");
+                return;
+            } else if (!BCrypt.checkpw(oldPasswordTF.getText(), dataAccess.getUserPassword(Main.user.getUserID()))) {
+                errorL.setText("The old password is incorrect.");
+                return;
+            }
+
+            lockUserProfileScreen();
+            // Deletes the user and goes to the main sign up screen
+            try {
+                dataAccess.deleteUser(Main.user.getUserID());
+            } catch (SQLException throwables) {
+                System.out.println("Failed to delete the user.");
+            }
+
+            unlockUserProfileScreen();
+
+            // clean up
+            Main.user = null;
+
+            TrayNotification notification = new TrayNotification();
+            notification.setTitle("Successfully Deleted User.");
+            notification.setMessage("Good bye " + userNameTF.getText());
+            notification.setAnimationType(AnimationType.POPUP);
+            notification.setNotificationType(NotificationType.SUCCESS);
+            notification.showAndDismiss(Duration.seconds(1.0));
+
+            stopReminderChecker.run();
+
+            Main.screenManager.returnNumOfScreens(2);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
-        unlockUserProfileScreen();
-
-        // clean up
-        Main.user = null;
-
-        TrayNotification notification = new TrayNotification();
-        notification.setTitle("Successfully Deleted User.");
-        notification.setMessage("Good bye " + userNameTF.getText());
-        notification.setAnimationType(AnimationType.POPUP);
-        notification.setNotificationType(NotificationType.SUCCESS);
-        notification.showAndDismiss(Duration.seconds(1.0));
-
-        stopReminderChecker.run();
-        
-        Main.screenManager.returnNumOfScreens(2);
 
     }
 

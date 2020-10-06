@@ -82,22 +82,7 @@
                 <configuration>
                     <source>13</source>
                     <target>13</target>
-                    <compilerArgs>
-                        <arg>--add-opens</arg>
-                        <arg>java.base/java.lang.reflect=com.jfoenix</arg>
-                        <arg>--add-opens</arg>
-                        <arg>javafx.base/com.sun.javafx.runtime=com.jfoenix</arg>
-                        <arg>--add-opens</arg>
-                        <arg>javafx.controls/com.sun.javafx.scene.control.behavior=com.jfoenix</arg>
-                        <arg>--add-opens</arg>
-                        <arg>javafx.controls/com.sun.javafx.scene.control=com.jfoenix</arg>
-                        <arg>--add-opens</arg>
-                        <arg>javafx.base/com.sun.javafx.binding=com.jfoenix</arg>
-                        <arg>--add-opens</arg>
-                        <arg>javafx.base/com.sun.javafx.event=com.jfoenix</arg>
-                        <arg>--add-opens</arg>
-                        <arg>javafx.graphics/com.sun.javafx.stage=com.jfoenix</arg>
-                    </compilerArgs>
+
                 </configuration>
             </plugin>
         </plugins>

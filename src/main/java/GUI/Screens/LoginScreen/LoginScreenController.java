@@ -10,6 +10,9 @@ import GUI.Style.ScreensPaths;
 import GUI.Style.Style.Theme;
 import GUI.Style.StyleFactory;
 import Main.Main;
+import com.github.plushaze.traynotification.animations.Animations;
+import com.github.plushaze.traynotification.notification.Notifications;
+import com.github.plushaze.traynotification.notification.TrayNotification;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -21,10 +24,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
-import tray.animations.AnimationType;
-import tray.notification.NotificationType;
-import tray.notification.TrayNotification;
-
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -112,8 +111,8 @@ public class LoginScreenController implements IControllers {
                             Main.screenManager.changeScreen(mainScreenController);
 
                             TrayNotification trayNotification = new TrayNotification();
-                            trayNotification.setAnimationType(AnimationType.POPUP);
-                            trayNotification.setNotificationType(NotificationType.SUCCESS);
+                            trayNotification.setAnimation(Animations.POPUP);
+                            trayNotification.setNotification(Notifications.SUCCESS);
                             trayNotification.setMessage("Welcome " + userNameTF.getText());
                             trayNotification.setTitle("Logged in successfully");
                             trayNotification.showAndDismiss(Duration.seconds(1));

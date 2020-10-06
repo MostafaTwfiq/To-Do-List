@@ -7,6 +7,9 @@ import DataClasses.TaskStatus.TaskStatus;
 import GUI.IControllers;
 import GUI.Style.ScreensPaths;
 import Main.Main;
+import com.github.plushaze.traynotification.animations.Animations;
+import com.github.plushaze.traynotification.notification.Notifications;
+import com.github.plushaze.traynotification.notification.TrayNotification;
 import com.jfoenix.controls.*;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
@@ -21,9 +24,6 @@ import javafx.scene.layout.*;
 import javafx.util.Duration;
 import javafx.util.StringConverter;
 import javafx.util.converter.LocalTimeStringConverter;
-import tray.animations.AnimationType;
-import tray.notification.NotificationType;
-import tray.notification.TrayNotification;
 import java.lang.reflect.Type;
 import java.net.URL;
 import java.sql.SQLException;
@@ -330,8 +330,8 @@ public class AddTaskScreenController implements IControllers {
 
     private void popupSuccessNotification() {
         TrayNotification trayNotification = new TrayNotification();
-        trayNotification.setAnimationType(AnimationType.FADE);
-        trayNotification.setNotificationType(NotificationType.SUCCESS);
+        trayNotification.setAnimation(Animations.FADE);
+        trayNotification.setNotification(Notifications.SUCCESS);
         trayNotification.setMessage("Successfully created the new task.");
         trayNotification.setTitle("Success");
         trayNotification.showAndDismiss(Duration.seconds(2));

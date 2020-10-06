@@ -6,6 +6,9 @@ import GUI.Style.ScreensPaths;
 import GUI.Style.Style.Theme;
 import GUI.Style.StyleFactory;
 import Main.Main;
+import com.github.plushaze.traynotification.animations.Animations;
+import com.github.plushaze.traynotification.notification.Notifications;
+import com.github.plushaze.traynotification.notification.TrayNotification;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -27,9 +30,6 @@ import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import tray.animations.AnimationType;
-import tray.notification.NotificationType;
-import tray.notification.TrayNotification;
 import java.io.File;
 import java.io.FileInputStream;
 import java.net.URL;
@@ -332,13 +332,13 @@ public class UserProfileController implements IControllers  {
             // clean up
             Main.user = null;
 
-            TrayNotification notification = new TrayNotification();
-            notification.setTitle("Successfully Deleted User.");
-            notification.setMessage("Good bye " + userNameTF.getText());
-            notification.setAnimationType(AnimationType.POPUP);
-            notification.setNotificationType(NotificationType.SUCCESS);
-            notification.showAndDismiss(Duration.seconds(1.0));
 
+        TrayNotification notification = new TrayNotification();
+        notification.setTitle("Successfully Deleted User.");
+        notification.setMessage("Good bye " + userNameTF.getText());
+        notification.setAnimation(Animations.POPUP);
+        notification.setNotification(Notifications.SUCCESS);
+        notification.showAndDismiss(Duration.seconds(1.0));
             stopReminderChecker.run();
 
             Main.screenManager.returnNumOfScreens(2);

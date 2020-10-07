@@ -90,7 +90,7 @@ public class SignUpScreenController implements IControllers {
 
         try {
 
-            Image image = new Image(Main.theme.getThemeResourcesPath() + "/SignUpScreen/defaultUserProfileImage.png");
+            Image image = new Image(Main.theme.getThemeResourcesPath() + "SignUpScreen/defaultUserProfileImage.png");
             setUserImageCImage(image);
 
         } catch (Exception e) {
@@ -139,7 +139,7 @@ public class SignUpScreenController implements IControllers {
 
     private void loadChooseImageBImage() {
         chooseImageB.setGraphic(loadButtonImage(Main.theme.getThemeResourcesPath()
-                + "/SignUpScreen/chooseImage.png", 35, 40));
+                + "SignUpScreen/chooseImage.png", 35, 40));
     }
 
     private void updateUserImageFile(File file) {
@@ -222,7 +222,7 @@ public class SignUpScreenController implements IControllers {
 
     private void loadCancelBImage() {
         returnB.setGraphic(loadButtonImage(Main.theme.getThemeResourcesPath()
-                + "/SignUpScreen/return.png", 50, 50));
+                + "SignUpScreen/return.png", 50, 50));
     }
 
     private ImageView loadButtonImage(String path, double h, double w) {

@@ -33,7 +33,7 @@ Being always on the run has become the day to day norm in the modern world, ever
    1) Clone this Repo: 
         > ```git clone https://github.com/MostafaTwfiq/To-Do-List.git```
    2) Download and install MySQL from [here](https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/)
-   3) Navigate to ``To-Do-List\src\Main\java\DataBase\DataBaseCreation``
+   3) Navigate to ``/src/Main/java/DataBase/DataBaseCreation``
    4) Ensure that MYSQL command-line client is in your ``PATH``
    5) Run the ```create_todo_list_data_base.sql``` using the following command:
         > ``` mysql -uroot -p <ROOT PASSSWORD> < create_todo_list_data_base.sql```

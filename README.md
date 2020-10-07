@@ -15,14 +15,14 @@ Being always on the run has become the day to day norm in the modern world, ever
 4) Profit and live your day to the fullest potential :thumbsup:
 
 ## :wrench: Manual Installation instructions :
-  ### Compiling from Source Files:
+  ### :gear: Compiling from Source Files:
    1) Clone this Repo: 
         > ```git clone https://github.com/MostafaTwfiq/To-Do-List.git```
    2) Compile with maven using the following Commmand:
         > ```mvn clean javafx:run -e```
    3) Ensure that either mysql or the docker conatainer are runnning in the background before double clicking the jar.
    
- ### :gear: Setting Up the Database Client:
+ ### :floppy_disk: Setting Up the Database Client:
   #### :whale: Using Docker
    1) Follow the Docker installation guide from [here](https://docs.docker.com/engine/install/) .
    2) Pull the docker container from docker hub:
@@ -44,9 +44,9 @@ Being always on the run has become the day to day norm in the modern world, ever
 * Bcrypt implementation by [jeremyh](https://github.com/jeremyh/jBCrypt)
 
 ## :books: Libraries used:
-* (JFoenix)[https://github.com/jfoenixadmin/JFoenix]
-* (TrayNotification)[https://github.com/PlusHaze/TrayNotification]
-* (MySQL Driver)[https://mvnrepository.com/artifact/mysql/mysql-connector-java]
+* [JFoenix](https://github.com/jfoenixadmin/JFoenix)
+* [TrayNotification](https://github.com/PlusHaze/TrayNotification)
+* [MySQL Driver](https://mvnrepository.com/artifact/mysql/mysql-connector-java)
 
 ## :handshake: Contributions : 
 Any Contributions, issues and  bug reports are welcome!

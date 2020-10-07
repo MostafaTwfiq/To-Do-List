@@ -51,4 +51,5 @@ Being always on the run has become the day to day norm in the modern world, ever
 
 ## :handshake: Contributions : 
 Any Contributions, issues and  bug reports are welcome!
+<br/>
 Feel free to open a pull request and make To-Do a better App.

@@ -38,7 +38,8 @@ Being always on the run has become the day to day norm in the modern world, ever
    5) Run the ```create_todo_list_data_base.sql``` using the following command:
         > ``` mysql -uroot -p <ROOT PASSSWORD> < create_todo_list_data_base.sql```
    6) Change the database connection in the ```src/Main/java/DataBase/DataBaseConnection.java``` class :
-        from ```jdbc:mysql://0.0.0.0:1212/``` to ```jdbc:mysql://localhost:3306/```
+        <br/>
+          from ```jdbc:mysql://0.0.0.0:1212/``` to ```jdbc:mysql://localhost:3306/```
    7) Compile the application from it's source files.                                                                               
 ## :raised_hands:	Acknowledgments :
 * Bcrypt implementation by [jeremyh](https://github.com/jeremyh/jBCrypt)

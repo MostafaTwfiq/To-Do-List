@@ -7,7 +7,7 @@ Being always on the run has become the day to day norm in the modern world, ever
 ## Preview :
 ![preview gif](https://media.giphy.com/media/W66PVvrZb2XiuKgzNn/giphy.gif)
 
-## Installation instruction :
+## Installation instructions :
 
 1) Follow the Docker installation guide from [here](https://docs.docker.com/engine/install/)
 2) Make Sure you have JDK13 installed. Can be downloaded from [here](https://www.oracle.com/java/technologies/javase-jdk13-downloads.html) 

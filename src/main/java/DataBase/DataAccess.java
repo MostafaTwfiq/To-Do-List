@@ -1250,7 +1250,7 @@ public class DataAccess {
      */
 
     private String addStringBetweenSingleQuote(String string) {
-        return "'" + string.replaceAll("'", "\\\\'") + "'";
+        return "'" + string.replaceAll("'", "\\\\'").replaceAll("\\\\", "\\\\\\\\") + "'";
     }
 
 

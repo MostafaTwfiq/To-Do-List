@@ -213,7 +213,7 @@ public class UserProfileController implements IControllers  {
 
     private void loadChooseImageBImage() {
         chooseImageB.setGraphic(loadButtonImage(Main.theme.getThemeResourcesPath()
-                + "/UserProfileScreen/chooseImage.png", 35, 40));
+                + "UserProfileScreen/chooseImage.png", 35, 40));
     }
 
     private ImageView loadButtonImage(String path, double h, double w) {

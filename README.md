@@ -22,7 +22,7 @@ Being always on the run has become the day to day norm in the modern world, ever
    2) Compile with maven using the following Commmand:
         > ```mvn clean javafx:run -e```
    3) Ensure that either mysql or the docker conatainer are runnning in the background before double clicking the jar.
-   
+
  ### :floppy_disk: Setting Up the Database Client:
   #### :whale: Using Docker
    1) Follow the Docker installation guide from [here](https://docs.docker.com/engine/install/) .
@@ -44,6 +44,7 @@ Being always on the run has become the day to day norm in the modern world, ever
    7) Compile the application from it's source files.                                                                               
 ## :raised_hands:	Acknowledgments :
 * Bcrypt implementation by [jeremyh](https://github.com/jeremyh/jBCrypt)
+* Khalid Ashraf ( UI/UX )
 
 ## :books: Libraries used:
 * [JFoenix](https://github.com/jfoenixadmin/JFoenix)

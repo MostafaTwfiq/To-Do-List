@@ -12,6 +12,7 @@ Being always on the run has become the day to day norm in the modern world, ever
 1) Follow the Docker installation guide from [here](https://docs.docker.com/engine/install/) .
 2) Make Sure you have JDK13 installed. Can be downloaded from [here](https://www.oracle.com/java/technologies/javase-jdk13-downloads.html) .
 3) Download and run the To-Do installer from [here](https://github.com/MostafaTwfiq/To-Do-List/releases/download/v1.0.0/TodoListAppInstaller.jar) .
+   - You can view the source code from [here](https://github.com/MostafaTwfiq/TodoListAppInstaller).
 4) Profit and live your day to the fullest potential :thumbsup:
 
 ## :wrench: Manual Installation instructions :

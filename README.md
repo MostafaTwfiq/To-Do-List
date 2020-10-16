@@ -44,7 +44,7 @@ Being always on the run has become the day to day norm in the modern world, ever
    7) Compile the application from it's source files.                                                                               
 ## :raised_hands:	Acknowledgments :
 * Bcrypt implementation by [jeremyh](https://github.com/jeremyh/jBCrypt)
-* Khalid Ashraf ( UI/UX )
+* [Khalid Ashraf](https://github.com/khaledashraf2000) ( UI/UX )
 
 ## :books: Libraries used:
 * [JFoenix](https://github.com/jfoenixadmin/JFoenix)
